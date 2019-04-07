@@ -1,0 +1,5 @@
+2019-03-27 23:02:17.380 INFO  --- [StartupInfoLogger.java:50][main] - Starting SpringbootTemplateApplication on teendadeMBP with PID 1931 (/Users/teenyda/project/ideaProject/SpringbootTemplate/target/classes started by teenyda in /Users/teenyda/project/ideaProject/SpringbootTemplate)
+2019-03-27 23:02:17.384 INFO  --- [SpringApplication.java:679][main] - The following profiles are active: dev
+2019-03-27 23:02:18.320 WARN  --- [ClassPathMapperScanner.java:166][main] - No MyBatis mapper was found in '[com.teenyda]' package. Please check your configuration.
+2019-03-27 23:02:19.342 WARN  --- [ThymeleafAutoConfiguration.java:108][main] - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-03-27 23:02:19.646 INFO  --- [StartupInfoLogger.java:59][main] - Started SpringbootTemplateApplication in 3.236 seconds (JVM running for 4.391)
