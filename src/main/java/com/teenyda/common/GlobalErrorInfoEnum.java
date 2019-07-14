@@ -7,8 +7,8 @@ package com.teenyda.common;
  * @Email teenyda@gmail.com
  */
 public enum GlobalErrorInfoEnum implements ErrorInfoInterface {
-    SUCCESS(0, "success"),
-    NOT_FOUND(-1, "service not found")
+    SUCCESS(200, "success"),
+    NOT_FOUND(40001, "service not found")
     ;
 
     private int code;

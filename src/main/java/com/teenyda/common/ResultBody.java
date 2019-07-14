@@ -21,23 +21,23 @@ public class ResultBody<T> {
     /**
      * 响应结果
      */
-    private T result;
+    private T data;
 
     public ResultBody(ErrorInfoInterface errorInfo){
         this.code = errorInfo.getCode();
         this.message = errorInfo.getMessage();
     }
 
-    public ResultBody(T result){
+    public ResultBody(T data){
         this.code = GlobalErrorInfoEnum.SUCCESS.getCode();
         this.message = GlobalErrorInfoEnum.SUCCESS.getMessage();
-        this.result = result;
+        this.data = data;
     }
 
-    public ResultBody(ErrorInfoInterface errorInfo,T result){
+    public ResultBody(ErrorInfoInterface errorInfo,T data){
         this.code = errorInfo.getCode();
         this.message = errorInfo.getMessage();
-        this.result = result;
+        this.data = data;
     }
 
     public int getCode() {
@@ -56,11 +56,11 @@ public class ResultBody<T> {
         this.message = message;
     }
 
-    public T getResult() {
-        return result;
+    public T getData() {
+        return data;
     }
 
-    public void setResult(T result) {
-        this.result = result;
+    public void setData(T data) {
+        this.data = data;
     }
 }

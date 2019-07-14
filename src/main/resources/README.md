@@ -69,7 +69,7 @@ GET https//domain.com/api/{模块名}/{?菜单名}/{接口名}/:param
                         ├── Application.java
                         ├── constant
                         │   └── CityErrorInfoEnum.java
-                        ├── result
+                        ├── data
                         │   ├── ErrorInfoInterface.java
                         │   ├── GlobalErrorInfoEnum.java
                         │   ├── GlobalErrorInfoException.java
