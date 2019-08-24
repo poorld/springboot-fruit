@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @program: springboottemplate
  * @author: Teenyda
@@ -44,5 +48,11 @@ public class FileUploadController {
         return ResultUtil.success(GlobalErrorInfoEnum.SUCCESS, response);
     }
 
+    @PostMapping("/multipleFiles")
+    public ResultBody<FileUploadResponse> uploadMultipleFiles(@RequestParam("file") MultipartFile[] files) {
+        return Arrays.stream(files)
+                .map(this::uploadFile)
+                .collect(Collectors.toList());
+    }
 
 }
