@@ -16,7 +16,7 @@ public class ResultBody<T> {
     /**
      * 响应消息
      */
-    private String message;
+    private String msg;
 
     /**
      * 响应结果
@@ -25,18 +25,18 @@ public class ResultBody<T> {
 
     public ResultBody(ErrorInfoInterface errorInfo){
         this.code = errorInfo.getCode();
-        this.message = errorInfo.getMessage();
+        this.msg = errorInfo.getMessage();
     }
 
     public ResultBody(T data){
         this.code = GlobalErrorInfoEnum.SUCCESS.getCode();
-        this.message = GlobalErrorInfoEnum.SUCCESS.getMessage();
+        this.msg = GlobalErrorInfoEnum.SUCCESS.getMessage();
         this.data = data;
     }
 
     public ResultBody(ErrorInfoInterface errorInfo,T data){
         this.code = errorInfo.getCode();
-        this.message = errorInfo.getMessage();
+        this.msg = errorInfo.getMessage();
         this.data = data;
     }
 
@@ -48,12 +48,12 @@ public class ResultBody<T> {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public T getData() {
