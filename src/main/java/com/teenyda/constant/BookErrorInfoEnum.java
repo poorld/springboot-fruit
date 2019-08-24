@@ -1,7 +1,6 @@
 package com.teenyda.constant;
 
 import com.teenyda.common.ErrorInfoInterface;
-import com.teenyda.common.GlobalErrorInfoEnum;
 
 public enum BookErrorInfoEnum implements ErrorInfoInterface {
 
@@ -24,5 +23,15 @@ public enum BookErrorInfoEnum implements ErrorInfoInterface {
     @Override
     public String getMessage() {
         return message;
+    }
+
+    @Override
+    public void setExplain(String explain) {
+
+    }
+
+    @Override
+    public String getExplain() {
+        return null;
     }
 }

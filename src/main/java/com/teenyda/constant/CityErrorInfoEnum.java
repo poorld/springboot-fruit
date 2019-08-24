@@ -38,4 +38,14 @@ public enum CityErrorInfoEnum implements ErrorInfoInterface {
     public String getMessage() {
         return this.message;
     }
+
+    @Override
+    public void setExplain(String explain) {
+
+    }
+
+    @Override
+    public String getExplain() {
+        return null;
+    }
 }

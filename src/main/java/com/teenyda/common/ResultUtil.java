@@ -21,5 +21,10 @@ public class ResultUtil {
         return resultBody;
     }
 
+    public static ResultBody error(ErrorInfoInterface errorInfo, String explain){
+        errorInfo.setExplain(explain);
+        ResultBody resultBody = new ResultBody(errorInfo);
+        return resultBody;
+    }
 
 }

@@ -2,6 +2,7 @@ package com.teenyda.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -23,5 +24,12 @@ public class GlobalErrorInfoHandler {
         LOGGER.error(e.getMessage());
         ResultBody resultBody = ResultUtil.error(e.getErrorInfo());
         return resultBody;
+    }
+
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public ResultBody requestMethodNotSupport(HttpServletRequest req,HttpRequestMethodNotSupportedException e) {
+        LOGGER.error(e.getMessage());
+        ResultBody error = ResultUtil.error(GlobalErrorInfoEnum.ERROR, e.getMessage());
+        return error;
     }
 }

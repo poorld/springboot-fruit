@@ -18,6 +18,13 @@ public interface ErrorInfoInterface {
      * @return
      */
     String getMessage();
+
+    /**
+     * 额外说明
+     */
+    void setExplain(String explain);
+
+    String getExplain();
 }
 
 

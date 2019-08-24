@@ -9,11 +9,16 @@ package com.teenyda.common;
 public class GlobalErrorInfoException extends Exception {
 
     private ErrorInfoInterface errorInfo;
-
+    private int code;
     private String message;
 
     public GlobalErrorInfoException(ErrorInfoInterface errorInfo) {
         this.errorInfo = errorInfo;
+    }
+
+    public GlobalErrorInfoException(ErrorInfoInterface errorInfo, String explain) {
+        this.errorInfo = errorInfo;
+        this.errorInfo.setExplain(explain);
     }
 
     public ErrorInfoInterface getErrorInfo() {
@@ -27,4 +32,9 @@ public class GlobalErrorInfoException extends Exception {
     public String getMessage(){
         return this.errorInfo.getMessage();
     }
+
+    public int getCode() {
+        return code;
+    }
+
 }

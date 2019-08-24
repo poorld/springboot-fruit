@@ -1,5 +1,7 @@
 package com.teenyda.common;
 
+import org.springframework.util.StringUtils;
+
 /**
  * 统一返回格式
  * @Author Administrator
@@ -26,6 +28,10 @@ public class ResultBody<T> {
     public ResultBody(ErrorInfoInterface errorInfo){
         this.code = errorInfo.getCode();
         this.msg = errorInfo.getMessage();
+        String explain = errorInfo.getExplain();
+        if (!StringUtils.isEmpty(explain)) {
+            this.msg = String.format(this.msg, explain);
+        }
     }
 
     public ResultBody(T data){
@@ -38,6 +44,11 @@ public class ResultBody<T> {
         this.code = errorInfo.getCode();
         this.msg = errorInfo.getMessage();
         this.data = data;
+    }
+
+    public ResultBody(GlobalErrorInfoException errorInfo) {
+        this.code = errorInfo.getCode();
+        this.msg = errorInfo.getMessage();
     }
 
     public int getCode() {

@@ -8,12 +8,14 @@ package com.teenyda.common;
  */
 public enum GlobalErrorInfoEnum implements ErrorInfoInterface {
     SUCCESS(200, "success"),
-    NOT_FOUND(40001, "service not found")
-    ;
+    ERROR(40001, "%s"),
+    NOT_FOUND(40002, "service not found");
 
     private int code;
 
     private String message;
+
+    private String explain;
 
     GlobalErrorInfoEnum(int code,String message){
         this.code = code;
@@ -28,5 +30,15 @@ public enum GlobalErrorInfoEnum implements ErrorInfoInterface {
     @Override
     public String getMessage() {
         return this.message;
+    }
+
+    @Override
+    public void setExplain(String explain) {
+        this.explain = explain;
+    }
+
+    @Override
+    public String getExplain() {
+        return explain;
     }
 }

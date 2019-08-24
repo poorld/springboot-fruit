@@ -19,4 +19,18 @@
         mode: HTML
         check-template-location: true
 
+  #文件上传配置
+  # 开启multipart上传功能
+    servlet:
+        multipart:
+            enabled: true
+            #写入磁盘的阈值
+            file-size-threshold: 2KB
+            #最大文件大小
+            max-file-size: 20MB
+            #最大请求大小
+            max-request-size: 25MB
 
+#自定义的参数 FileProperties
+  file:
+      upload-dir: ./uploads
