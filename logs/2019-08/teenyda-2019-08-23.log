@@ -1,0 +1,8 @@
+2019-08-23 10:14:10.470 INFO  --- [StartupInfoLogger.java:50][main] - Starting SpringbootTemplateApplication on teendadeMBP with PID 6968 (/Users/teenyda/project/ideaProject/SpringbootTemplate/target/classes started by teenyda in /Users/teenyda/project/ideaProject/SpringbootTemplate)
+2019-08-23 10:14:10.477 INFO  --- [SpringApplication.java:679][main] - The following profiles are active: dev
+2019-08-23 10:14:12.332 WARN  --- [ThymeleafAutoConfiguration.java:108][main] - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-08-23 10:14:12.463 INFO  --- [StartupInfoLogger.java:59][main] - Started SpringbootTemplateApplication in 3.256 seconds (JVM running for 5.474)
+2019-08-23 11:39:47.213 INFO  --- [StartupInfoLogger.java:50][main] - Starting SpringbootTemplateApplication on teendadeMBP with PID 10633 (/Users/teenyda/project/ideaProject/SpringbootTemplate/target/classes started by teenyda in /Users/teenyda/project/ideaProject/SpringbootTemplate)
+2019-08-23 11:39:47.217 INFO  --- [SpringApplication.java:679][main] - The following profiles are active: dev
+2019-08-23 11:39:49.192 WARN  --- [ThymeleafAutoConfiguration.java:108][main] - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-08-23 11:39:49.308 INFO  --- [StartupInfoLogger.java:59][main] - Started SpringbootTemplateApplication in 2.722 seconds (JVM running for 3.595)
