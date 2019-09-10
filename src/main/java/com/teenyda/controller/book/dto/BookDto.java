@@ -1,4 +1,4 @@
-package com.teenyda.vo;
+package com.teenyda.controller.book.dto;
 
 /**
  * @program: springboottemplate
@@ -6,7 +6,7 @@ package com.teenyda.vo;
  * @create: 2019-07-07 22:25
  * @description:
  **/
-public class BookVo {
+public class BookDto {
     String bookName;
 
     public String getBookName() {

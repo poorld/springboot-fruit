@@ -38,7 +38,6 @@ public class FileService {
     public FileService(FileProperties fileProperties) throws GlobalErrorInfoException {
         this.fileStorageLocation = Paths.get(fileProperties.getUploadDir())
                                     .toAbsolutePath().normalize();
-
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (IOException e) {

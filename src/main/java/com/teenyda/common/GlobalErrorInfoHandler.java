@@ -32,4 +32,11 @@ public class GlobalErrorInfoHandler {
         ResultBody error = ResultUtil.error(GlobalErrorInfoEnum.ERROR, e.getMessage());
         return error;
     }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResultBody otherErrorInfoHandler(Exception e) {
+        LOGGER.error(e.getMessage());
+        ResultBody error = ResultUtil.error(GlobalErrorInfoEnum.ERROR, e.getMessage());
+        return error;
+    }
 }

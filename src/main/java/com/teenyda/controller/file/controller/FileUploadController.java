@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @description: 文件上传
  **/
 
-@RestController()
+@RestController
 @RequestMapping("/file")
 public class FileUploadController {
 
@@ -49,10 +49,8 @@ public class FileUploadController {
     }
 
     @PostMapping("/multipleFiles")
-    public ResultBody<FileUploadResponse> uploadMultipleFiles(@RequestParam("file") MultipartFile[] files) {
-        return Arrays.stream(files)
-                .map(this::uploadFile)
-                .collect(Collectors.toList());
+    public ResultBody<FileUploadResponse> uploadMultipleFiles(@RequestParam("file") MultipartFile[] files)  {
+        return null;
     }
 
 }
