@@ -1,4 +1,0 @@
-2019-01-02 13:24:33.095 DEBUG --- [ResourceBundleMessageInterpolator.java:89][background-preinit] - Loaded expression factory via original TCCL
-2019-01-02 13:24:33.185 INFO  --- [StartupInfoLogger.java:50][main] - Starting SpringbootTemplateApplication on PC-20171019BQNQ with PID 9840 (E:\Code\idea\SpringbootTemplate\target\classes started by Administrator in E:\Code\idea\SpringbootTemplate)
-2019-01-02 13:24:33.186 INFO  --- [SpringApplication.java:679][main] - The following profiles are active: dev
-2019-01-02 13:24:34.725 INFO  --- [StartupInfoLogger.java:59][main] - Started SpringbootTemplateApplication in 2.141 seconds (JVM running for 3.215)

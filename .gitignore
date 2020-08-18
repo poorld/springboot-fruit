@@ -9,13 +9,13 @@
 .settings
 .springBeans
 .sts4-cache
-.gitkeep
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+.gitkeep
 
 ### NetBeans ###
 /nbproject/private/
