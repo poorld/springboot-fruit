@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.teenyda.mapper.VideoMapper" >
+  <resultMap id="BaseResultMap" type="com.teenyda.model.Video" >
+    <id column="video_id" property="videoId" jdbcType="VARCHAR" />
+    <result column="auth_id" property="authId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="abstract" property="abstract" jdbcType="VARCHAR" />
+    <result column="has_video" property="hasVideo" jdbcType="BIT" />
+    <result column="article_url" property="articleUrl" jdbcType="VARCHAR" />
+    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="item_id" property="itemId" jdbcType="VARCHAR" />
+    <result column="detail_video_large_image" property="detailVideoLargeImage" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    video_id, auth_id, title, abstract, has_video, article_url, publish_time, item_id, 
+    detail_video_large_image
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teenyda.model.VideoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from video
+    where video_id = #{videoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from video
+    where video_id = #{videoId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.teenyda.model.VideoExample" >
+    delete from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.teenyda.model.Video" >
+    insert into video (video_id, auth_id, title, 
+      abstract, has_video, article_url, 
+      publish_time, item_id, detail_video_large_image
+      )
+    values (#{videoId,jdbcType=VARCHAR}, #{authId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{abstract,jdbcType=VARCHAR}, #{hasVideo,jdbcType=BIT}, #{articleUrl,jdbcType=VARCHAR}, 
+      #{publishTime,jdbcType=TIMESTAMP}, #{itemId,jdbcType=VARCHAR}, #{detailVideoLargeImage,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.teenyda.model.Video" >
+    insert into video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="videoId != null" >
+        video_id,
+      </if>
+      <if test="authId != null" >
+        auth_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="abstract != null" >
+        abstract,
+      </if>
+      <if test="hasVideo != null" >
+        has_video,
+      </if>
+      <if test="articleUrl != null" >
+        article_url,
+      </if>
+      <if test="publishTime != null" >
+        publish_time,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="detailVideoLargeImage != null" >
+        detail_video_large_image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="videoId != null" >
+        #{videoId,jdbcType=VARCHAR},
+      </if>
+      <if test="authId != null" >
+        #{authId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="abstract != null" >
+        #{abstract,jdbcType=VARCHAR},
+      </if>
+      <if test="hasVideo != null" >
+        #{hasVideo,jdbcType=BIT},
+      </if>
+      <if test="articleUrl != null" >
+        #{articleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="detailVideoLargeImage != null" >
+        #{detailVideoLargeImage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update video
+    <set >
+      <if test="record.videoId != null" >
+        video_id = #{record.videoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authId != null" >
+        auth_id = #{record.authId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.abstract != null" >
+        abstract = #{record.abstract,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hasVideo != null" >
+        has_video = #{record.hasVideo,jdbcType=BIT},
+      </if>
+      <if test="record.articleUrl != null" >
+        article_url = #{record.articleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishTime != null" >
+        publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemId != null" >
+        item_id = #{record.itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailVideoLargeImage != null" >
+        detail_video_large_image = #{record.detailVideoLargeImage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update video
+    set video_id = #{record.videoId,jdbcType=VARCHAR},
+      auth_id = #{record.authId,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      abstract = #{record.abstract,jdbcType=VARCHAR},
+      has_video = #{record.hasVideo,jdbcType=BIT},
+      article_url = #{record.articleUrl,jdbcType=VARCHAR},
+      publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
+      item_id = #{record.itemId,jdbcType=VARCHAR},
+      detail_video_large_image = #{record.detailVideoLargeImage,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.teenyda.model.Video" >
+    update video
+    <set >
+      <if test="authId != null" >
+        auth_id = #{authId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="abstract != null" >
+        abstract = #{abstract,jdbcType=VARCHAR},
+      </if>
+      <if test="hasVideo != null" >
+        has_video = #{hasVideo,jdbcType=BIT},
+      </if>
+      <if test="articleUrl != null" >
+        article_url = #{articleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="detailVideoLargeImage != null" >
+        detail_video_large_image = #{detailVideoLargeImage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where video_id = #{videoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.teenyda.model.Video" >
+    update video
+    set auth_id = #{authId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      abstract = #{abstract,jdbcType=VARCHAR},
+      has_video = #{hasVideo,jdbcType=BIT},
+      article_url = #{articleUrl,jdbcType=VARCHAR},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      item_id = #{itemId,jdbcType=VARCHAR},
+      detail_video_large_image = #{detailVideoLargeImage,jdbcType=VARCHAR}
+    where video_id = #{videoId,jdbcType=VARCHAR}
+  </update>
+</mapper>

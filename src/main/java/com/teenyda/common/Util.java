@@ -3,6 +3,8 @@ package com.teenyda.common;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileNotFoundException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @Author Administrator
@@ -15,6 +17,15 @@ public class Util {
         try {
             return ResourceUtils.getURL("classpath:").getPath();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static String lunchAddress() {
+        try {
+            String host = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         return "";

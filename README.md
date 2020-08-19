@@ -59,6 +59,7 @@ GET https//domain.com/api/{模块名}/{?菜单名}/{接口名}/:param
 |success|其它状态码(1xx、2xx、3xx)|
 
 参考
+```
 ├── pom.xml
 └── src
     └── main
@@ -78,3 +79,10 @@ GET https//domain.com/api/{模块名}/{?菜单名}/{接口名}/:param
                         └── web
                             ├── City.java
                             └── ErrorJsonController.java
+```
+
+
+## 解决application.yml不生效问题
+- 右键点击resources文件夹
+- Mark Directory as 
+- Sources Root
