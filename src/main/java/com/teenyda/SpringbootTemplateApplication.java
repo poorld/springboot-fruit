@@ -18,6 +18,7 @@ public class SpringbootTemplateApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootTemplateApplication.class, args);
 		System.out.println(Util.resourcePath());
+		System.out.println(Util.lunchAddress());
 	}
 }
 
