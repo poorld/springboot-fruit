@@ -7,24 +7,21 @@ package com.teenyda.common;
  */
 public class ResultUtil {
 
-    public static ResultBody success(ErrorInfoInterface errorInfo) {
+    public static <T>  ResultBody<T> success(ResponseInfoInterface errorInfo) {
         return success(errorInfo, null);
     }
 
-    public static<T> ResultBody success(ErrorInfoInterface errorInfo,T data) {
-        ResultBody resultBody = new ResultBody(errorInfo,data);
-        return resultBody;
+    public static <T> ResultBody<T> success(ResponseInfoInterface errorInfo, T data) {
+        return new ResultBody<>(errorInfo,data);
     }
 
-    public static ResultBody error(ErrorInfoInterface errorInfo){
-        ResultBody resultBody = new ResultBody(errorInfo);
-        return resultBody;
+    public static <T> ResultBody<T> error(ResponseInfoInterface errorInfo){
+        return new ResultBody<>(errorInfo);
     }
 
-    public static ResultBody error(ErrorInfoInterface errorInfo, String explain){
+    public static <T> ResultBody<T> error(ResponseInfoInterface errorInfo, String explain){
         errorInfo.setExplain(explain);
-        ResultBody resultBody = new ResultBody(errorInfo);
-        return resultBody;
+        return new ResultBody<>(errorInfo);
     }
 
 }

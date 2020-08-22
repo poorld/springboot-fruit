@@ -1,8 +1,8 @@
 package com.teenyda.constant;
 
-import com.teenyda.common.ErrorInfoInterface;
+import com.teenyda.common.ResponseInfoInterface;
 
-public enum BookErrorInfoEnum implements ErrorInfoInterface {
+public enum BookResponseInfoEnum implements ResponseInfoInterface {
 
     ERROR_PARAM(40001, "参数错误");
 
@@ -10,7 +10,7 @@ public enum BookErrorInfoEnum implements ErrorInfoInterface {
 
     private String message;
 
-    BookErrorInfoEnum(int code, String message) {
+    BookResponseInfoEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }

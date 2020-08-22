@@ -5,7 +5,7 @@ package com.teenyda.common;
  * @Date 2019-01-06.
  * @Email teenyda@gmail.com
  */
-public interface ErrorInfoInterface {
+public interface ResponseInfoInterface {
 
     /**
      * 状态码

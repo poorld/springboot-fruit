@@ -82,7 +82,33 @@ GET https//domain.com/api/{模块名}/{?菜单名}/{接口名}/:param
 ```
 
 
-## 解决application.yml不生效问题
+### 解决application.yml不生效问题
 - 右键点击resources文件夹
 - Mark Directory as 
 - Sources Root
+
+### 工具类static成员使用@Value获取不到值
+- 添加一个set方法，并使用@Value注解
+```java
+private static String port;
+@Value("${server.port}")
+public void setPort(String port){
+    this.port = port;
+}
+```
+
+### 开启请求-响应json驼峰转换
+```yaml
+  spring:
+    jackson:
+        # 请求响应的驼峰转换
+        # response bookName -> book_name
+        # request book_name -> bookName
+        property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+```
+> 注意：使用驼峰转换后就不能用驼峰式提交表单，否则获取不到数据
+>
+> book_name √
+>
+> bookName ×
+

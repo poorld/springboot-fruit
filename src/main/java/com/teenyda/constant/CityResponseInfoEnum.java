@@ -1,13 +1,13 @@
 package com.teenyda.constant;
 
-import com.teenyda.common.ErrorInfoInterface;
+import com.teenyda.common.ResponseInfoInterface;
 
 /**
  * @Author Administrator
  * @Date 2019-01-06.
  * @Email teenyda@gmail.com
  */
-public enum CityErrorInfoEnum implements ErrorInfoInterface {
+public enum CityResponseInfoEnum implements ResponseInfoInterface {
 
     /**
      * 参数错误
@@ -25,7 +25,7 @@ public enum CityErrorInfoEnum implements ErrorInfoInterface {
 
     private String message;
 
-    CityErrorInfoEnum(int code , String message){
+    CityResponseInfoEnum(int code , String message){
         this.code = code;
         this.message = message;
     }

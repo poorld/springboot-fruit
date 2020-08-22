@@ -8,24 +8,25 @@ package com.teenyda.common;
  */
 public class GlobalErrorInfoException extends Exception {
 
-    private ErrorInfoInterface errorInfo;
+    private ResponseInfoInterface errorInfo;
     private int code;
     private String message;
 
-    public GlobalErrorInfoException(ErrorInfoInterface errorInfo) {
+    public GlobalErrorInfoException(ResponseInfoInterface errorInfo) {
         this.errorInfo = errorInfo;
     }
 
-    public GlobalErrorInfoException(ErrorInfoInterface errorInfo, String explain) {
+    public GlobalErrorInfoException(ResponseInfoInterface errorInfo, String explain) {
         this.errorInfo = errorInfo;
+        // ERROR_FOUND(40006, "文件没有找到 %s"), %s 占位符 explain 额外说明
         this.errorInfo.setExplain(explain);
     }
 
-    public ErrorInfoInterface getErrorInfo() {
+    public ResponseInfoInterface getErrorInfo() {
         return errorInfo;
     }
 
-    public void setErrorInfo(ErrorInfoInterface errorInfo) {
+    public void setErrorInfo(ResponseInfoInterface errorInfo) {
         this.errorInfo = errorInfo;
     }
 

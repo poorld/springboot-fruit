@@ -1,6 +1,6 @@
 package com.teenyda.controller.file.exception;
 
-import com.teenyda.common.ErrorInfoInterface;
+import com.teenyda.common.ResponseInfoInterface;
 
 /**
  * @program: springboottemplate
@@ -8,7 +8,7 @@ import com.teenyda.common.ErrorInfoInterface;
  * @create: 2019-08-24 09:34
  * @description:
  **/
-public enum FileUploadException implements ErrorInfoInterface {
+public enum FileUploadException implements ResponseInfoInterface {
 
     ERROR_PARAM(40001, "参数错误"),
     ERROR_SIZE_EXCEEDED(40002, "文件大小超出"),

@@ -29,14 +29,14 @@ public class GlobalErrorInfoHandler {
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public ResultBody requestMethodNotSupport(HttpServletRequest req,HttpRequestMethodNotSupportedException e) {
         LOGGER.error(e.getMessage());
-        ResultBody error = ResultUtil.error(GlobalErrorInfoEnum.ERROR, e.getMessage());
+        ResultBody error = ResultUtil.error(GlobalResponseInfoEnum.ERROR, e.getMessage());
         return error;
     }
 
     @ExceptionHandler(value = Exception.class)
     public ResultBody otherErrorInfoHandler(Exception e) {
         LOGGER.error(e.getMessage());
-        ResultBody error = ResultUtil.error(GlobalErrorInfoEnum.ERROR, e.getMessage());
+        ResultBody error = ResultUtil.error(GlobalResponseInfoEnum.ERROR, e.getMessage());
         return error;
     }
 }

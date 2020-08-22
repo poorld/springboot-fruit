@@ -6,7 +6,7 @@ package com.teenyda.common;
  * @Date 2019-01-06.
  * @Email teenyda@gmail.com
  */
-public enum GlobalErrorInfoEnum implements ErrorInfoInterface {
+public enum GlobalResponseInfoEnum implements ResponseInfoInterface {
     SUCCESS(200, "success"),
     ERROR(40001, "%s"),
     NOT_FOUND(40002, "service not found");
@@ -17,7 +17,7 @@ public enum GlobalErrorInfoEnum implements ErrorInfoInterface {
 
     private String explain;
 
-    GlobalErrorInfoEnum(int code,String message){
+    GlobalResponseInfoEnum(int code, String message){
         this.code = code;
         this.message = message;
     }

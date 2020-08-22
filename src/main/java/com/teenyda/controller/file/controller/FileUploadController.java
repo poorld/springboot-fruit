@@ -1,6 +1,6 @@
 package com.teenyda.controller.file.controller;
 
-import com.teenyda.common.GlobalErrorInfoEnum;
+import com.teenyda.common.GlobalResponseInfoEnum;
 import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.common.ResultBody;
 import com.teenyda.common.ResultUtil;
@@ -15,10 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @program: springboottemplate
@@ -45,7 +41,7 @@ public class FileUploadController {
                 .toUriString();
 
         FileUploadResponse response = new FileUploadResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
-        return ResultUtil.success(GlobalErrorInfoEnum.SUCCESS, response);
+        return ResultUtil.success(GlobalResponseInfoEnum.SUCCESS, response);
     }
 
     @PostMapping("/multipleFiles")
