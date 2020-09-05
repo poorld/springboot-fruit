@@ -61,13 +61,18 @@ public class BookController extends AbstractApiController {
 
     /**
      * aop测试
+     * 加@RequestBody会获取不到参数，并提示
+     *  I/O error while reading input message; nested exception is java.io.EOFException: Unexpecte
      * @param bookDto
      * @return
      */
     @PutMapping("/book")
-    public ResultBody<BookDto> updateBook(@RequestBody BookDto bookDto) {
-        log.info("BookDto={}", bookDto);
+    public ResultBody<BookDto> updateBook(BookDto bookDto) {
+        // @RequestBody BookDto bookDto
+        // log.info("BookDto={}", bookDto);
         // return getProxyObject().responseSuccessJson(bookDto);
-        return responseSuccessJson(bookDto);
+        // return responseSuccessJson(bookDto);
+        log.info("BookDto");
+        return responseSuccessJson();
     }
 }

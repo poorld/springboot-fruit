@@ -54,11 +54,12 @@ public class ResponseAspect {
 
     @After("printInfo()")
     public void doAfter() {
-        log.info("----------------------------------------");
+        // log.info("----------------------------------------");
     }
 
     @AfterReturning(returning = "object", pointcut = "printInfo()")
     public void doAfterReturning(Object object) {
         log.info("ResultBody={}", (ResultBody)object);
+        log.info("----------------------------------------");
     }
 }
