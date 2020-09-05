@@ -83,6 +83,7 @@ GET https//domain.com/api/{模块名}/{?菜单名}/{接口名}/:param
 
 
 ### 解决application.yml不生效问题
+> Could not resolve placeholder 'server.port' in value "${server.port}"
 - 右键点击resources文件夹
 - Mark Directory as 
 - Sources Root

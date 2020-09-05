@@ -12,7 +12,7 @@
         # 请求响应的驼峰转换
         # response bookName -> book_name
         # request book_name -> bookName
-        property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+        # property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
 
     thymeleaf:
         prefix: classpath:/templates/
