@@ -1,5 +1,6 @@
 package com.teenyda.common;
 
+import com.power.common.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.stereotype.Component;
@@ -56,6 +57,22 @@ public class Util {
 
     public static String lunchAddress() {
         return "http://" + localIP() + ":" + port + contextPath;
+    }
+
+
+    /**
+     * 获取文件后缀
+     */
+    public static String getSuffix(String fileName){
+        return fileName.substring(fileName.lastIndexOf("."),fileName.length());
+    }
+
+    /**
+     * 获取UUID 32
+     * @return
+     */
+    public static String getUUID() {
+        return UUIDUtil.getUuid32();
     }
 
 }

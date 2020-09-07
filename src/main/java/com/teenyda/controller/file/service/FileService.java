@@ -1,6 +1,7 @@
 package com.teenyda.controller.file.service;
 
 import com.teenyda.common.GlobalErrorInfoException;
+import com.teenyda.common.Util;
 import com.teenyda.controller.file.exception.FileUploadException;
 import com.teenyda.controller.file.property.FileProperties;
 import org.slf4j.Logger;
@@ -19,12 +20,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 
 /**
  * @program: springboottemplate
- * @author: Teenyda
+ * @author:
  * @create: 2019-08-24 09:41
  * @description:
+ * 原文
+ * https://www.jianshu.com/p/e25b3c542553
  **/
 @Service
 public class FileService {
@@ -53,11 +57,10 @@ public class FileService {
      * @throws GlobalErrorInfoException
      */
     public String saveToFile(MultipartFile file) throws GlobalErrorInfoException {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        // String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = Util.getUUID() + Util.getSuffix(Objects.requireNonNull(file.getOriginalFilename()));
         try {
-            if (fileName.contains("..")) {
-                throw new GlobalErrorInfoException(FileUploadException.ERROR_PATH, fileName);
-            }
+
 
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
 
@@ -92,4 +95,6 @@ public class FileService {
             throw new GlobalErrorInfoException(FileUploadException.ERROR_FOUND, fileName);
         }
     }
+
+
 }

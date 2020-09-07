@@ -67,7 +67,7 @@ public class BookController extends AbstractApiController {
      * @return
      */
     @PutMapping("/book")
-    public ResultBody<BookDto> updateBook(BookDto bookDto) {
+    public ResultBody<BookDto> updateBook(@RequestBody BookDto bookDto) {
         // @RequestBody BookDto bookDto
         // log.info("BookDto={}", bookDto);
         // return getProxyObject().responseSuccessJson(bookDto);

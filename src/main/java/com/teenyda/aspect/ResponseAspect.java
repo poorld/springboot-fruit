@@ -9,6 +9,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 
 /**
@@ -36,6 +37,15 @@ public class ResponseAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
+
+        log.info("------------------header--------------------");
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String name = headerNames.nextElement();
+            log.info("|" + name + ":" + request.getHeader(name));
+        }
+        log.info("------------------header--------------------");
+
         //url
         log.info("url={}", request.getRequestURL());
 
@@ -60,6 +70,6 @@ public class ResponseAspect {
     @AfterReturning(returning = "object", pointcut = "printInfo()")
     public void doAfterReturning(Object object) {
         log.info("ResultBody={}", (ResultBody)object);
-        log.info("----------------------------------------");
+        log.info("----------------------------------------\n\n");
     }
 }
