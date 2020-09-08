@@ -73,7 +73,7 @@ public class FileService {
             return fileName;
 
         } catch (IOException e) {
-            throw new GlobalErrorInfoException(FileUploadException.ERROR_SAVE, fileName);
+            throw new GlobalErrorInfoException(FileUploadException.ERROR_SAVE, file.getName());
         }
     }
 

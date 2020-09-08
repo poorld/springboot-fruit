@@ -42,9 +42,9 @@ public class FileUploadController {
     private FileService fileService;
 
     @PostMapping("/upload")
-    public ResultBody<FileUploadResponse> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResultBody<FileUploadResponse> uploadFile(@RequestParam("file") MultipartFile file) throws GlobalErrorInfoException {
 
-        String fileName = null;
+        String fileName = fileService.saveToFile(file);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/file")
                 .path("/downloadFile/")
@@ -56,30 +56,25 @@ public class FileUploadController {
     }
 
     @PostMapping("/multipleFiles")
-    public ResultBody<List<FileUploadResponse>> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+    public ResultBody<List<FileUploadResponse>> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) throws GlobalErrorInfoException {
         /*return Arrays.stream(files)
                 .map(this::uploadFile)
                 .collect(Collectors.toList());*/
         List<FileUploadResponse> list = new ArrayList<>();
 
-        try {
-            String fileName = null;
+        String fileName = null;
 
-            for (MultipartFile file : files) {
-                fileName = fileService.saveToFile(file);
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/file")
-                        .path("/downloadFile/")
-                        .path(fileName)
-                        .toUriString();
-                FileUploadResponse response = new FileUploadResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
-                list.add(response);
-            }
-
-
-        } catch (GlobalErrorInfoException e) {
-            return ResultUtil.error(FileUploadException.ERROR_SAVE, "");
+        for (MultipartFile file : files) {
+            fileName = fileService.saveToFile(file);
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/file")
+                    .path("/downloadFile/")
+                    .path(fileName)
+                    .toUriString();
+            FileUploadResponse response = new FileUploadResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+            list.add(response);
         }
+
 
         return ResultUtil.success(GlobalResponseInfoEnum.SUCCESS, list);
 
