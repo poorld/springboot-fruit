@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.mapper.base.ConsumptionRecordBaseMapper">
+
+
+    <insert id="insertConsumptionRecord"  useGeneratedKeys="true" keyProperty="consumptionId">
+        INSERT INTO `consumption_record`
+        (
+        <trim suffixOverrides=",">
+                    <if test="consumptionId!=null">
+                        `consumption_id`,
+                    </if>
+                    <if test="userId!=null">
+                        `user_id`,
+                    </if>
+                    <if test="consumption!=null">
+                        `consumption`,
+                    </if>
+                    <if test="source!=null">
+                        `source`,
+                    </if>
+                    <if test="createTime!=null">
+                        `create_time`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="consumptionId!=null">
+                    #{consumptionId},
+                </if>
+                <if test="userId!=null">
+                    #{userId},
+                </if>
+                <if test="consumption!=null">
+                    #{consumption},
+                </if>
+                <if test="source!=null">
+                    #{source},
+                </if>
+                <if test="createTime!=null">
+                    #{createTime},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateConsumptionRecord">
+        UPDATE `consumption_record`
+        SET
+        <trim suffixOverrides=",">
+            <if test="userId != null">
+                `user_id` = #{userId},
+            </if>
+            <if test="consumption != null">
+                `consumption` = #{consumption},
+            </if>
+            <if test="source != null and source!=''">
+                `source` = #{source},
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `consumption_id` = #{consumptionId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `consumption_record`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.userId != null">
+            `user_id` = #{set.userId},
+        </if>
+        <if test="set.consumption != null">
+            `consumption` = #{set.consumption},
+        </if>
+        <if test="set.source != null and set.source!=''">
+            `source` = #{set.source},
+        </if>
+        <if test="set.createTime != null">
+            `create_time` = #{set.createTime},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.consumptionIdList != null">
+                    `consumption_id` in
+                    <foreach collection="where.consumptionIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.consumptionIdSt !=null">
+                `consumption_id` >= #{where.consumptionIdSt} and
+            </if>
+            <if test="where.consumptionIdEd!=null">
+                `consumption_id` &lt;= #{where.consumptionIdEd} and
+            </if>
+                <if test="where.userIdList != null">
+                    `user_id` in
+                    <foreach collection="where.userIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.userIdSt !=null">
+                `user_id` >= #{where.userIdSt} and
+            </if>
+            <if test="where.userIdEd!=null">
+                `user_id` &lt;= #{where.userIdEd} and
+            </if>
+                <if test="where.consumptionList != null">
+                    `consumption` in
+                    <foreach collection="where.consumptionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.consumptionSt !=null">
+                `consumption` >= #{where.consumptionSt} and
+            </if>
+            <if test="where.consumptionEd!=null">
+                `consumption` &lt;= #{where.consumptionEd} and
+            </if>
+                <if test="where.sourceList != null">
+                    `source` in
+                    <foreach collection="where.sourceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzySource!=null and where.fuzzySource.size()>0">
+                (
+                <foreach collection="where.fuzzySource"  separator="or" item="item">
+                    `Source` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzySource!=null and where.rightFuzzySource.size()>0">
+                (
+                <foreach collection="where.rightFuzzySource"  separator="or" item="item">
+                    `Source` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.createTimeList != null">
+                    `create_time` in
+                    <foreach collection="where.createTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.createTimeSt !=null">
+                `create_time` >= #{where.createTimeSt} and
+            </if>
+            <if test="where.createTimeEd!=null">
+                `create_time` &lt;= #{where.createTimeEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.teenyda.dao.ConsumptionRecord" id="ConsumptionRecordMap">
+        <result property="consumptionId" column="consumption_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="consumption" column="consumption"/>
+        <result property="source" column="source"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+
+    <select id="queryConsumptionRecord" resultMap="ConsumptionRecordMap">
+        select
+        <include refid="baseResult"></include>
+        from  `consumption_record`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="consumptionId != null">
+                `consumption_id` = #{consumptionId} and
+            </if>
+            <if test="userId != null">
+                `user_id` = #{userId} and
+            </if>
+            <if test="consumption != null">
+                `consumption` = #{consumption} and
+            </if>
+            <if test="source != null and source!=''">
+                `source` = #{source} and
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.ConsumptionRecord$QueryBuilder) == true">
+                <if test="consumptionIdList != null">
+                    `consumption_id` in
+                    <foreach collection="consumptionIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="consumptionIdSt !=null">
+                    `consumption_id` >= #{consumptionIdSt} and
+                </if>
+                <if test="consumptionIdEd!=null">
+                    `consumption_id` &lt;= #{consumptionIdEd} and
+                </if>
+                <if test="userIdList != null">
+                    `user_id` in
+                    <foreach collection="userIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="userIdSt !=null">
+                    `user_id` >= #{userIdSt} and
+                </if>
+                <if test="userIdEd!=null">
+                    `user_id` &lt;= #{userIdEd} and
+                </if>
+                <if test="consumptionList != null">
+                    `consumption` in
+                    <foreach collection="consumptionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="consumptionSt !=null">
+                    `consumption` >= #{consumptionSt} and
+                </if>
+                <if test="consumptionEd!=null">
+                    `consumption` &lt;= #{consumptionEd} and
+                </if>
+                <if test="sourceList != null">
+                    `source` in
+                    <foreach collection="sourceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySource!=null and fuzzySource.size()>0">
+                    (
+                    <foreach collection="fuzzySource"  separator="or" item="item">
+                        `Source` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySource!=null and rightFuzzySource.size()>0">
+                    (
+                    <foreach collection="rightFuzzySource"  separator="or" item="item">
+                        `Source` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="createTimeList != null">
+                    `create_time` in
+                    <foreach collection="createTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="createTimeSt !=null">
+                    `create_time` >= #{createTimeSt} and
+                </if>
+                <if test="createTimeEd!=null">
+                    `create_time` &lt;= #{createTimeEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryConsumptionRecordLimit1" resultMap="ConsumptionRecordMap">
+        select
+        <include refid="baseResult"></include>
+        from  `consumption_record`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="consumptionId != null">
+                `consumption_id` = #{consumptionId} and
+            </if>
+            <if test="userId != null">
+                `user_id` = #{userId} and
+            </if>
+            <if test="consumption != null">
+                `consumption` = #{consumption} and
+            </if>
+            <if test="source != null and source!=''">
+                `source` = #{source} and
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.ConsumptionRecord$QueryBuilder) == true">
+                    <if test="consumptionIdList != null">
+                        `consumption_id` in
+                        <foreach collection="consumptionIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="consumptionIdSt !=null">
+                    `consumption_id` >= #{consumptionIdSt} and
+                </if>
+                <if test="consumptionIdEd!=null">
+                    `consumption_id` &lt;= #{consumptionIdEd} and
+                </if>
+                    <if test="userIdList != null">
+                        `user_id` in
+                        <foreach collection="userIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="userIdSt !=null">
+                    `user_id` >= #{userIdSt} and
+                </if>
+                <if test="userIdEd!=null">
+                    `user_id` &lt;= #{userIdEd} and
+                </if>
+                    <if test="consumptionList != null">
+                        `consumption` in
+                        <foreach collection="consumptionList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="consumptionSt !=null">
+                    `consumption` >= #{consumptionSt} and
+                </if>
+                <if test="consumptionEd!=null">
+                    `consumption` &lt;= #{consumptionEd} and
+                </if>
+                    <if test="sourceList != null">
+                        `source` in
+                        <foreach collection="sourceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzySource!=null and fuzzySource.size()>0">
+                    (
+                    <foreach collection="fuzzySource"  separator="or" item="item">
+                        `Source` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySource!=null and rightFuzzySource.size()>0">
+                    (
+                    <foreach collection="rightFuzzySource"  separator="or" item="item">
+                        `Source` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="createTimeList != null">
+                        `create_time` in
+                        <foreach collection="createTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="createTimeSt !=null">
+                    `create_time` >= #{createTimeSt} and
+                </if>
+                <if test="createTimeEd!=null">
+                    `create_time` &lt;= #{createTimeEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `consumption_id`,
+        `user_id`,
+        `consumption`,
+        `source`,
+        `create_time`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.teenyda.dao.ConsumptionRecord$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.consumptionId==true">
+                        `consumption_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.userId==true">
+                        `user_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.consumption==true">
+                        `consumption`,
+                    </if>
+                    <if test="fetchFields.fetchFields.source==true">
+                        `source`,
+                    </if>
+                    <if test="fetchFields.fetchFields.createTime==true">
+                        `create_time`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.consumptionId==null">
+                        `consumption_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.userId==null">
+                        `user_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.consumption==null">
+                        `consumption`,
+                    </if>
+                    <if test="fetchFields.excludeFields.source==null">
+                        `source`,
+                    </if>
+                    <if test="fetchFields.excludeFields.createTime==null">
+                        `create_time`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.teenyda.dao.ConsumptionRecord$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

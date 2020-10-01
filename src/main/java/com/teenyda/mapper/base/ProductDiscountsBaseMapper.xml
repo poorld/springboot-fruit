@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.mapper.base.ProductDiscountsBaseMapper">
+
+
+    <insert id="insertProductDiscounts" >
+        INSERT INTO `product_discounts`
+        (
+        <trim suffixOverrides=",">
+                    <if test="productId!=null">
+                        `product_id`,
+                    </if>
+                    <if test="discountsId!=null">
+                        `discounts_id`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="productId!=null">
+                    #{productId},
+                </if>
+                <if test="discountsId!=null">
+                    #{discountsId},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateProductDiscounts">
+        UPDATE `product_discounts`
+        SET
+        <trim suffixOverrides=",">
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `product_id` = #{productId} and
+                `discounts_id` = #{discountsId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `product_discounts`
+        SET
+        <trim suffixOverrides=",">
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.productIdList != null">
+                    `product_id` in
+                    <foreach collection="where.productIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.productIdSt !=null">
+                `product_id` >= #{where.productIdSt} and
+            </if>
+            <if test="where.productIdEd!=null">
+                `product_id` &lt;= #{where.productIdEd} and
+            </if>
+                <if test="where.discountsIdList != null">
+                    `discounts_id` in
+                    <foreach collection="where.discountsIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.discountsIdSt !=null">
+                `discounts_id` >= #{where.discountsIdSt} and
+            </if>
+            <if test="where.discountsIdEd!=null">
+                `discounts_id` &lt;= #{where.discountsIdEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.teenyda.dao.ProductDiscounts" id="ProductDiscountsMap">
+        <result property="productId" column="product_id"/>
+        <result property="discountsId" column="discounts_id"/>
+    </resultMap>
+
+
+    <select id="queryProductDiscounts" resultMap="ProductDiscountsMap">
+        select
+        <include refid="baseResult"></include>
+        from  `product_discounts`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="productId != null">
+                `product_id` = #{productId} and
+            </if>
+            <if test="discountsId != null">
+                `discounts_id` = #{discountsId} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.ProductDiscounts$QueryBuilder) == true">
+                <if test="productIdList != null">
+                    `product_id` in
+                    <foreach collection="productIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="productIdSt !=null">
+                    `product_id` >= #{productIdSt} and
+                </if>
+                <if test="productIdEd!=null">
+                    `product_id` &lt;= #{productIdEd} and
+                </if>
+                <if test="discountsIdList != null">
+                    `discounts_id` in
+                    <foreach collection="discountsIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="discountsIdSt !=null">
+                    `discounts_id` >= #{discountsIdSt} and
+                </if>
+                <if test="discountsIdEd!=null">
+                    `discounts_id` &lt;= #{discountsIdEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryProductDiscountsLimit1" resultMap="ProductDiscountsMap">
+        select
+        <include refid="baseResult"></include>
+        from  `product_discounts`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="productId != null">
+                `product_id` = #{productId} and
+            </if>
+            <if test="discountsId != null">
+                `discounts_id` = #{discountsId} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.ProductDiscounts$QueryBuilder) == true">
+                    <if test="productIdList != null">
+                        `product_id` in
+                        <foreach collection="productIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="productIdSt !=null">
+                    `product_id` >= #{productIdSt} and
+                </if>
+                <if test="productIdEd!=null">
+                    `product_id` &lt;= #{productIdEd} and
+                </if>
+                    <if test="discountsIdList != null">
+                        `discounts_id` in
+                        <foreach collection="discountsIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="discountsIdSt !=null">
+                    `discounts_id` >= #{discountsIdSt} and
+                </if>
+                <if test="discountsIdEd!=null">
+                    `discounts_id` &lt;= #{discountsIdEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `product_id`,
+        `discounts_id`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.teenyda.dao.ProductDiscounts$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.productId==true">
+                        `product_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.discountsId==true">
+                        `discounts_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.productId==null">
+                        `product_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.discountsId==null">
+                        `discounts_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.teenyda.dao.ProductDiscounts$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

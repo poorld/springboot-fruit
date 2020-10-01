@@ -18,7 +18,7 @@ import java.util.List;
  **/
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/fruit")
 @Slf4j
 public class BookController extends AbstractApiController {
 

@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.mapper.base.BannerBaseMapper">
+
+
+    <insert id="insertBanner" >
+        INSERT INTO `banner`
+        (
+        <trim suffixOverrides=",">
+                    <if test="bannerId!=null">
+                        `banner_id`,
+                    </if>
+                    <if test="productId!=null">
+                        `product_id`,
+                    </if>
+                    <if test="image!=null">
+                        `image`,
+                    </if>
+                    <if test="desc!=null">
+                        `desc`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="bannerId!=null">
+                    #{bannerId},
+                </if>
+                <if test="productId!=null">
+                    #{productId},
+                </if>
+                <if test="image!=null">
+                    #{image},
+                </if>
+                <if test="desc!=null">
+                    #{desc},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateBanner">
+        UPDATE `banner`
+        SET
+        <trim suffixOverrides=",">
+            <if test="image != null and image!=''">
+                `image` = #{image},
+            </if>
+            <if test="desc != null and desc!=''">
+                `desc` = #{desc},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `banner_id` = #{bannerId} and
+                `product_id` = #{productId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `banner`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.image != null and set.image!=''">
+            `image` = #{set.image},
+        </if>
+        <if test="set.desc != null and set.desc!=''">
+            `desc` = #{set.desc},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.bannerIdList != null">
+                    `banner_id` in
+                    <foreach collection="where.bannerIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.bannerIdSt !=null">
+                `banner_id` >= #{where.bannerIdSt} and
+            </if>
+            <if test="where.bannerIdEd!=null">
+                `banner_id` &lt;= #{where.bannerIdEd} and
+            </if>
+                <if test="where.productIdList != null">
+                    `product_id` in
+                    <foreach collection="where.productIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.productIdSt !=null">
+                `product_id` >= #{where.productIdSt} and
+            </if>
+            <if test="where.productIdEd!=null">
+                `product_id` &lt;= #{where.productIdEd} and
+            </if>
+                <if test="where.imageList != null">
+                    `image` in
+                    <foreach collection="where.imageList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyImage!=null and where.fuzzyImage.size()>0">
+                (
+                <foreach collection="where.fuzzyImage"  separator="or" item="item">
+                    `Image` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyImage!=null and where.rightFuzzyImage.size()>0">
+                (
+                <foreach collection="where.rightFuzzyImage"  separator="or" item="item">
+                    `Image` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.descList != null">
+                    `desc` in
+                    <foreach collection="where.descList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDesc!=null and where.fuzzyDesc.size()>0">
+                (
+                <foreach collection="where.fuzzyDesc"  separator="or" item="item">
+                    `Desc` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDesc!=null and where.rightFuzzyDesc.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDesc"  separator="or" item="item">
+                    `Desc` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.teenyda.dao.Banner" id="BannerMap">
+        <result property="bannerId" column="banner_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="image" column="image"/>
+        <result property="desc" column="desc"/>
+    </resultMap>
+
+
+    <select id="queryBanner" resultMap="BannerMap">
+        select
+        <include refid="baseResult"></include>
+        from  `banner`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="bannerId != null">
+                `banner_id` = #{bannerId} and
+            </if>
+            <if test="productId != null">
+                `product_id` = #{productId} and
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image} and
+            </if>
+            <if test="desc != null and desc!=''">
+                `desc` = #{desc} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.Banner$QueryBuilder) == true">
+                <if test="bannerIdList != null">
+                    `banner_id` in
+                    <foreach collection="bannerIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="bannerIdSt !=null">
+                    `banner_id` >= #{bannerIdSt} and
+                </if>
+                <if test="bannerIdEd!=null">
+                    `banner_id` &lt;= #{bannerIdEd} and
+                </if>
+                <if test="productIdList != null">
+                    `product_id` in
+                    <foreach collection="productIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="productIdSt !=null">
+                    `product_id` >= #{productIdSt} and
+                </if>
+                <if test="productIdEd!=null">
+                    `product_id` &lt;= #{productIdEd} and
+                </if>
+                <if test="imageList != null">
+                    `image` in
+                    <foreach collection="imageList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyImage!=null and fuzzyImage.size()>0">
+                    (
+                    <foreach collection="fuzzyImage"  separator="or" item="item">
+                        `Image` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImage!=null and rightFuzzyImage.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImage"  separator="or" item="item">
+                        `Image` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="descList != null">
+                    `desc` in
+                    <foreach collection="descList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDesc!=null and fuzzyDesc.size()>0">
+                    (
+                    <foreach collection="fuzzyDesc"  separator="or" item="item">
+                        `Desc` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDesc!=null and rightFuzzyDesc.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDesc"  separator="or" item="item">
+                        `Desc` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryBannerLimit1" resultMap="BannerMap">
+        select
+        <include refid="baseResult"></include>
+        from  `banner`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="bannerId != null">
+                `banner_id` = #{bannerId} and
+            </if>
+            <if test="productId != null">
+                `product_id` = #{productId} and
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image} and
+            </if>
+            <if test="desc != null and desc!=''">
+                `desc` = #{desc} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.Banner$QueryBuilder) == true">
+                    <if test="bannerIdList != null">
+                        `banner_id` in
+                        <foreach collection="bannerIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="bannerIdSt !=null">
+                    `banner_id` >= #{bannerIdSt} and
+                </if>
+                <if test="bannerIdEd!=null">
+                    `banner_id` &lt;= #{bannerIdEd} and
+                </if>
+                    <if test="productIdList != null">
+                        `product_id` in
+                        <foreach collection="productIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="productIdSt !=null">
+                    `product_id` >= #{productIdSt} and
+                </if>
+                <if test="productIdEd!=null">
+                    `product_id` &lt;= #{productIdEd} and
+                </if>
+                    <if test="imageList != null">
+                        `image` in
+                        <foreach collection="imageList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyImage!=null and fuzzyImage.size()>0">
+                    (
+                    <foreach collection="fuzzyImage"  separator="or" item="item">
+                        `Image` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImage!=null and rightFuzzyImage.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImage"  separator="or" item="item">
+                        `Image` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="descList != null">
+                        `desc` in
+                        <foreach collection="descList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDesc!=null and fuzzyDesc.size()>0">
+                    (
+                    <foreach collection="fuzzyDesc"  separator="or" item="item">
+                        `Desc` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDesc!=null and rightFuzzyDesc.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDesc"  separator="or" item="item">
+                        `Desc` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `banner_id`,
+        `product_id`,
+        `image`,
+        `desc`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.teenyda.dao.Banner$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.bannerId==true">
+                        `banner_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.productId==true">
+                        `product_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.image==true">
+                        `image`,
+                    </if>
+                    <if test="fetchFields.fetchFields.desc==true">
+                        `desc`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.bannerId==null">
+                        `banner_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.productId==null">
+                        `product_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.image==null">
+                        `image`,
+                    </if>
+                    <if test="fetchFields.excludeFields.desc==null">
+                        `desc`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.teenyda.dao.Banner$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

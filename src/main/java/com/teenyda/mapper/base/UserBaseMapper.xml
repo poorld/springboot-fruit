@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.mapper.base.UserBaseMapper">
+
+
+    <insert id="insertUser"  useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO `user`
+        (
+        <trim suffixOverrides=",">
+                    <if test="userId!=null">
+                        `user_id`,
+                    </if>
+                    <if test="username!=null">
+                        `username`,
+                    </if>
+                    <if test="password!=null">
+                        `password`,
+                    </if>
+                    <if test="nickname!=null">
+                        `nickname`,
+                    </if>
+                    <if test="email!=null">
+                        `email`,
+                    </if>
+                    <if test="image!=null">
+                        `image`,
+                    </if>
+                    <if test="QQ!=null">
+                        `QQ`,
+                    </if>
+                    <if test="mobile!=null">
+                        `mobile`,
+                    </if>
+                    <if test="lastLoginTime!=null">
+                        `last_login_time`,
+                    </if>
+                    <if test="registerTime!=null">
+                        `register_time`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="userId!=null">
+                    #{userId},
+                </if>
+                <if test="username!=null">
+                    #{username},
+                </if>
+                <if test="password!=null">
+                    #{password},
+                </if>
+                <if test="nickname!=null">
+                    #{nickname},
+                </if>
+                <if test="email!=null">
+                    #{email},
+                </if>
+                <if test="image!=null">
+                    #{image},
+                </if>
+                <if test="QQ!=null">
+                    #{QQ},
+                </if>
+                <if test="mobile!=null">
+                    #{mobile},
+                </if>
+                <if test="lastLoginTime!=null">
+                    #{lastLoginTime},
+                </if>
+                <if test="registerTime!=null">
+                    #{registerTime},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateUser">
+        UPDATE `user`
+        SET
+        <trim suffixOverrides=",">
+            <if test="username != null and username!=''">
+                `username` = #{username},
+            </if>
+            <if test="password != null and password!=''">
+                `password` = #{password},
+            </if>
+            <if test="nickname != null and nickname!=''">
+                `nickname` = #{nickname},
+            </if>
+            <if test="email != null and email!=''">
+                `email` = #{email},
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image},
+            </if>
+            <if test="QQ != null and QQ!=''">
+                `QQ` = #{QQ},
+            </if>
+            <if test="mobile != null and mobile!=''">
+                `mobile` = #{mobile},
+            </if>
+            <if test="lastLoginTime != null">
+                `last_login_time` = #{lastLoginTime},
+            </if>
+            <if test="registerTime != null">
+                `register_time` = #{registerTime},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `user_id` = #{userId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `user`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.username != null and set.username!=''">
+            `username` = #{set.username},
+        </if>
+        <if test="set.password != null and set.password!=''">
+            `password` = #{set.password},
+        </if>
+        <if test="set.nickname != null and set.nickname!=''">
+            `nickname` = #{set.nickname},
+        </if>
+        <if test="set.email != null and set.email!=''">
+            `email` = #{set.email},
+        </if>
+        <if test="set.image != null and set.image!=''">
+            `image` = #{set.image},
+        </if>
+        <if test="set.QQ != null and set.QQ!=''">
+            `QQ` = #{set.QQ},
+        </if>
+        <if test="set.mobile != null and set.mobile!=''">
+            `mobile` = #{set.mobile},
+        </if>
+        <if test="set.lastLoginTime != null">
+            `last_login_time` = #{set.lastLoginTime},
+        </if>
+        <if test="set.registerTime != null">
+            `register_time` = #{set.registerTime},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.userIdList != null">
+                    `user_id` in
+                    <foreach collection="where.userIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.userIdSt !=null">
+                `user_id` >= #{where.userIdSt} and
+            </if>
+            <if test="where.userIdEd!=null">
+                `user_id` &lt;= #{where.userIdEd} and
+            </if>
+                <if test="where.usernameList != null">
+                    `username` in
+                    <foreach collection="where.usernameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyUsername!=null and where.fuzzyUsername.size()>0">
+                (
+                <foreach collection="where.fuzzyUsername"  separator="or" item="item">
+                    `Username` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyUsername!=null and where.rightFuzzyUsername.size()>0">
+                (
+                <foreach collection="where.rightFuzzyUsername"  separator="or" item="item">
+                    `Username` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.passwordList != null">
+                    `password` in
+                    <foreach collection="where.passwordList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyPassword!=null and where.fuzzyPassword.size()>0">
+                (
+                <foreach collection="where.fuzzyPassword"  separator="or" item="item">
+                    `Password` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyPassword!=null and where.rightFuzzyPassword.size()>0">
+                (
+                <foreach collection="where.rightFuzzyPassword"  separator="or" item="item">
+                    `Password` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.nicknameList != null">
+                    `nickname` in
+                    <foreach collection="where.nicknameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyNickname!=null and where.fuzzyNickname.size()>0">
+                (
+                <foreach collection="where.fuzzyNickname"  separator="or" item="item">
+                    `Nickname` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyNickname!=null and where.rightFuzzyNickname.size()>0">
+                (
+                <foreach collection="where.rightFuzzyNickname"  separator="or" item="item">
+                    `Nickname` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.emailList != null">
+                    `email` in
+                    <foreach collection="where.emailList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyEmail!=null and where.fuzzyEmail.size()>0">
+                (
+                <foreach collection="where.fuzzyEmail"  separator="or" item="item">
+                    `Email` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyEmail!=null and where.rightFuzzyEmail.size()>0">
+                (
+                <foreach collection="where.rightFuzzyEmail"  separator="or" item="item">
+                    `Email` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.imageList != null">
+                    `image` in
+                    <foreach collection="where.imageList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyImage!=null and where.fuzzyImage.size()>0">
+                (
+                <foreach collection="where.fuzzyImage"  separator="or" item="item">
+                    `Image` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyImage!=null and where.rightFuzzyImage.size()>0">
+                (
+                <foreach collection="where.rightFuzzyImage"  separator="or" item="item">
+                    `Image` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.QQList != null">
+                    `QQ` in
+                    <foreach collection="where.QQList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyQQ!=null and where.fuzzyQQ.size()>0">
+                (
+                <foreach collection="where.fuzzyQQ"  separator="or" item="item">
+                    `QQ` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyQQ!=null and where.rightFuzzyQQ.size()>0">
+                (
+                <foreach collection="where.rightFuzzyQQ"  separator="or" item="item">
+                    `QQ` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.mobileList != null">
+                    `mobile` in
+                    <foreach collection="where.mobileList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyMobile!=null and where.fuzzyMobile.size()>0">
+                (
+                <foreach collection="where.fuzzyMobile"  separator="or" item="item">
+                    `Mobile` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyMobile!=null and where.rightFuzzyMobile.size()>0">
+                (
+                <foreach collection="where.rightFuzzyMobile"  separator="or" item="item">
+                    `Mobile` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.lastLoginTimeList != null">
+                    `last_login_time` in
+                    <foreach collection="where.lastLoginTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.lastLoginTimeSt !=null">
+                `last_login_time` >= #{where.lastLoginTimeSt} and
+            </if>
+            <if test="where.lastLoginTimeEd!=null">
+                `last_login_time` &lt;= #{where.lastLoginTimeEd} and
+            </if>
+                <if test="where.registerTimeList != null">
+                    `register_time` in
+                    <foreach collection="where.registerTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.registerTimeSt !=null">
+                `register_time` >= #{where.registerTimeSt} and
+            </if>
+            <if test="where.registerTimeEd!=null">
+                `register_time` &lt;= #{where.registerTimeEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.teenyda.dao.User" id="UserMap">
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="image" column="image"/>
+        <result property="QQ" column="QQ"/>
+        <result property="mobile" column="mobile"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+        <result property="registerTime" column="register_time"/>
+    </resultMap>
+
+
+    <select id="queryUser" resultMap="UserMap">
+        select
+        <include refid="baseResult"></include>
+        from  `user`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="userId != null">
+                `user_id` = #{userId} and
+            </if>
+            <if test="username != null and username!=''">
+                `username` = #{username} and
+            </if>
+            <if test="password != null and password!=''">
+                `password` = #{password} and
+            </if>
+            <if test="nickname != null and nickname!=''">
+                `nickname` = #{nickname} and
+            </if>
+            <if test="email != null and email!=''">
+                `email` = #{email} and
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image} and
+            </if>
+            <if test="QQ != null and QQ!=''">
+                `QQ` = #{QQ} and
+            </if>
+            <if test="mobile != null and mobile!=''">
+                `mobile` = #{mobile} and
+            </if>
+            <if test="lastLoginTime != null">
+                `last_login_time` = #{lastLoginTime} and
+            </if>
+            <if test="registerTime != null">
+                `register_time` = #{registerTime} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.User$QueryBuilder) == true">
+                <if test="userIdList != null">
+                    `user_id` in
+                    <foreach collection="userIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="userIdSt !=null">
+                    `user_id` >= #{userIdSt} and
+                </if>
+                <if test="userIdEd!=null">
+                    `user_id` &lt;= #{userIdEd} and
+                </if>
+                <if test="usernameList != null">
+                    `username` in
+                    <foreach collection="usernameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyUsername!=null and fuzzyUsername.size()>0">
+                    (
+                    <foreach collection="fuzzyUsername"  separator="or" item="item">
+                        `Username` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUsername!=null and rightFuzzyUsername.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUsername"  separator="or" item="item">
+                        `Username` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="passwordList != null">
+                    `password` in
+                    <foreach collection="passwordList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPassword!=null and fuzzyPassword.size()>0">
+                    (
+                    <foreach collection="fuzzyPassword"  separator="or" item="item">
+                        `Password` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPassword!=null and rightFuzzyPassword.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPassword"  separator="or" item="item">
+                        `Password` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="nicknameList != null">
+                    `nickname` in
+                    <foreach collection="nicknameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyNickname!=null and fuzzyNickname.size()>0">
+                    (
+                    <foreach collection="fuzzyNickname"  separator="or" item="item">
+                        `Nickname` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyNickname!=null and rightFuzzyNickname.size()>0">
+                    (
+                    <foreach collection="rightFuzzyNickname"  separator="or" item="item">
+                        `Nickname` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="emailList != null">
+                    `email` in
+                    <foreach collection="emailList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyEmail!=null and fuzzyEmail.size()>0">
+                    (
+                    <foreach collection="fuzzyEmail"  separator="or" item="item">
+                        `Email` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEmail!=null and rightFuzzyEmail.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEmail"  separator="or" item="item">
+                        `Email` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="imageList != null">
+                    `image` in
+                    <foreach collection="imageList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyImage!=null and fuzzyImage.size()>0">
+                    (
+                    <foreach collection="fuzzyImage"  separator="or" item="item">
+                        `Image` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImage!=null and rightFuzzyImage.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImage"  separator="or" item="item">
+                        `Image` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="QQList != null">
+                    `QQ` in
+                    <foreach collection="QQList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyQQ!=null and fuzzyQQ.size()>0">
+                    (
+                    <foreach collection="fuzzyQQ"  separator="or" item="item">
+                        `QQ` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyQQ!=null and rightFuzzyQQ.size()>0">
+                    (
+                    <foreach collection="rightFuzzyQQ"  separator="or" item="item">
+                        `QQ` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="mobileList != null">
+                    `mobile` in
+                    <foreach collection="mobileList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMobile!=null and fuzzyMobile.size()>0">
+                    (
+                    <foreach collection="fuzzyMobile"  separator="or" item="item">
+                        `Mobile` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMobile!=null and rightFuzzyMobile.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMobile"  separator="or" item="item">
+                        `Mobile` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="lastLoginTimeList != null">
+                    `last_login_time` in
+                    <foreach collection="lastLoginTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="lastLoginTimeSt !=null">
+                    `last_login_time` >= #{lastLoginTimeSt} and
+                </if>
+                <if test="lastLoginTimeEd!=null">
+                    `last_login_time` &lt;= #{lastLoginTimeEd} and
+                </if>
+                <if test="registerTimeList != null">
+                    `register_time` in
+                    <foreach collection="registerTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="registerTimeSt !=null">
+                    `register_time` >= #{registerTimeSt} and
+                </if>
+                <if test="registerTimeEd!=null">
+                    `register_time` &lt;= #{registerTimeEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryUserLimit1" resultMap="UserMap">
+        select
+        <include refid="baseResult"></include>
+        from  `user`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="userId != null">
+                `user_id` = #{userId} and
+            </if>
+            <if test="username != null and username!=''">
+                `username` = #{username} and
+            </if>
+            <if test="password != null and password!=''">
+                `password` = #{password} and
+            </if>
+            <if test="nickname != null and nickname!=''">
+                `nickname` = #{nickname} and
+            </if>
+            <if test="email != null and email!=''">
+                `email` = #{email} and
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image} and
+            </if>
+            <if test="QQ != null and QQ!=''">
+                `QQ` = #{QQ} and
+            </if>
+            <if test="mobile != null and mobile!=''">
+                `mobile` = #{mobile} and
+            </if>
+            <if test="lastLoginTime != null">
+                `last_login_time` = #{lastLoginTime} and
+            </if>
+            <if test="registerTime != null">
+                `register_time` = #{registerTime} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.User$QueryBuilder) == true">
+                    <if test="userIdList != null">
+                        `user_id` in
+                        <foreach collection="userIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="userIdSt !=null">
+                    `user_id` >= #{userIdSt} and
+                </if>
+                <if test="userIdEd!=null">
+                    `user_id` &lt;= #{userIdEd} and
+                </if>
+                    <if test="usernameList != null">
+                        `username` in
+                        <foreach collection="usernameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyUsername!=null and fuzzyUsername.size()>0">
+                    (
+                    <foreach collection="fuzzyUsername"  separator="or" item="item">
+                        `Username` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUsername!=null and rightFuzzyUsername.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUsername"  separator="or" item="item">
+                        `Username` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="passwordList != null">
+                        `password` in
+                        <foreach collection="passwordList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPassword!=null and fuzzyPassword.size()>0">
+                    (
+                    <foreach collection="fuzzyPassword"  separator="or" item="item">
+                        `Password` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPassword!=null and rightFuzzyPassword.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPassword"  separator="or" item="item">
+                        `Password` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="nicknameList != null">
+                        `nickname` in
+                        <foreach collection="nicknameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyNickname!=null and fuzzyNickname.size()>0">
+                    (
+                    <foreach collection="fuzzyNickname"  separator="or" item="item">
+                        `Nickname` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyNickname!=null and rightFuzzyNickname.size()>0">
+                    (
+                    <foreach collection="rightFuzzyNickname"  separator="or" item="item">
+                        `Nickname` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="emailList != null">
+                        `email` in
+                        <foreach collection="emailList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyEmail!=null and fuzzyEmail.size()>0">
+                    (
+                    <foreach collection="fuzzyEmail"  separator="or" item="item">
+                        `Email` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEmail!=null and rightFuzzyEmail.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEmail"  separator="or" item="item">
+                        `Email` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="imageList != null">
+                        `image` in
+                        <foreach collection="imageList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyImage!=null and fuzzyImage.size()>0">
+                    (
+                    <foreach collection="fuzzyImage"  separator="or" item="item">
+                        `Image` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImage!=null and rightFuzzyImage.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImage"  separator="or" item="item">
+                        `Image` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="QQList != null">
+                        `QQ` in
+                        <foreach collection="QQList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyQQ!=null and fuzzyQQ.size()>0">
+                    (
+                    <foreach collection="fuzzyQQ"  separator="or" item="item">
+                        `QQ` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyQQ!=null and rightFuzzyQQ.size()>0">
+                    (
+                    <foreach collection="rightFuzzyQQ"  separator="or" item="item">
+                        `QQ` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="mobileList != null">
+                        `mobile` in
+                        <foreach collection="mobileList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMobile!=null and fuzzyMobile.size()>0">
+                    (
+                    <foreach collection="fuzzyMobile"  separator="or" item="item">
+                        `Mobile` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMobile!=null and rightFuzzyMobile.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMobile"  separator="or" item="item">
+                        `Mobile` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="lastLoginTimeList != null">
+                        `last_login_time` in
+                        <foreach collection="lastLoginTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="lastLoginTimeSt !=null">
+                    `last_login_time` >= #{lastLoginTimeSt} and
+                </if>
+                <if test="lastLoginTimeEd!=null">
+                    `last_login_time` &lt;= #{lastLoginTimeEd} and
+                </if>
+                    <if test="registerTimeList != null">
+                        `register_time` in
+                        <foreach collection="registerTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="registerTimeSt !=null">
+                    `register_time` >= #{registerTimeSt} and
+                </if>
+                <if test="registerTimeEd!=null">
+                    `register_time` &lt;= #{registerTimeEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `user_id`,
+        `username`,
+        `password`,
+        `nickname`,
+        `email`,
+        `image`,
+        `QQ`,
+        `mobile`,
+        `last_login_time`,
+        `register_time`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.teenyda.dao.User$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.userId==true">
+                        `user_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.username==true">
+                        `username`,
+                    </if>
+                    <if test="fetchFields.fetchFields.password==true">
+                        `password`,
+                    </if>
+                    <if test="fetchFields.fetchFields.nickname==true">
+                        `nickname`,
+                    </if>
+                    <if test="fetchFields.fetchFields.email==true">
+                        `email`,
+                    </if>
+                    <if test="fetchFields.fetchFields.image==true">
+                        `image`,
+                    </if>
+                    <if test="fetchFields.fetchFields.QQ==true">
+                        `QQ`,
+                    </if>
+                    <if test="fetchFields.fetchFields.mobile==true">
+                        `mobile`,
+                    </if>
+                    <if test="fetchFields.fetchFields.lastLoginTime==true">
+                        `last_login_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.registerTime==true">
+                        `register_time`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.userId==null">
+                        `user_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.username==null">
+                        `username`,
+                    </if>
+                    <if test="fetchFields.excludeFields.password==null">
+                        `password`,
+                    </if>
+                    <if test="fetchFields.excludeFields.nickname==null">
+                        `nickname`,
+                    </if>
+                    <if test="fetchFields.excludeFields.email==null">
+                        `email`,
+                    </if>
+                    <if test="fetchFields.excludeFields.image==null">
+                        `image`,
+                    </if>
+                    <if test="fetchFields.excludeFields.QQ==null">
+                        `QQ`,
+                    </if>
+                    <if test="fetchFields.excludeFields.mobile==null">
+                        `mobile`,
+                    </if>
+                    <if test="fetchFields.excludeFields.lastLoginTime==null">
+                        `last_login_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.registerTime==null">
+                        `register_time`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.teenyda.dao.User$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

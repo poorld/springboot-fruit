@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.mapper.base.ProductBaseMapper">
+
+
+    <insert id="insertProduct"  useGeneratedKeys="true" keyProperty="productId">
+        INSERT INTO `product`
+        (
+        <trim suffixOverrides=",">
+                    <if test="productId!=null">
+                        `product_id`,
+                    </if>
+                    <if test="productCategoryId!=null">
+                        `product_category_id`,
+                    </if>
+                    <if test="name!=null">
+                        `name`,
+                    </if>
+                    <if test="explain!=null">
+                        `explain`,
+                    </if>
+                    <if test="shopPrice!=null">
+                        `shop_price`,
+                    </if>
+                    <if test="price!=null">
+                        `price`,
+                    </if>
+                    <if test="hot!=null">
+                        `hot`,
+                    </if>
+                    <if test="productStatus!=null">
+                        `product_status`,
+                    </if>
+                    <if test="defaultImg!=null">
+                        `default_img`,
+                    </if>
+                    <if test="updateTime!=null">
+                        `update_time`,
+                    </if>
+                    <if test="updateUserId!=null">
+                        `update_user_id`,
+                    </if>
+                    <if test="createTime!=null">
+                        `create_time`,
+                    </if>
+                    <if test="createUserId!=null">
+                        `create_user_id`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="productId!=null">
+                    #{productId},
+                </if>
+                <if test="productCategoryId!=null">
+                    #{productCategoryId},
+                </if>
+                <if test="name!=null">
+                    #{name},
+                </if>
+                <if test="explain!=null">
+                    #{explain},
+                </if>
+                <if test="shopPrice!=null">
+                    #{shopPrice},
+                </if>
+                <if test="price!=null">
+                    #{price},
+                </if>
+                <if test="hot!=null">
+                    #{hot},
+                </if>
+                <if test="productStatus!=null">
+                    #{productStatus},
+                </if>
+                <if test="defaultImg!=null">
+                    #{defaultImg},
+                </if>
+                <if test="updateTime!=null">
+                    #{updateTime},
+                </if>
+                <if test="updateUserId!=null">
+                    #{updateUserId},
+                </if>
+                <if test="createTime!=null">
+                    #{createTime},
+                </if>
+                <if test="createUserId!=null">
+                    #{createUserId},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateProduct">
+        UPDATE `product`
+        SET
+        <trim suffixOverrides=",">
+            <if test="productCategoryId != null">
+                `product_category_id` = #{productCategoryId},
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="explain != null and explain!=''">
+                `explain` = #{explain},
+            </if>
+            <if test="shopPrice != null">
+                `shop_price` = #{shopPrice},
+            </if>
+            <if test="price != null">
+                `price` = #{price},
+            </if>
+            <if test="hot != null">
+                `hot` = #{hot},
+            </if>
+            <if test="productStatus != null">
+                `product_status` = #{productStatus},
+            </if>
+            <if test="defaultImg != null and defaultImg!=''">
+                `default_img` = #{defaultImg},
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime},
+            </if>
+            <if test="updateUserId != null">
+                `update_user_id` = #{updateUserId},
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime},
+            </if>
+            <if test="createUserId != null">
+                `create_user_id` = #{createUserId},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `product_id` = #{productId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `product`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.productCategoryId != null">
+            `product_category_id` = #{set.productCategoryId},
+        </if>
+        <if test="set.name != null and set.name!=''">
+            `name` = #{set.name},
+        </if>
+        <if test="set.explain != null and set.explain!=''">
+            `explain` = #{set.explain},
+        </if>
+        <if test="set.shopPrice != null">
+            `shop_price` = #{set.shopPrice},
+        </if>
+        <if test="set.price != null">
+            `price` = #{set.price},
+        </if>
+        <if test="set.hot != null">
+            `hot` = #{set.hot},
+        </if>
+        <if test="set.productStatus != null">
+            `product_status` = #{set.productStatus},
+        </if>
+        <if test="set.defaultImg != null and set.defaultImg!=''">
+            `default_img` = #{set.defaultImg},
+        </if>
+        <if test="set.updateTime != null">
+            `update_time` = #{set.updateTime},
+        </if>
+        <if test="set.updateUserId != null">
+            `update_user_id` = #{set.updateUserId},
+        </if>
+        <if test="set.createTime != null">
+            `create_time` = #{set.createTime},
+        </if>
+        <if test="set.createUserId != null">
+            `create_user_id` = #{set.createUserId},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.productIdList != null">
+                    `product_id` in
+                    <foreach collection="where.productIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.productIdSt !=null">
+                `product_id` >= #{where.productIdSt} and
+            </if>
+            <if test="where.productIdEd!=null">
+                `product_id` &lt;= #{where.productIdEd} and
+            </if>
+                <if test="where.productCategoryIdList != null">
+                    `product_category_id` in
+                    <foreach collection="where.productCategoryIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.productCategoryIdSt !=null">
+                `product_category_id` >= #{where.productCategoryIdSt} and
+            </if>
+            <if test="where.productCategoryIdEd!=null">
+                `product_category_id` &lt;= #{where.productCategoryIdEd} and
+            </if>
+                <if test="where.nameList != null">
+                    `name` in
+                    <foreach collection="where.nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyName!=null and where.fuzzyName.size()>0">
+                (
+                <foreach collection="where.fuzzyName"  separator="or" item="item">
+                    `Name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyName!=null and where.rightFuzzyName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyName"  separator="or" item="item">
+                    `Name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.explainList != null">
+                    `explain` in
+                    <foreach collection="where.explainList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyExplain!=null and where.fuzzyExplain.size()>0">
+                (
+                <foreach collection="where.fuzzyExplain"  separator="or" item="item">
+                    `Explain` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyExplain!=null and where.rightFuzzyExplain.size()>0">
+                (
+                <foreach collection="where.rightFuzzyExplain"  separator="or" item="item">
+                    `Explain` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.shopPriceList != null">
+                    `shop_price` in
+                    <foreach collection="where.shopPriceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.shopPriceSt !=null">
+                `shop_price` >= #{where.shopPriceSt} and
+            </if>
+            <if test="where.shopPriceEd!=null">
+                `shop_price` &lt;= #{where.shopPriceEd} and
+            </if>
+                <if test="where.priceList != null">
+                    `price` in
+                    <foreach collection="where.priceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.priceSt !=null">
+                `price` >= #{where.priceSt} and
+            </if>
+            <if test="where.priceEd!=null">
+                `price` &lt;= #{where.priceEd} and
+            </if>
+                <if test="where.hotList != null">
+                    `hot` in
+                    <foreach collection="where.hotList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.hotSt !=null">
+                `hot` >= #{where.hotSt} and
+            </if>
+            <if test="where.hotEd!=null">
+                `hot` &lt;= #{where.hotEd} and
+            </if>
+                <if test="where.productStatusList != null">
+                    `product_status` in
+                    <foreach collection="where.productStatusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.productStatusSt !=null">
+                `product_status` >= #{where.productStatusSt} and
+            </if>
+            <if test="where.productStatusEd!=null">
+                `product_status` &lt;= #{where.productStatusEd} and
+            </if>
+                <if test="where.defaultImgList != null">
+                    `default_img` in
+                    <foreach collection="where.defaultImgList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDefaultImg!=null and where.fuzzyDefaultImg.size()>0">
+                (
+                <foreach collection="where.fuzzyDefaultImg"  separator="or" item="item">
+                    `Default_img` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDefaultImg!=null and where.rightFuzzyDefaultImg.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDefaultImg"  separator="or" item="item">
+                    `Default_img` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.updateTimeList != null">
+                    `update_time` in
+                    <foreach collection="where.updateTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.updateTimeSt !=null">
+                `update_time` >= #{where.updateTimeSt} and
+            </if>
+            <if test="where.updateTimeEd!=null">
+                `update_time` &lt;= #{where.updateTimeEd} and
+            </if>
+                <if test="where.updateUserIdList != null">
+                    `update_user_id` in
+                    <foreach collection="where.updateUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.updateUserIdSt !=null">
+                `update_user_id` >= #{where.updateUserIdSt} and
+            </if>
+            <if test="where.updateUserIdEd!=null">
+                `update_user_id` &lt;= #{where.updateUserIdEd} and
+            </if>
+                <if test="where.createTimeList != null">
+                    `create_time` in
+                    <foreach collection="where.createTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.createTimeSt !=null">
+                `create_time` >= #{where.createTimeSt} and
+            </if>
+            <if test="where.createTimeEd!=null">
+                `create_time` &lt;= #{where.createTimeEd} and
+            </if>
+                <if test="where.createUserIdList != null">
+                    `create_user_id` in
+                    <foreach collection="where.createUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.createUserIdSt !=null">
+                `create_user_id` >= #{where.createUserIdSt} and
+            </if>
+            <if test="where.createUserIdEd!=null">
+                `create_user_id` &lt;= #{where.createUserIdEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.teenyda.dao.Product" id="ProductMap">
+        <result property="productId" column="product_id"/>
+        <result property="productCategoryId" column="product_category_id"/>
+        <result property="name" column="name"/>
+        <result property="explain" column="explain"/>
+        <result property="shopPrice" column="shop_price"/>
+        <result property="price" column="price"/>
+        <result property="hot" column="hot"/>
+        <result property="productStatus" column="product_status"/>
+        <result property="defaultImg" column="default_img"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUserId" column="update_user_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUserId" column="create_user_id"/>
+    </resultMap>
+
+
+    <select id="queryProduct" resultMap="ProductMap">
+        select
+        <include refid="baseResult"></include>
+        from  `product`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="productId != null">
+                `product_id` = #{productId} and
+            </if>
+            <if test="productCategoryId != null">
+                `product_category_id` = #{productCategoryId} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="explain != null and explain!=''">
+                `explain` = #{explain} and
+            </if>
+            <if test="shopPrice != null">
+                `shop_price` = #{shopPrice} and
+            </if>
+            <if test="price != null">
+                `price` = #{price} and
+            </if>
+            <if test="hot != null">
+                `hot` = #{hot} and
+            </if>
+            <if test="productStatus != null">
+                `product_status` = #{productStatus} and
+            </if>
+            <if test="defaultImg != null and defaultImg!=''">
+                `default_img` = #{defaultImg} and
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime} and
+            </if>
+            <if test="updateUserId != null">
+                `update_user_id` = #{updateUserId} and
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime} and
+            </if>
+            <if test="createUserId != null">
+                `create_user_id` = #{createUserId} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.Product$QueryBuilder) == true">
+                <if test="productIdList != null">
+                    `product_id` in
+                    <foreach collection="productIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="productIdSt !=null">
+                    `product_id` >= #{productIdSt} and
+                </if>
+                <if test="productIdEd!=null">
+                    `product_id` &lt;= #{productIdEd} and
+                </if>
+                <if test="productCategoryIdList != null">
+                    `product_category_id` in
+                    <foreach collection="productCategoryIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="productCategoryIdSt !=null">
+                    `product_category_id` >= #{productCategoryIdSt} and
+                </if>
+                <if test="productCategoryIdEd!=null">
+                    `product_category_id` &lt;= #{productCategoryIdEd} and
+                </if>
+                <if test="nameList != null">
+                    `name` in
+                    <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="explainList != null">
+                    `explain` in
+                    <foreach collection="explainList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyExplain!=null and fuzzyExplain.size()>0">
+                    (
+                    <foreach collection="fuzzyExplain"  separator="or" item="item">
+                        `Explain` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyExplain!=null and rightFuzzyExplain.size()>0">
+                    (
+                    <foreach collection="rightFuzzyExplain"  separator="or" item="item">
+                        `Explain` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="shopPriceList != null">
+                    `shop_price` in
+                    <foreach collection="shopPriceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="shopPriceSt !=null">
+                    `shop_price` >= #{shopPriceSt} and
+                </if>
+                <if test="shopPriceEd!=null">
+                    `shop_price` &lt;= #{shopPriceEd} and
+                </if>
+                <if test="priceList != null">
+                    `price` in
+                    <foreach collection="priceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="priceSt !=null">
+                    `price` >= #{priceSt} and
+                </if>
+                <if test="priceEd!=null">
+                    `price` &lt;= #{priceEd} and
+                </if>
+                <if test="hotList != null">
+                    `hot` in
+                    <foreach collection="hotList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="hotSt !=null">
+                    `hot` >= #{hotSt} and
+                </if>
+                <if test="hotEd!=null">
+                    `hot` &lt;= #{hotEd} and
+                </if>
+                <if test="productStatusList != null">
+                    `product_status` in
+                    <foreach collection="productStatusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="productStatusSt !=null">
+                    `product_status` >= #{productStatusSt} and
+                </if>
+                <if test="productStatusEd!=null">
+                    `product_status` &lt;= #{productStatusEd} and
+                </if>
+                <if test="defaultImgList != null">
+                    `default_img` in
+                    <foreach collection="defaultImgList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDefaultImg!=null and fuzzyDefaultImg.size()>0">
+                    (
+                    <foreach collection="fuzzyDefaultImg"  separator="or" item="item">
+                        `Default_img` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDefaultImg!=null and rightFuzzyDefaultImg.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDefaultImg"  separator="or" item="item">
+                        `Default_img` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="updateTimeList != null">
+                    `update_time` in
+                    <foreach collection="updateTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="updateTimeSt !=null">
+                    `update_time` >= #{updateTimeSt} and
+                </if>
+                <if test="updateTimeEd!=null">
+                    `update_time` &lt;= #{updateTimeEd} and
+                </if>
+                <if test="updateUserIdList != null">
+                    `update_user_id` in
+                    <foreach collection="updateUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="updateUserIdSt !=null">
+                    `update_user_id` >= #{updateUserIdSt} and
+                </if>
+                <if test="updateUserIdEd!=null">
+                    `update_user_id` &lt;= #{updateUserIdEd} and
+                </if>
+                <if test="createTimeList != null">
+                    `create_time` in
+                    <foreach collection="createTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="createTimeSt !=null">
+                    `create_time` >= #{createTimeSt} and
+                </if>
+                <if test="createTimeEd!=null">
+                    `create_time` &lt;= #{createTimeEd} and
+                </if>
+                <if test="createUserIdList != null">
+                    `create_user_id` in
+                    <foreach collection="createUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="createUserIdSt !=null">
+                    `create_user_id` >= #{createUserIdSt} and
+                </if>
+                <if test="createUserIdEd!=null">
+                    `create_user_id` &lt;= #{createUserIdEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryProductLimit1" resultMap="ProductMap">
+        select
+        <include refid="baseResult"></include>
+        from  `product`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="productId != null">
+                `product_id` = #{productId} and
+            </if>
+            <if test="productCategoryId != null">
+                `product_category_id` = #{productCategoryId} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="explain != null and explain!=''">
+                `explain` = #{explain} and
+            </if>
+            <if test="shopPrice != null">
+                `shop_price` = #{shopPrice} and
+            </if>
+            <if test="price != null">
+                `price` = #{price} and
+            </if>
+            <if test="hot != null">
+                `hot` = #{hot} and
+            </if>
+            <if test="productStatus != null">
+                `product_status` = #{productStatus} and
+            </if>
+            <if test="defaultImg != null and defaultImg!=''">
+                `default_img` = #{defaultImg} and
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime} and
+            </if>
+            <if test="updateUserId != null">
+                `update_user_id` = #{updateUserId} and
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime} and
+            </if>
+            <if test="createUserId != null">
+                `create_user_id` = #{createUserId} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.Product$QueryBuilder) == true">
+                    <if test="productIdList != null">
+                        `product_id` in
+                        <foreach collection="productIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="productIdSt !=null">
+                    `product_id` >= #{productIdSt} and
+                </if>
+                <if test="productIdEd!=null">
+                    `product_id` &lt;= #{productIdEd} and
+                </if>
+                    <if test="productCategoryIdList != null">
+                        `product_category_id` in
+                        <foreach collection="productCategoryIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="productCategoryIdSt !=null">
+                    `product_category_id` >= #{productCategoryIdSt} and
+                </if>
+                <if test="productCategoryIdEd!=null">
+                    `product_category_id` &lt;= #{productCategoryIdEd} and
+                </if>
+                    <if test="nameList != null">
+                        `name` in
+                        <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="explainList != null">
+                        `explain` in
+                        <foreach collection="explainList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyExplain!=null and fuzzyExplain.size()>0">
+                    (
+                    <foreach collection="fuzzyExplain"  separator="or" item="item">
+                        `Explain` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyExplain!=null and rightFuzzyExplain.size()>0">
+                    (
+                    <foreach collection="rightFuzzyExplain"  separator="or" item="item">
+                        `Explain` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="shopPriceList != null">
+                        `shop_price` in
+                        <foreach collection="shopPriceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="shopPriceSt !=null">
+                    `shop_price` >= #{shopPriceSt} and
+                </if>
+                <if test="shopPriceEd!=null">
+                    `shop_price` &lt;= #{shopPriceEd} and
+                </if>
+                    <if test="priceList != null">
+                        `price` in
+                        <foreach collection="priceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="priceSt !=null">
+                    `price` >= #{priceSt} and
+                </if>
+                <if test="priceEd!=null">
+                    `price` &lt;= #{priceEd} and
+                </if>
+                    <if test="hotList != null">
+                        `hot` in
+                        <foreach collection="hotList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="hotSt !=null">
+                    `hot` >= #{hotSt} and
+                </if>
+                <if test="hotEd!=null">
+                    `hot` &lt;= #{hotEd} and
+                </if>
+                    <if test="productStatusList != null">
+                        `product_status` in
+                        <foreach collection="productStatusList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="productStatusSt !=null">
+                    `product_status` >= #{productStatusSt} and
+                </if>
+                <if test="productStatusEd!=null">
+                    `product_status` &lt;= #{productStatusEd} and
+                </if>
+                    <if test="defaultImgList != null">
+                        `default_img` in
+                        <foreach collection="defaultImgList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDefaultImg!=null and fuzzyDefaultImg.size()>0">
+                    (
+                    <foreach collection="fuzzyDefaultImg"  separator="or" item="item">
+                        `Default_img` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDefaultImg!=null and rightFuzzyDefaultImg.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDefaultImg"  separator="or" item="item">
+                        `Default_img` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="updateTimeList != null">
+                        `update_time` in
+                        <foreach collection="updateTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="updateTimeSt !=null">
+                    `update_time` >= #{updateTimeSt} and
+                </if>
+                <if test="updateTimeEd!=null">
+                    `update_time` &lt;= #{updateTimeEd} and
+                </if>
+                    <if test="updateUserIdList != null">
+                        `update_user_id` in
+                        <foreach collection="updateUserIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="updateUserIdSt !=null">
+                    `update_user_id` >= #{updateUserIdSt} and
+                </if>
+                <if test="updateUserIdEd!=null">
+                    `update_user_id` &lt;= #{updateUserIdEd} and
+                </if>
+                    <if test="createTimeList != null">
+                        `create_time` in
+                        <foreach collection="createTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="createTimeSt !=null">
+                    `create_time` >= #{createTimeSt} and
+                </if>
+                <if test="createTimeEd!=null">
+                    `create_time` &lt;= #{createTimeEd} and
+                </if>
+                    <if test="createUserIdList != null">
+                        `create_user_id` in
+                        <foreach collection="createUserIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="createUserIdSt !=null">
+                    `create_user_id` >= #{createUserIdSt} and
+                </if>
+                <if test="createUserIdEd!=null">
+                    `create_user_id` &lt;= #{createUserIdEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `product_id`,
+        `product_category_id`,
+        `name`,
+        `explain`,
+        `shop_price`,
+        `price`,
+        `hot`,
+        `product_status`,
+        `default_img`,
+        `update_time`,
+        `update_user_id`,
+        `create_time`,
+        `create_user_id`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.teenyda.dao.Product$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.productId==true">
+                        `product_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.productCategoryId==true">
+                        `product_category_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.name==true">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.explain==true">
+                        `explain`,
+                    </if>
+                    <if test="fetchFields.fetchFields.shopPrice==true">
+                        `shop_price`,
+                    </if>
+                    <if test="fetchFields.fetchFields.price==true">
+                        `price`,
+                    </if>
+                    <if test="fetchFields.fetchFields.hot==true">
+                        `hot`,
+                    </if>
+                    <if test="fetchFields.fetchFields.productStatus==true">
+                        `product_status`,
+                    </if>
+                    <if test="fetchFields.fetchFields.defaultImg==true">
+                        `default_img`,
+                    </if>
+                    <if test="fetchFields.fetchFields.updateTime==true">
+                        `update_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.updateUserId==true">
+                        `update_user_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.createTime==true">
+                        `create_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.createUserId==true">
+                        `create_user_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.productId==null">
+                        `product_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.productCategoryId==null">
+                        `product_category_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.name==null">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.explain==null">
+                        `explain`,
+                    </if>
+                    <if test="fetchFields.excludeFields.shopPrice==null">
+                        `shop_price`,
+                    </if>
+                    <if test="fetchFields.excludeFields.price==null">
+                        `price`,
+                    </if>
+                    <if test="fetchFields.excludeFields.hot==null">
+                        `hot`,
+                    </if>
+                    <if test="fetchFields.excludeFields.productStatus==null">
+                        `product_status`,
+                    </if>
+                    <if test="fetchFields.excludeFields.defaultImg==null">
+                        `default_img`,
+                    </if>
+                    <if test="fetchFields.excludeFields.updateTime==null">
+                        `update_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.updateUserId==null">
+                        `update_user_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.createTime==null">
+                        `create_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.createUserId==null">
+                        `create_user_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.teenyda.dao.Product$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

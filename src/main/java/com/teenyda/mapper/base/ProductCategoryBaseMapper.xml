@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.mapper.base.ProductCategoryBaseMapper">
+
+
+    <insert id="insertProductCategory"  useGeneratedKeys="true" keyProperty="productCategoryId">
+        INSERT INTO `product_category`
+        (
+        <trim suffixOverrides=",">
+                    <if test="productCategoryId!=null">
+                        `product_category_id`,
+                    </if>
+                    <if test="name!=null">
+                        `name`,
+                    </if>
+                    <if test="sortOrder!=null">
+                        `sort_order`,
+                    </if>
+                    <if test="description!=null">
+                        `description`,
+                    </if>
+                    <if test="image!=null">
+                        `image`,
+                    </if>
+                    <if test="updateTime!=null">
+                        `update_time`,
+                    </if>
+                    <if test="updateUserId!=null">
+                        `update_user_id`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="productCategoryId!=null">
+                    #{productCategoryId},
+                </if>
+                <if test="name!=null">
+                    #{name},
+                </if>
+                <if test="sortOrder!=null">
+                    #{sortOrder},
+                </if>
+                <if test="description!=null">
+                    #{description},
+                </if>
+                <if test="image!=null">
+                    #{image},
+                </if>
+                <if test="updateTime!=null">
+                    #{updateTime},
+                </if>
+                <if test="updateUserId!=null">
+                    #{updateUserId},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateProductCategory">
+        UPDATE `product_category`
+        SET
+        <trim suffixOverrides=",">
+            <if test="name != null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="sortOrder != null">
+                `sort_order` = #{sortOrder},
+            </if>
+            <if test="description != null and description!=''">
+                `description` = #{description},
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image},
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime},
+            </if>
+            <if test="updateUserId != null">
+                `update_user_id` = #{updateUserId},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `product_category_id` = #{productCategoryId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `product_category`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.name != null and set.name!=''">
+            `name` = #{set.name},
+        </if>
+        <if test="set.sortOrder != null">
+            `sort_order` = #{set.sortOrder},
+        </if>
+        <if test="set.description != null and set.description!=''">
+            `description` = #{set.description},
+        </if>
+        <if test="set.image != null and set.image!=''">
+            `image` = #{set.image},
+        </if>
+        <if test="set.updateTime != null">
+            `update_time` = #{set.updateTime},
+        </if>
+        <if test="set.updateUserId != null">
+            `update_user_id` = #{set.updateUserId},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.productCategoryIdList != null">
+                    `product_category_id` in
+                    <foreach collection="where.productCategoryIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.productCategoryIdSt !=null">
+                `product_category_id` >= #{where.productCategoryIdSt} and
+            </if>
+            <if test="where.productCategoryIdEd!=null">
+                `product_category_id` &lt;= #{where.productCategoryIdEd} and
+            </if>
+                <if test="where.nameList != null">
+                    `name` in
+                    <foreach collection="where.nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyName!=null and where.fuzzyName.size()>0">
+                (
+                <foreach collection="where.fuzzyName"  separator="or" item="item">
+                    `Name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyName!=null and where.rightFuzzyName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyName"  separator="or" item="item">
+                    `Name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.sortOrderList != null">
+                    `sort_order` in
+                    <foreach collection="where.sortOrderList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.sortOrderSt !=null">
+                `sort_order` >= #{where.sortOrderSt} and
+            </if>
+            <if test="where.sortOrderEd!=null">
+                `sort_order` &lt;= #{where.sortOrderEd} and
+            </if>
+                <if test="where.descriptionList != null">
+                    `description` in
+                    <foreach collection="where.descriptionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDescription!=null and where.fuzzyDescription.size()>0">
+                (
+                <foreach collection="where.fuzzyDescription"  separator="or" item="item">
+                    `Description` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDescription!=null and where.rightFuzzyDescription.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDescription"  separator="or" item="item">
+                    `Description` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.imageList != null">
+                    `image` in
+                    <foreach collection="where.imageList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyImage!=null and where.fuzzyImage.size()>0">
+                (
+                <foreach collection="where.fuzzyImage"  separator="or" item="item">
+                    `Image` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyImage!=null and where.rightFuzzyImage.size()>0">
+                (
+                <foreach collection="where.rightFuzzyImage"  separator="or" item="item">
+                    `Image` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.updateTimeList != null">
+                    `update_time` in
+                    <foreach collection="where.updateTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.updateTimeSt !=null">
+                `update_time` >= #{where.updateTimeSt} and
+            </if>
+            <if test="where.updateTimeEd!=null">
+                `update_time` &lt;= #{where.updateTimeEd} and
+            </if>
+                <if test="where.updateUserIdList != null">
+                    `update_user_id` in
+                    <foreach collection="where.updateUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.updateUserIdSt !=null">
+                `update_user_id` >= #{where.updateUserIdSt} and
+            </if>
+            <if test="where.updateUserIdEd!=null">
+                `update_user_id` &lt;= #{where.updateUserIdEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.teenyda.dao.ProductCategory" id="ProductCategoryMap">
+        <result property="productCategoryId" column="product_category_id"/>
+        <result property="name" column="name"/>
+        <result property="sortOrder" column="sort_order"/>
+        <result property="description" column="description"/>
+        <result property="image" column="image"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUserId" column="update_user_id"/>
+    </resultMap>
+
+
+    <select id="queryProductCategory" resultMap="ProductCategoryMap">
+        select
+        <include refid="baseResult"></include>
+        from  `product_category`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="productCategoryId != null">
+                `product_category_id` = #{productCategoryId} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="sortOrder != null">
+                `sort_order` = #{sortOrder} and
+            </if>
+            <if test="description != null and description!=''">
+                `description` = #{description} and
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image} and
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime} and
+            </if>
+            <if test="updateUserId != null">
+                `update_user_id` = #{updateUserId} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.ProductCategory$QueryBuilder) == true">
+                <if test="productCategoryIdList != null">
+                    `product_category_id` in
+                    <foreach collection="productCategoryIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="productCategoryIdSt !=null">
+                    `product_category_id` >= #{productCategoryIdSt} and
+                </if>
+                <if test="productCategoryIdEd!=null">
+                    `product_category_id` &lt;= #{productCategoryIdEd} and
+                </if>
+                <if test="nameList != null">
+                    `name` in
+                    <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="sortOrderList != null">
+                    `sort_order` in
+                    <foreach collection="sortOrderList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="sortOrderSt !=null">
+                    `sort_order` >= #{sortOrderSt} and
+                </if>
+                <if test="sortOrderEd!=null">
+                    `sort_order` &lt;= #{sortOrderEd} and
+                </if>
+                <if test="descriptionList != null">
+                    `description` in
+                    <foreach collection="descriptionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDescription!=null and fuzzyDescription.size()>0">
+                    (
+                    <foreach collection="fuzzyDescription"  separator="or" item="item">
+                        `Description` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDescription!=null and rightFuzzyDescription.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDescription"  separator="or" item="item">
+                        `Description` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="imageList != null">
+                    `image` in
+                    <foreach collection="imageList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyImage!=null and fuzzyImage.size()>0">
+                    (
+                    <foreach collection="fuzzyImage"  separator="or" item="item">
+                        `Image` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImage!=null and rightFuzzyImage.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImage"  separator="or" item="item">
+                        `Image` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="updateTimeList != null">
+                    `update_time` in
+                    <foreach collection="updateTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="updateTimeSt !=null">
+                    `update_time` >= #{updateTimeSt} and
+                </if>
+                <if test="updateTimeEd!=null">
+                    `update_time` &lt;= #{updateTimeEd} and
+                </if>
+                <if test="updateUserIdList != null">
+                    `update_user_id` in
+                    <foreach collection="updateUserIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="updateUserIdSt !=null">
+                    `update_user_id` >= #{updateUserIdSt} and
+                </if>
+                <if test="updateUserIdEd!=null">
+                    `update_user_id` &lt;= #{updateUserIdEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryProductCategoryLimit1" resultMap="ProductCategoryMap">
+        select
+        <include refid="baseResult"></include>
+        from  `product_category`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="productCategoryId != null">
+                `product_category_id` = #{productCategoryId} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="sortOrder != null">
+                `sort_order` = #{sortOrder} and
+            </if>
+            <if test="description != null and description!=''">
+                `description` = #{description} and
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image} and
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime} and
+            </if>
+            <if test="updateUserId != null">
+                `update_user_id` = #{updateUserId} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.ProductCategory$QueryBuilder) == true">
+                    <if test="productCategoryIdList != null">
+                        `product_category_id` in
+                        <foreach collection="productCategoryIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="productCategoryIdSt !=null">
+                    `product_category_id` >= #{productCategoryIdSt} and
+                </if>
+                <if test="productCategoryIdEd!=null">
+                    `product_category_id` &lt;= #{productCategoryIdEd} and
+                </if>
+                    <if test="nameList != null">
+                        `name` in
+                        <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="sortOrderList != null">
+                        `sort_order` in
+                        <foreach collection="sortOrderList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="sortOrderSt !=null">
+                    `sort_order` >= #{sortOrderSt} and
+                </if>
+                <if test="sortOrderEd!=null">
+                    `sort_order` &lt;= #{sortOrderEd} and
+                </if>
+                    <if test="descriptionList != null">
+                        `description` in
+                        <foreach collection="descriptionList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDescription!=null and fuzzyDescription.size()>0">
+                    (
+                    <foreach collection="fuzzyDescription"  separator="or" item="item">
+                        `Description` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDescription!=null and rightFuzzyDescription.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDescription"  separator="or" item="item">
+                        `Description` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="imageList != null">
+                        `image` in
+                        <foreach collection="imageList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyImage!=null and fuzzyImage.size()>0">
+                    (
+                    <foreach collection="fuzzyImage"  separator="or" item="item">
+                        `Image` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImage!=null and rightFuzzyImage.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImage"  separator="or" item="item">
+                        `Image` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="updateTimeList != null">
+                        `update_time` in
+                        <foreach collection="updateTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="updateTimeSt !=null">
+                    `update_time` >= #{updateTimeSt} and
+                </if>
+                <if test="updateTimeEd!=null">
+                    `update_time` &lt;= #{updateTimeEd} and
+                </if>
+                    <if test="updateUserIdList != null">
+                        `update_user_id` in
+                        <foreach collection="updateUserIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="updateUserIdSt !=null">
+                    `update_user_id` >= #{updateUserIdSt} and
+                </if>
+                <if test="updateUserIdEd!=null">
+                    `update_user_id` &lt;= #{updateUserIdEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `product_category_id`,
+        `name`,
+        `sort_order`,
+        `description`,
+        `image`,
+        `update_time`,
+        `update_user_id`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.teenyda.dao.ProductCategory$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.productCategoryId==true">
+                        `product_category_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.name==true">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.sortOrder==true">
+                        `sort_order`,
+                    </if>
+                    <if test="fetchFields.fetchFields.description==true">
+                        `description`,
+                    </if>
+                    <if test="fetchFields.fetchFields.image==true">
+                        `image`,
+                    </if>
+                    <if test="fetchFields.fetchFields.updateTime==true">
+                        `update_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.updateUserId==true">
+                        `update_user_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.productCategoryId==null">
+                        `product_category_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.name==null">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.sortOrder==null">
+                        `sort_order`,
+                    </if>
+                    <if test="fetchFields.excludeFields.description==null">
+                        `description`,
+                    </if>
+                    <if test="fetchFields.excludeFields.image==null">
+                        `image`,
+                    </if>
+                    <if test="fetchFields.excludeFields.updateTime==null">
+                        `update_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.updateUserId==null">
+                        `update_user_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.teenyda.dao.ProductCategory$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
