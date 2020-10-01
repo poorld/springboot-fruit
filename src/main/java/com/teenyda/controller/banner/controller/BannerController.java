@@ -1,8 +1,6 @@
 package com.teenyda.controller.banner.controller;
 
 import com.teenyda.controller.api.AbstractApiController;
-import com.teenyda.dao.Banner;
-import com.teenyda.mapper.base.BannerBaseMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

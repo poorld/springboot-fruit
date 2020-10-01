@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.mapping.base.DiscountsCategoryBaseMapper">
+
+
+    <insert id="insertDiscountsCategory"  useGeneratedKeys="true" keyProperty="discountsCategoryId">
+        INSERT INTO `discounts_category`
+        (
+        <trim suffixOverrides=",">
+                    <if test="discountsCategoryId!=null">
+                        `discounts_category_id`,
+                    </if>
+                    <if test="discountsType!=null">
+                        `discounts_type`,
+                    </if>
+                    <if test="discountsFlag!=null">
+                        `discounts_flag`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="discountsCategoryId!=null">
+                    #{discountsCategoryId},
+                </if>
+                <if test="discountsType!=null">
+                    #{discountsType},
+                </if>
+                <if test="discountsFlag!=null">
+                    #{discountsFlag},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateDiscountsCategory">
+        UPDATE `discounts_category`
+        SET
+        <trim suffixOverrides=",">
+            <if test="discountsType != null and discountsType!=''">
+                `discounts_type` = #{discountsType},
+            </if>
+            <if test="discountsFlag != null">
+                `discounts_flag` = #{discountsFlag},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `discounts_category_id` = #{discountsCategoryId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `discounts_category`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.discountsType != null and set.discountsType!=''">
+            `discounts_type` = #{set.discountsType},
+        </if>
+        <if test="set.discountsFlag != null">
+            `discounts_flag` = #{set.discountsFlag},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.discountsCategoryIdList != null">
+                    `discounts_category_id` in
+                    <foreach collection="where.discountsCategoryIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.discountsCategoryIdSt !=null">
+                `discounts_category_id` >= #{where.discountsCategoryIdSt} and
+            </if>
+            <if test="where.discountsCategoryIdEd!=null">
+                `discounts_category_id` &lt;= #{where.discountsCategoryIdEd} and
+            </if>
+                <if test="where.discountsTypeList != null">
+                    `discounts_type` in
+                    <foreach collection="where.discountsTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDiscountsType!=null and where.fuzzyDiscountsType.size()>0">
+                (
+                <foreach collection="where.fuzzyDiscountsType"  separator="or" item="item">
+                    `Discounts_type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDiscountsType!=null and where.rightFuzzyDiscountsType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDiscountsType"  separator="or" item="item">
+                    `Discounts_type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.discountsFlagList != null">
+                    `discounts_flag` in
+                    <foreach collection="where.discountsFlagList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.discountsFlagSt !=null">
+                `discounts_flag` >= #{where.discountsFlagSt} and
+            </if>
+            <if test="where.discountsFlagEd!=null">
+                `discounts_flag` &lt;= #{where.discountsFlagEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.teenyda.dao.DiscountsCategory" id="DiscountsCategoryMap">
+        <result property="discountsCategoryId" column="discounts_category_id"/>
+        <result property="discountsType" column="discounts_type"/>
+        <result property="discountsFlag" column="discounts_flag"/>
+    </resultMap>
+
+
+    <select id="queryDiscountsCategory" resultMap="DiscountsCategoryMap">
+        select
+        <include refid="baseResult"></include>
+        from  `discounts_category`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="discountsCategoryId != null">
+                `discounts_category_id` = #{discountsCategoryId} and
+            </if>
+            <if test="discountsType != null and discountsType!=''">
+                `discounts_type` = #{discountsType} and
+            </if>
+            <if test="discountsFlag != null">
+                `discounts_flag` = #{discountsFlag} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.DiscountsCategory$QueryBuilder) == true">
+                <if test="discountsCategoryIdList != null">
+                    `discounts_category_id` in
+                    <foreach collection="discountsCategoryIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="discountsCategoryIdSt !=null">
+                    `discounts_category_id` >= #{discountsCategoryIdSt} and
+                </if>
+                <if test="discountsCategoryIdEd!=null">
+                    `discounts_category_id` &lt;= #{discountsCategoryIdEd} and
+                </if>
+                <if test="discountsTypeList != null">
+                    `discounts_type` in
+                    <foreach collection="discountsTypeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDiscountsType!=null and fuzzyDiscountsType.size()>0">
+                    (
+                    <foreach collection="fuzzyDiscountsType"  separator="or" item="item">
+                        `Discounts_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDiscountsType!=null and rightFuzzyDiscountsType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDiscountsType"  separator="or" item="item">
+                        `Discounts_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="discountsFlagList != null">
+                    `discounts_flag` in
+                    <foreach collection="discountsFlagList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="discountsFlagSt !=null">
+                    `discounts_flag` >= #{discountsFlagSt} and
+                </if>
+                <if test="discountsFlagEd!=null">
+                    `discounts_flag` &lt;= #{discountsFlagEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryDiscountsCategoryLimit1" resultMap="DiscountsCategoryMap">
+        select
+        <include refid="baseResult"></include>
+        from  `discounts_category`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="discountsCategoryId != null">
+                `discounts_category_id` = #{discountsCategoryId} and
+            </if>
+            <if test="discountsType != null and discountsType!=''">
+                `discounts_type` = #{discountsType} and
+            </if>
+            <if test="discountsFlag != null">
+                `discounts_flag` = #{discountsFlag} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.DiscountsCategory$QueryBuilder) == true">
+                    <if test="discountsCategoryIdList != null">
+                        `discounts_category_id` in
+                        <foreach collection="discountsCategoryIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="discountsCategoryIdSt !=null">
+                    `discounts_category_id` >= #{discountsCategoryIdSt} and
+                </if>
+                <if test="discountsCategoryIdEd!=null">
+                    `discounts_category_id` &lt;= #{discountsCategoryIdEd} and
+                </if>
+                    <if test="discountsTypeList != null">
+                        `discounts_type` in
+                        <foreach collection="discountsTypeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDiscountsType!=null and fuzzyDiscountsType.size()>0">
+                    (
+                    <foreach collection="fuzzyDiscountsType"  separator="or" item="item">
+                        `Discounts_type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDiscountsType!=null and rightFuzzyDiscountsType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDiscountsType"  separator="or" item="item">
+                        `Discounts_type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="discountsFlagList != null">
+                        `discounts_flag` in
+                        <foreach collection="discountsFlagList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="discountsFlagSt !=null">
+                    `discounts_flag` >= #{discountsFlagSt} and
+                </if>
+                <if test="discountsFlagEd!=null">
+                    `discounts_flag` &lt;= #{discountsFlagEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `discounts_category_id`,
+        `discounts_type`,
+        `discounts_flag`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.teenyda.dao.DiscountsCategory$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.discountsCategoryId==true">
+                        `discounts_category_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.discountsType==true">
+                        `discounts_type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.discountsFlag==true">
+                        `discounts_flag`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.discountsCategoryId==null">
+                        `discounts_category_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.discountsType==null">
+                        `discounts_type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.discountsFlag==null">
+                        `discounts_flag`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.teenyda.dao.DiscountsCategory$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

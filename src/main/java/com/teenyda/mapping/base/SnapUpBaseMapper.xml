@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.mapping.base.SnapUpBaseMapper">
+
+
+    <insert id="insertSnapUp" >
+        INSERT INTO `snap_up`
+        (
+        <trim suffixOverrides=",">
+                    <if test="snapUpId!=null">
+                        `snap_up_id`,
+                    </if>
+                    <if test="productId!=null">
+                        `product_id`,
+                    </if>
+                    <if test="price!=null">
+                        `price`,
+                    </if>
+                    <if test="createTime!=null">
+                        `create_time`,
+                    </if>
+                    <if test="endTime!=null">
+                        `end_time`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="snapUpId!=null">
+                    #{snapUpId},
+                </if>
+                <if test="productId!=null">
+                    #{productId},
+                </if>
+                <if test="price!=null">
+                    #{price},
+                </if>
+                <if test="createTime!=null">
+                    #{createTime},
+                </if>
+                <if test="endTime!=null">
+                    #{endTime},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateSnapUp">
+        UPDATE `snap_up`
+        SET
+        <trim suffixOverrides=",">
+            <if test="price != null">
+                `price` = #{price},
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime},
+            </if>
+            <if test="endTime != null">
+                `end_time` = #{endTime},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `snap_up_id` = #{snapUpId} and
+                `product_id` = #{productId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `snap_up`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.price != null">
+            `price` = #{set.price},
+        </if>
+        <if test="set.createTime != null">
+            `create_time` = #{set.createTime},
+        </if>
+        <if test="set.endTime != null">
+            `end_time` = #{set.endTime},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.snapUpIdList != null">
+                    `snap_up_id` in
+                    <foreach collection="where.snapUpIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.snapUpIdSt !=null">
+                `snap_up_id` >= #{where.snapUpIdSt} and
+            </if>
+            <if test="where.snapUpIdEd!=null">
+                `snap_up_id` &lt;= #{where.snapUpIdEd} and
+            </if>
+                <if test="where.productIdList != null">
+                    `product_id` in
+                    <foreach collection="where.productIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.productIdSt !=null">
+                `product_id` >= #{where.productIdSt} and
+            </if>
+            <if test="where.productIdEd!=null">
+                `product_id` &lt;= #{where.productIdEd} and
+            </if>
+                <if test="where.priceList != null">
+                    `price` in
+                    <foreach collection="where.priceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.priceSt !=null">
+                `price` >= #{where.priceSt} and
+            </if>
+            <if test="where.priceEd!=null">
+                `price` &lt;= #{where.priceEd} and
+            </if>
+                <if test="where.createTimeList != null">
+                    `create_time` in
+                    <foreach collection="where.createTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.createTimeSt !=null">
+                `create_time` >= #{where.createTimeSt} and
+            </if>
+            <if test="where.createTimeEd!=null">
+                `create_time` &lt;= #{where.createTimeEd} and
+            </if>
+                <if test="where.endTimeList != null">
+                    `end_time` in
+                    <foreach collection="where.endTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.endTimeSt !=null">
+                `end_time` >= #{where.endTimeSt} and
+            </if>
+            <if test="where.endTimeEd!=null">
+                `end_time` &lt;= #{where.endTimeEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.teenyda.dao.SnapUp" id="SnapUpMap">
+        <result property="snapUpId" column="snap_up_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="price" column="price"/>
+        <result property="createTime" column="create_time"/>
+        <result property="endTime" column="end_time"/>
+    </resultMap>
+
+
+    <select id="querySnapUp" resultMap="SnapUpMap">
+        select
+        <include refid="baseResult"></include>
+        from  `snap_up`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="snapUpId != null">
+                `snap_up_id` = #{snapUpId} and
+            </if>
+            <if test="productId != null">
+                `product_id` = #{productId} and
+            </if>
+            <if test="price != null">
+                `price` = #{price} and
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime} and
+            </if>
+            <if test="endTime != null">
+                `end_time` = #{endTime} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.SnapUp$QueryBuilder) == true">
+                <if test="snapUpIdList != null">
+                    `snap_up_id` in
+                    <foreach collection="snapUpIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="snapUpIdSt !=null">
+                    `snap_up_id` >= #{snapUpIdSt} and
+                </if>
+                <if test="snapUpIdEd!=null">
+                    `snap_up_id` &lt;= #{snapUpIdEd} and
+                </if>
+                <if test="productIdList != null">
+                    `product_id` in
+                    <foreach collection="productIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="productIdSt !=null">
+                    `product_id` >= #{productIdSt} and
+                </if>
+                <if test="productIdEd!=null">
+                    `product_id` &lt;= #{productIdEd} and
+                </if>
+                <if test="priceList != null">
+                    `price` in
+                    <foreach collection="priceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="priceSt !=null">
+                    `price` >= #{priceSt} and
+                </if>
+                <if test="priceEd!=null">
+                    `price` &lt;= #{priceEd} and
+                </if>
+                <if test="createTimeList != null">
+                    `create_time` in
+                    <foreach collection="createTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="createTimeSt !=null">
+                    `create_time` >= #{createTimeSt} and
+                </if>
+                <if test="createTimeEd!=null">
+                    `create_time` &lt;= #{createTimeEd} and
+                </if>
+                <if test="endTimeList != null">
+                    `end_time` in
+                    <foreach collection="endTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="endTimeSt !=null">
+                    `end_time` >= #{endTimeSt} and
+                </if>
+                <if test="endTimeEd!=null">
+                    `end_time` &lt;= #{endTimeEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="querySnapUpLimit1" resultMap="SnapUpMap">
+        select
+        <include refid="baseResult"></include>
+        from  `snap_up`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="snapUpId != null">
+                `snap_up_id` = #{snapUpId} and
+            </if>
+            <if test="productId != null">
+                `product_id` = #{productId} and
+            </if>
+            <if test="price != null">
+                `price` = #{price} and
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime} and
+            </if>
+            <if test="endTime != null">
+                `end_time` = #{endTime} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.SnapUp$QueryBuilder) == true">
+                    <if test="snapUpIdList != null">
+                        `snap_up_id` in
+                        <foreach collection="snapUpIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="snapUpIdSt !=null">
+                    `snap_up_id` >= #{snapUpIdSt} and
+                </if>
+                <if test="snapUpIdEd!=null">
+                    `snap_up_id` &lt;= #{snapUpIdEd} and
+                </if>
+                    <if test="productIdList != null">
+                        `product_id` in
+                        <foreach collection="productIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="productIdSt !=null">
+                    `product_id` >= #{productIdSt} and
+                </if>
+                <if test="productIdEd!=null">
+                    `product_id` &lt;= #{productIdEd} and
+                </if>
+                    <if test="priceList != null">
+                        `price` in
+                        <foreach collection="priceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="priceSt !=null">
+                    `price` >= #{priceSt} and
+                </if>
+                <if test="priceEd!=null">
+                    `price` &lt;= #{priceEd} and
+                </if>
+                    <if test="createTimeList != null">
+                        `create_time` in
+                        <foreach collection="createTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="createTimeSt !=null">
+                    `create_time` >= #{createTimeSt} and
+                </if>
+                <if test="createTimeEd!=null">
+                    `create_time` &lt;= #{createTimeEd} and
+                </if>
+                    <if test="endTimeList != null">
+                        `end_time` in
+                        <foreach collection="endTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="endTimeSt !=null">
+                    `end_time` >= #{endTimeSt} and
+                </if>
+                <if test="endTimeEd!=null">
+                    `end_time` &lt;= #{endTimeEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `snap_up_id`,
+        `product_id`,
+        `price`,
+        `create_time`,
+        `end_time`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.teenyda.dao.SnapUp$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.snapUpId==true">
+                        `snap_up_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.productId==true">
+                        `product_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.price==true">
+                        `price`,
+                    </if>
+                    <if test="fetchFields.fetchFields.createTime==true">
+                        `create_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.endTime==true">
+                        `end_time`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.snapUpId==null">
+                        `snap_up_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.productId==null">
+                        `product_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.price==null">
+                        `price`,
+                    </if>
+                    <if test="fetchFields.excludeFields.createTime==null">
+                        `create_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.endTime==null">
+                        `end_time`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.teenyda.dao.SnapUp$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

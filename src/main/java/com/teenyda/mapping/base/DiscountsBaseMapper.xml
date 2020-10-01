@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.mapping.base.DiscountsBaseMapper">
+
+
+    <insert id="insertDiscounts"  useGeneratedKeys="true" keyProperty="discountsId">
+        INSERT INTO `discounts`
+        (
+        <trim suffixOverrides=",">
+                    <if test="discountsId!=null">
+                        `discounts_id`,
+                    </if>
+                    <if test="discountsCategoryId!=null">
+                        `discounts_category_id`,
+                    </if>
+                    <if test="explain!=null">
+                        `explain`,
+                    </if>
+                    <if test="conditions!=null">
+                        `conditions`,
+                    </if>
+                    <if test="conditionsExplain!=null">
+                        `conditions_explain`,
+                    </if>
+                    <if test="discounts!=null">
+                        `discounts`,
+                    </if>
+                    <if test="members!=null">
+                        `members`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="discountsId!=null">
+                    #{discountsId},
+                </if>
+                <if test="discountsCategoryId!=null">
+                    #{discountsCategoryId},
+                </if>
+                <if test="explain!=null">
+                    #{explain},
+                </if>
+                <if test="conditions!=null">
+                    #{conditions},
+                </if>
+                <if test="conditionsExplain!=null">
+                    #{conditionsExplain},
+                </if>
+                <if test="discounts!=null">
+                    #{discounts},
+                </if>
+                <if test="members!=null">
+                    #{members},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateDiscounts">
+        UPDATE `discounts`
+        SET
+        <trim suffixOverrides=",">
+            <if test="discountsCategoryId != null">
+                `discounts_category_id` = #{discountsCategoryId},
+            </if>
+            <if test="explain != null and explain!=''">
+                `explain` = #{explain},
+            </if>
+            <if test="conditions != null">
+                `conditions` = #{conditions},
+            </if>
+            <if test="conditionsExplain != null and conditionsExplain!=''">
+                `conditions_explain` = #{conditionsExplain},
+            </if>
+            <if test="discounts != null and discounts!=''">
+                `discounts` = #{discounts},
+            </if>
+            <if test="members != null">
+                `members` = #{members},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `discounts_id` = #{discountsId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `discounts`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.discountsCategoryId != null">
+            `discounts_category_id` = #{set.discountsCategoryId},
+        </if>
+        <if test="set.explain != null and set.explain!=''">
+            `explain` = #{set.explain},
+        </if>
+        <if test="set.conditions != null">
+            `conditions` = #{set.conditions},
+        </if>
+        <if test="set.conditionsExplain != null and set.conditionsExplain!=''">
+            `conditions_explain` = #{set.conditionsExplain},
+        </if>
+        <if test="set.discounts != null and set.discounts!=''">
+            `discounts` = #{set.discounts},
+        </if>
+        <if test="set.members != null">
+            `members` = #{set.members},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.discountsIdList != null">
+                    `discounts_id` in
+                    <foreach collection="where.discountsIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.discountsIdSt !=null">
+                `discounts_id` >= #{where.discountsIdSt} and
+            </if>
+            <if test="where.discountsIdEd!=null">
+                `discounts_id` &lt;= #{where.discountsIdEd} and
+            </if>
+                <if test="where.discountsCategoryIdList != null">
+                    `discounts_category_id` in
+                    <foreach collection="where.discountsCategoryIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.discountsCategoryIdSt !=null">
+                `discounts_category_id` >= #{where.discountsCategoryIdSt} and
+            </if>
+            <if test="where.discountsCategoryIdEd!=null">
+                `discounts_category_id` &lt;= #{where.discountsCategoryIdEd} and
+            </if>
+                <if test="where.explainList != null">
+                    `explain` in
+                    <foreach collection="where.explainList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyExplain!=null and where.fuzzyExplain.size()>0">
+                (
+                <foreach collection="where.fuzzyExplain"  separator="or" item="item">
+                    `Explain` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyExplain!=null and where.rightFuzzyExplain.size()>0">
+                (
+                <foreach collection="where.rightFuzzyExplain"  separator="or" item="item">
+                    `Explain` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.conditionsList != null">
+                    `conditions` in
+                    <foreach collection="where.conditionsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.conditionsSt !=null">
+                `conditions` >= #{where.conditionsSt} and
+            </if>
+            <if test="where.conditionsEd!=null">
+                `conditions` &lt;= #{where.conditionsEd} and
+            </if>
+                <if test="where.conditionsExplainList != null">
+                    `conditions_explain` in
+                    <foreach collection="where.conditionsExplainList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyConditionsExplain!=null and where.fuzzyConditionsExplain.size()>0">
+                (
+                <foreach collection="where.fuzzyConditionsExplain"  separator="or" item="item">
+                    `Conditions_explain` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyConditionsExplain!=null and where.rightFuzzyConditionsExplain.size()>0">
+                (
+                <foreach collection="where.rightFuzzyConditionsExplain"  separator="or" item="item">
+                    `Conditions_explain` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.discountsList != null">
+                    `discounts` in
+                    <foreach collection="where.discountsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDiscounts!=null and where.fuzzyDiscounts.size()>0">
+                (
+                <foreach collection="where.fuzzyDiscounts"  separator="or" item="item">
+                    `Discounts` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDiscounts!=null and where.rightFuzzyDiscounts.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDiscounts"  separator="or" item="item">
+                    `Discounts` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.membersList != null">
+                    `members` in
+                    <foreach collection="where.membersList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.membersSt !=null">
+                `members` >= #{where.membersSt} and
+            </if>
+            <if test="where.membersEd!=null">
+                `members` &lt;= #{where.membersEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.teenyda.dao.Discounts" id="DiscountsMap">
+        <result property="discountsId" column="discounts_id"/>
+        <result property="discountsCategoryId" column="discounts_category_id"/>
+        <result property="explain" column="explain"/>
+        <result property="conditions" column="conditions"/>
+        <result property="conditionsExplain" column="conditions_explain"/>
+        <result property="discounts" column="discounts"/>
+        <result property="members" column="members"/>
+    </resultMap>
+
+
+    <select id="queryDiscounts" resultMap="DiscountsMap">
+        select
+        <include refid="baseResult"></include>
+        from  `discounts`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="discountsId != null">
+                `discounts_id` = #{discountsId} and
+            </if>
+            <if test="discountsCategoryId != null">
+                `discounts_category_id` = #{discountsCategoryId} and
+            </if>
+            <if test="explain != null and explain!=''">
+                `explain` = #{explain} and
+            </if>
+            <if test="conditions != null">
+                `conditions` = #{conditions} and
+            </if>
+            <if test="conditionsExplain != null and conditionsExplain!=''">
+                `conditions_explain` = #{conditionsExplain} and
+            </if>
+            <if test="discounts != null and discounts!=''">
+                `discounts` = #{discounts} and
+            </if>
+            <if test="members != null">
+                `members` = #{members} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.Discounts$QueryBuilder) == true">
+                <if test="discountsIdList != null">
+                    `discounts_id` in
+                    <foreach collection="discountsIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="discountsIdSt !=null">
+                    `discounts_id` >= #{discountsIdSt} and
+                </if>
+                <if test="discountsIdEd!=null">
+                    `discounts_id` &lt;= #{discountsIdEd} and
+                </if>
+                <if test="discountsCategoryIdList != null">
+                    `discounts_category_id` in
+                    <foreach collection="discountsCategoryIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="discountsCategoryIdSt !=null">
+                    `discounts_category_id` >= #{discountsCategoryIdSt} and
+                </if>
+                <if test="discountsCategoryIdEd!=null">
+                    `discounts_category_id` &lt;= #{discountsCategoryIdEd} and
+                </if>
+                <if test="explainList != null">
+                    `explain` in
+                    <foreach collection="explainList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyExplain!=null and fuzzyExplain.size()>0">
+                    (
+                    <foreach collection="fuzzyExplain"  separator="or" item="item">
+                        `Explain` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyExplain!=null and rightFuzzyExplain.size()>0">
+                    (
+                    <foreach collection="rightFuzzyExplain"  separator="or" item="item">
+                        `Explain` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="conditionsList != null">
+                    `conditions` in
+                    <foreach collection="conditionsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="conditionsSt !=null">
+                    `conditions` >= #{conditionsSt} and
+                </if>
+                <if test="conditionsEd!=null">
+                    `conditions` &lt;= #{conditionsEd} and
+                </if>
+                <if test="conditionsExplainList != null">
+                    `conditions_explain` in
+                    <foreach collection="conditionsExplainList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyConditionsExplain!=null and fuzzyConditionsExplain.size()>0">
+                    (
+                    <foreach collection="fuzzyConditionsExplain"  separator="or" item="item">
+                        `Conditions_explain` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyConditionsExplain!=null and rightFuzzyConditionsExplain.size()>0">
+                    (
+                    <foreach collection="rightFuzzyConditionsExplain"  separator="or" item="item">
+                        `Conditions_explain` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="discountsList != null">
+                    `discounts` in
+                    <foreach collection="discountsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDiscounts!=null and fuzzyDiscounts.size()>0">
+                    (
+                    <foreach collection="fuzzyDiscounts"  separator="or" item="item">
+                        `Discounts` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDiscounts!=null and rightFuzzyDiscounts.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDiscounts"  separator="or" item="item">
+                        `Discounts` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="membersList != null">
+                    `members` in
+                    <foreach collection="membersList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="membersSt !=null">
+                    `members` >= #{membersSt} and
+                </if>
+                <if test="membersEd!=null">
+                    `members` &lt;= #{membersEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryDiscountsLimit1" resultMap="DiscountsMap">
+        select
+        <include refid="baseResult"></include>
+        from  `discounts`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="discountsId != null">
+                `discounts_id` = #{discountsId} and
+            </if>
+            <if test="discountsCategoryId != null">
+                `discounts_category_id` = #{discountsCategoryId} and
+            </if>
+            <if test="explain != null and explain!=''">
+                `explain` = #{explain} and
+            </if>
+            <if test="conditions != null">
+                `conditions` = #{conditions} and
+            </if>
+            <if test="conditionsExplain != null and conditionsExplain!=''">
+                `conditions_explain` = #{conditionsExplain} and
+            </if>
+            <if test="discounts != null and discounts!=''">
+                `discounts` = #{discounts} and
+            </if>
+            <if test="members != null">
+                `members` = #{members} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.Discounts$QueryBuilder) == true">
+                    <if test="discountsIdList != null">
+                        `discounts_id` in
+                        <foreach collection="discountsIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="discountsIdSt !=null">
+                    `discounts_id` >= #{discountsIdSt} and
+                </if>
+                <if test="discountsIdEd!=null">
+                    `discounts_id` &lt;= #{discountsIdEd} and
+                </if>
+                    <if test="discountsCategoryIdList != null">
+                        `discounts_category_id` in
+                        <foreach collection="discountsCategoryIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="discountsCategoryIdSt !=null">
+                    `discounts_category_id` >= #{discountsCategoryIdSt} and
+                </if>
+                <if test="discountsCategoryIdEd!=null">
+                    `discounts_category_id` &lt;= #{discountsCategoryIdEd} and
+                </if>
+                    <if test="explainList != null">
+                        `explain` in
+                        <foreach collection="explainList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyExplain!=null and fuzzyExplain.size()>0">
+                    (
+                    <foreach collection="fuzzyExplain"  separator="or" item="item">
+                        `Explain` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyExplain!=null and rightFuzzyExplain.size()>0">
+                    (
+                    <foreach collection="rightFuzzyExplain"  separator="or" item="item">
+                        `Explain` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="conditionsList != null">
+                        `conditions` in
+                        <foreach collection="conditionsList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="conditionsSt !=null">
+                    `conditions` >= #{conditionsSt} and
+                </if>
+                <if test="conditionsEd!=null">
+                    `conditions` &lt;= #{conditionsEd} and
+                </if>
+                    <if test="conditionsExplainList != null">
+                        `conditions_explain` in
+                        <foreach collection="conditionsExplainList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyConditionsExplain!=null and fuzzyConditionsExplain.size()>0">
+                    (
+                    <foreach collection="fuzzyConditionsExplain"  separator="or" item="item">
+                        `Conditions_explain` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyConditionsExplain!=null and rightFuzzyConditionsExplain.size()>0">
+                    (
+                    <foreach collection="rightFuzzyConditionsExplain"  separator="or" item="item">
+                        `Conditions_explain` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="discountsList != null">
+                        `discounts` in
+                        <foreach collection="discountsList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDiscounts!=null and fuzzyDiscounts.size()>0">
+                    (
+                    <foreach collection="fuzzyDiscounts"  separator="or" item="item">
+                        `Discounts` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDiscounts!=null and rightFuzzyDiscounts.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDiscounts"  separator="or" item="item">
+                        `Discounts` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="membersList != null">
+                        `members` in
+                        <foreach collection="membersList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="membersSt !=null">
+                    `members` >= #{membersSt} and
+                </if>
+                <if test="membersEd!=null">
+                    `members` &lt;= #{membersEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `discounts_id`,
+        `discounts_category_id`,
+        `explain`,
+        `conditions`,
+        `conditions_explain`,
+        `discounts`,
+        `members`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.teenyda.dao.Discounts$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.discountsId==true">
+                        `discounts_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.discountsCategoryId==true">
+                        `discounts_category_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.explain==true">
+                        `explain`,
+                    </if>
+                    <if test="fetchFields.fetchFields.conditions==true">
+                        `conditions`,
+                    </if>
+                    <if test="fetchFields.fetchFields.conditionsExplain==true">
+                        `conditions_explain`,
+                    </if>
+                    <if test="fetchFields.fetchFields.discounts==true">
+                        `discounts`,
+                    </if>
+                    <if test="fetchFields.fetchFields.members==true">
+                        `members`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.discountsId==null">
+                        `discounts_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.discountsCategoryId==null">
+                        `discounts_category_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.explain==null">
+                        `explain`,
+                    </if>
+                    <if test="fetchFields.excludeFields.conditions==null">
+                        `conditions`,
+                    </if>
+                    <if test="fetchFields.excludeFields.conditionsExplain==null">
+                        `conditions_explain`,
+                    </if>
+                    <if test="fetchFields.excludeFields.discounts==null">
+                        `discounts`,
+                    </if>
+                    <if test="fetchFields.excludeFields.members==null">
+                        `members`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.teenyda.dao.Discounts$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

@@ -25,11 +25,11 @@
         </javaModelGenerator>
 
         <!-- 生成映射文件的包名和位置-->
-        <sqlMapGenerator targetPackage="com.teenyda.mapper" targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="com.teenyda.mapping" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成mapper位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.teenyda.mapper" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.teenyda.mapping" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 

@@ -113,3 +113,15 @@ public void setPort(String port){
 >
 > bookName ×
 
+# mybatis-generoter
+https://gitee.com/rohou/mybatis-generator?_from=gitee_search
+
+自定义生成mybatis ，可以自己控制模板
+
+db目录下的main文件运行即可
+
+借鉴 Mybatis-generator的思想
+
+insert、update、query生成 主键查询生成XXXById
+
+自由控制sql的返回的属性集，通过fetchXXX，或者excludeXXX控制 通过Builder构建查询

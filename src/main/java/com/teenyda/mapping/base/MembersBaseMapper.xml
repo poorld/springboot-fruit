@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.mapping.base.MembersBaseMapper">
+
+
+    <insert id="insertMembers"  useGeneratedKeys="true" keyProperty="membersId">
+        INSERT INTO `members`
+        (
+        <trim suffixOverrides=",">
+                    <if test="membersId!=null">
+                        `members_id`,
+                    </if>
+                    <if test="name!=null">
+                        `name`,
+                    </if>
+                    <if test="level!=null">
+                        `level`,
+                    </if>
+                    <if test="discount!=null">
+                        `discount`,
+                    </if>
+                    <if test="distribution!=null">
+                        `distribution`,
+                    </if>
+                    <if test="topup!=null">
+                        `topup`,
+                    </if>
+                    <if test="price!=null">
+                        `price`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="membersId!=null">
+                    #{membersId},
+                </if>
+                <if test="name!=null">
+                    #{name},
+                </if>
+                <if test="level!=null">
+                    #{level},
+                </if>
+                <if test="discount!=null">
+                    #{discount},
+                </if>
+                <if test="distribution!=null">
+                    #{distribution},
+                </if>
+                <if test="topup!=null">
+                    #{topup},
+                </if>
+                <if test="price!=null">
+                    #{price},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateMembers">
+        UPDATE `members`
+        SET
+        <trim suffixOverrides=",">
+            <if test="name != null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="level != null">
+                `level` = #{level},
+            </if>
+            <if test="discount != null">
+                `discount` = #{discount},
+            </if>
+            <if test="distribution != null">
+                `distribution` = #{distribution},
+            </if>
+            <if test="topup != null">
+                `topup` = #{topup},
+            </if>
+            <if test="price != null">
+                `price` = #{price},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `members_id` = #{membersId} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `members`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.name != null and set.name!=''">
+            `name` = #{set.name},
+        </if>
+        <if test="set.level != null">
+            `level` = #{set.level},
+        </if>
+        <if test="set.discount != null">
+            `discount` = #{set.discount},
+        </if>
+        <if test="set.distribution != null">
+            `distribution` = #{set.distribution},
+        </if>
+        <if test="set.topup != null">
+            `topup` = #{set.topup},
+        </if>
+        <if test="set.price != null">
+            `price` = #{set.price},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.membersIdList != null">
+                    `members_id` in
+                    <foreach collection="where.membersIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.membersIdSt !=null">
+                `members_id` >= #{where.membersIdSt} and
+            </if>
+            <if test="where.membersIdEd!=null">
+                `members_id` &lt;= #{where.membersIdEd} and
+            </if>
+                <if test="where.nameList != null">
+                    `name` in
+                    <foreach collection="where.nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyName!=null and where.fuzzyName.size()>0">
+                (
+                <foreach collection="where.fuzzyName"  separator="or" item="item">
+                    `Name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyName!=null and where.rightFuzzyName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyName"  separator="or" item="item">
+                    `Name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.levelList != null">
+                    `level` in
+                    <foreach collection="where.levelList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.levelSt !=null">
+                `level` >= #{where.levelSt} and
+            </if>
+            <if test="where.levelEd!=null">
+                `level` &lt;= #{where.levelEd} and
+            </if>
+                <if test="where.discountList != null">
+                    `discount` in
+                    <foreach collection="where.discountList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.discountSt !=null">
+                `discount` >= #{where.discountSt} and
+            </if>
+            <if test="where.discountEd!=null">
+                `discount` &lt;= #{where.discountEd} and
+            </if>
+                <if test="where.distributionList != null">
+                    `distribution` in
+                    <foreach collection="where.distributionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.distributionSt !=null">
+                `distribution` >= #{where.distributionSt} and
+            </if>
+            <if test="where.distributionEd!=null">
+                `distribution` &lt;= #{where.distributionEd} and
+            </if>
+                <if test="where.topupList != null">
+                    `topup` in
+                    <foreach collection="where.topupList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.topupSt !=null">
+                `topup` >= #{where.topupSt} and
+            </if>
+            <if test="where.topupEd!=null">
+                `topup` &lt;= #{where.topupEd} and
+            </if>
+                <if test="where.priceList != null">
+                    `price` in
+                    <foreach collection="where.priceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.priceSt !=null">
+                `price` >= #{where.priceSt} and
+            </if>
+            <if test="where.priceEd!=null">
+                `price` &lt;= #{where.priceEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.teenyda.dao.Members" id="MembersMap">
+        <result property="membersId" column="members_id"/>
+        <result property="name" column="name"/>
+        <result property="level" column="level"/>
+        <result property="discount" column="discount"/>
+        <result property="distribution" column="distribution"/>
+        <result property="topup" column="topup"/>
+        <result property="price" column="price"/>
+    </resultMap>
+
+
+    <select id="queryMembers" resultMap="MembersMap">
+        select
+        <include refid="baseResult"></include>
+        from  `members`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="membersId != null">
+                `members_id` = #{membersId} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="level != null">
+                `level` = #{level} and
+            </if>
+            <if test="discount != null">
+                `discount` = #{discount} and
+            </if>
+            <if test="distribution != null">
+                `distribution` = #{distribution} and
+            </if>
+            <if test="topup != null">
+                `topup` = #{topup} and
+            </if>
+            <if test="price != null">
+                `price` = #{price} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.Members$QueryBuilder) == true">
+                <if test="membersIdList != null">
+                    `members_id` in
+                    <foreach collection="membersIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="membersIdSt !=null">
+                    `members_id` >= #{membersIdSt} and
+                </if>
+                <if test="membersIdEd!=null">
+                    `members_id` &lt;= #{membersIdEd} and
+                </if>
+                <if test="nameList != null">
+                    `name` in
+                    <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="levelList != null">
+                    `level` in
+                    <foreach collection="levelList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="levelSt !=null">
+                    `level` >= #{levelSt} and
+                </if>
+                <if test="levelEd!=null">
+                    `level` &lt;= #{levelEd} and
+                </if>
+                <if test="discountList != null">
+                    `discount` in
+                    <foreach collection="discountList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="discountSt !=null">
+                    `discount` >= #{discountSt} and
+                </if>
+                <if test="discountEd!=null">
+                    `discount` &lt;= #{discountEd} and
+                </if>
+                <if test="distributionList != null">
+                    `distribution` in
+                    <foreach collection="distributionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="distributionSt !=null">
+                    `distribution` >= #{distributionSt} and
+                </if>
+                <if test="distributionEd!=null">
+                    `distribution` &lt;= #{distributionEd} and
+                </if>
+                <if test="topupList != null">
+                    `topup` in
+                    <foreach collection="topupList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="topupSt !=null">
+                    `topup` >= #{topupSt} and
+                </if>
+                <if test="topupEd!=null">
+                    `topup` &lt;= #{topupEd} and
+                </if>
+                <if test="priceList != null">
+                    `price` in
+                    <foreach collection="priceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="priceSt !=null">
+                    `price` >= #{priceSt} and
+                </if>
+                <if test="priceEd!=null">
+                    `price` &lt;= #{priceEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryMembersLimit1" resultMap="MembersMap">
+        select
+        <include refid="baseResult"></include>
+        from  `members`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="membersId != null">
+                `members_id` = #{membersId} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="level != null">
+                `level` = #{level} and
+            </if>
+            <if test="discount != null">
+                `discount` = #{discount} and
+            </if>
+            <if test="distribution != null">
+                `distribution` = #{distribution} and
+            </if>
+            <if test="topup != null">
+                `topup` = #{topup} and
+            </if>
+            <if test="price != null">
+                `price` = #{price} and
+            </if>
+            <if test = "(_parameter instanceof com.teenyda.dao.Members$QueryBuilder) == true">
+                    <if test="membersIdList != null">
+                        `members_id` in
+                        <foreach collection="membersIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="membersIdSt !=null">
+                    `members_id` >= #{membersIdSt} and
+                </if>
+                <if test="membersIdEd!=null">
+                    `members_id` &lt;= #{membersIdEd} and
+                </if>
+                    <if test="nameList != null">
+                        `name` in
+                        <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="levelList != null">
+                        `level` in
+                        <foreach collection="levelList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="levelSt !=null">
+                    `level` >= #{levelSt} and
+                </if>
+                <if test="levelEd!=null">
+                    `level` &lt;= #{levelEd} and
+                </if>
+                    <if test="discountList != null">
+                        `discount` in
+                        <foreach collection="discountList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="discountSt !=null">
+                    `discount` >= #{discountSt} and
+                </if>
+                <if test="discountEd!=null">
+                    `discount` &lt;= #{discountEd} and
+                </if>
+                    <if test="distributionList != null">
+                        `distribution` in
+                        <foreach collection="distributionList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="distributionSt !=null">
+                    `distribution` >= #{distributionSt} and
+                </if>
+                <if test="distributionEd!=null">
+                    `distribution` &lt;= #{distributionEd} and
+                </if>
+                    <if test="topupList != null">
+                        `topup` in
+                        <foreach collection="topupList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="topupSt !=null">
+                    `topup` >= #{topupSt} and
+                </if>
+                <if test="topupEd!=null">
+                    `topup` &lt;= #{topupEd} and
+                </if>
+                    <if test="priceList != null">
+                        `price` in
+                        <foreach collection="priceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="priceSt !=null">
+                    `price` >= #{priceSt} and
+                </if>
+                <if test="priceEd!=null">
+                    `price` &lt;= #{priceEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `members_id`,
+        `name`,
+        `level`,
+        `discount`,
+        `distribution`,
+        `topup`,
+        `price`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.teenyda.dao.Members$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.membersId==true">
+                        `members_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.name==true">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.level==true">
+                        `level`,
+                    </if>
+                    <if test="fetchFields.fetchFields.discount==true">
+                        `discount`,
+                    </if>
+                    <if test="fetchFields.fetchFields.distribution==true">
+                        `distribution`,
+                    </if>
+                    <if test="fetchFields.fetchFields.topup==true">
+                        `topup`,
+                    </if>
+                    <if test="fetchFields.fetchFields.price==true">
+                        `price`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.membersId==null">
+                        `members_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.name==null">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.level==null">
+                        `level`,
+                    </if>
+                    <if test="fetchFields.excludeFields.discount==null">
+                        `discount`,
+                    </if>
+                    <if test="fetchFields.excludeFields.distribution==null">
+                        `distribution`,
+                    </if>
+                    <if test="fetchFields.excludeFields.topup==null">
+                        `topup`,
+                    </if>
+                    <if test="fetchFields.excludeFields.price==null">
+                        `price`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.teenyda.dao.Members$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
