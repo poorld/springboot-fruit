@@ -38,13 +38,13 @@ public class ResponseAspect {
         HttpServletRequest request = attributes.getRequest();
 
 
-        log.info("------------------header--------------------");
+        log.info("\n------------------request header--------------------");
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String name = headerNames.nextElement();
             log.info("|" + name + ":" + request.getHeader(name));
         }
-        log.info("------------------header--------------------");
+        log.info("------------------request header----------------------");
 
         //url
         log.info("url={}", request.getRequestURL());
@@ -60,6 +60,7 @@ public class ResponseAspect {
 
         //参数
         log.info("args={}", joinPoint.getArgs());
+        log.info("--------------------request end-----------------------");
     }
 
     @After("printInfo()")

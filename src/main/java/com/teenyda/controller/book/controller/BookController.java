@@ -59,6 +59,16 @@ public class BookController extends AbstractApiController {
         return responseSuccessJson(list);
     }
 
+    @PostMapping("/book")
+    public ResultBody<BookDto> addBook(@RequestBody BookDto bookDto) {
+        // @RequestBody BookDto bookDto
+        log.info("BookDto={}", bookDto);
+        // return getProxyObject().responseSuccessJson(bookDto);
+        // return responseSuccessJson(bookDto);
+        log.info("BookDto");
+        return responseSuccessJson(bookDto);
+    }
+
     /**
      * aop测试
      * 加@RequestBody会获取不到参数，并提示

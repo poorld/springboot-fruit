@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,28 +17,26 @@ import javax.servlet.http.HttpServletRequest;
  * @Email teenyda@gmail.com
  */
 @RestControllerAdvice
+@ResponseBody
 public class GlobalErrorInfoHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalErrorInfoHandler.class);
 
     @ExceptionHandler(value = GlobalErrorInfoException.class)
-    public ResultBody globalErrorInfoHandler(HttpServletRequest req,GlobalErrorInfoException e){
+    public ResultBody<String> globalErrorInfoHandler(HttpServletRequest req,GlobalErrorInfoException e){
         LOGGER.error(e.getMessage());
-        ResultBody resultBody = ResultUtil.error(e.getErrorInfo());
-        return resultBody;
+        return ResultUtil.error(e.getErrorInfo());
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    public ResultBody requestMethodNotSupport(HttpServletRequest req,HttpRequestMethodNotSupportedException e) {
+    public ResultBody<String>  requestMethodNotSupport(HttpServletRequest req,HttpRequestMethodNotSupportedException e) {
         LOGGER.error(e.getMessage());
-        ResultBody error = ResultUtil.error(GlobalResponseInfoEnum.ERROR, e.getMessage());
-        return error;
+        return ResultUtil.error(GlobalResponseInfoEnum.ERROR, e.getMessage());
     }
 
     @ExceptionHandler(value = Exception.class)
-    public ResultBody otherErrorInfoHandler(Exception e) {
+    public ResultBody<String> otherErrorInfoHandler(Exception e) {
         LOGGER.error(e.getMessage());
-        ResultBody error = ResultUtil.error(GlobalResponseInfoEnum.ERROR, e.getMessage());
-        return error;
+        return ResultUtil.error(GlobalResponseInfoEnum.ERROR, e.getMessage());
     }
 }
