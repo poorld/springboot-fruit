@@ -19,7 +19,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 // aop
 // @EnableAspectJAutoProxy
 
-// @ComponentScan("com.teenyda.*")
+// @ComponentScan("com.teenyda.dao")
 
 // 解决Property 'sqlSessionFactory' or 'sqlSessionTemplate' are required
 @EnableAutoConfiguration

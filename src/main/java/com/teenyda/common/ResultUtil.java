@@ -7,8 +7,16 @@ package com.teenyda.common;
  */
 public class ResultUtil {
 
+    public static <T>  ResultBody<T> success() {
+        return success(GlobalResponseInfoEnum.SUCCESS, null);
+    }
+
     public static <T>  ResultBody<T> success(ResponseInfoInterface errorInfo) {
         return success(errorInfo, null);
+    }
+
+    public static <T>  ResultBody<T> success(T data) {
+        return success(GlobalResponseInfoEnum.SUCCESS, data);
     }
 
     public static <T> ResultBody<T> success(ResponseInfoInterface errorInfo, T data) {
@@ -19,6 +27,11 @@ public class ResultUtil {
         return new ResultBody<>(errorInfo);
     }
 
+
+    public static <T> ResultBody<T> success(ResponseInfoInterface errorInfo, String explain){
+        errorInfo.setExplain(explain);
+        return new ResultBody<>(errorInfo);
+    }
     public static <T> ResultBody<T> error(ResponseInfoInterface errorInfo, String explain){
         errorInfo.setExplain(explain);
         return new ResultBody<>(errorInfo);

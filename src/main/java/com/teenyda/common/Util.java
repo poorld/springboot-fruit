@@ -1,5 +1,6 @@
 package com.teenyda.common;
 
+import com.power.common.util.DateTimeUtil;
 import com.power.common.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -9,6 +10,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.FileNotFoundException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 
 /**
  * @Author Administrator
@@ -73,6 +75,10 @@ public class Util {
      */
     public static String getUUID() {
         return UUIDUtil.getUuid32();
+    }
+
+    public static String getNowDate(){
+        return DateTimeUtil.nowStrTime();
     }
 
 }

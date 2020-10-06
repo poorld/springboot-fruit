@@ -6,5 +6,5 @@ import com.teenyda.mapping.base.ProductCategoryBaseMapper;
 */
 public interface ProductCategoryMapper extends ProductCategoryBaseMapper{
 
-
+    int deleteProductCategory(Integer id);
 }

@@ -1,4 +1,7 @@
 package com.teenyda.dao;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +11,8 @@ import java.util.List;
 *
 *  @author mymx.banner
 */
+
+@Component
 public class ProductCategory implements Serializable {
 
     private static final long serialVersionUID = 1601518176547L;

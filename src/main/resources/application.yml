@@ -46,3 +46,8 @@ file:
 mybatis:
     mapper-locations: com.teenyda.mapping.base/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
     type-aliases-package: com.teenyda.dao  # 注意：对应实体类的路径
+
+
+logging:
+    level:
+        com.teenyda.mapping: debug  # com.eth.wallet.mapper 根据你的项目设定
