@@ -1,7 +1,9 @@
 package com.teenyda.controller.category.service;
 
+import com.teenyda.controller.category.dto.CategoryDto;
 import com.teenyda.dao.ProductCategory;
 import com.teenyda.mapping.ProductCategoryMapper;
+import com.teenyda.utils.CloneBeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +43,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<ProductCategory> getCategorys() {
-        return mapper.queryProductCategory(null);
+    public List<CategoryDto> getCategorys() {
+        List<ProductCategory> categories = mapper.queryProductCategory(null);
+        return CloneBeanUtils.copyListProperties(categories, CategoryDto::new);
     }
 }

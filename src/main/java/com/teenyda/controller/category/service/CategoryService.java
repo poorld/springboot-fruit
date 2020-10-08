@@ -1,5 +1,6 @@
 package com.teenyda.controller.category.service;
 
+import com.teenyda.controller.category.dto.CategoryDto;
 import com.teenyda.dao.ProductCategory;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface CategoryService {
 
     ProductCategory getCategoryById(ProductCategory categoryId);
 
-    List<ProductCategory> getCategorys();
+    List<CategoryDto> getCategorys();
 }
