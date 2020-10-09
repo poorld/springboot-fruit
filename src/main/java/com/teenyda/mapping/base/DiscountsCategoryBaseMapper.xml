@@ -115,7 +115,7 @@
     </update>
 
 
-    <resultMap type="com.teenyda.dao.DiscountsCategory" id="DiscountsCategoryMap">
+    <resultMap type="com.teenyda.domain.DiscountsCategory" id="DiscountsCategoryMap">
         <result property="discountsCategoryId" column="discounts_category_id"/>
         <result property="discountsType" column="discounts_type"/>
         <result property="discountsFlag" column="discounts_flag"/>
@@ -136,7 +136,7 @@
             <if test="discountsFlag != null">
                 `discounts_flag` = #{discountsFlag} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.DiscountsCategory$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.DiscountsCategory$QueryBuilder) == true">
                 <if test="discountsCategoryIdList != null">
                     `discounts_category_id` in
                     <foreach collection="discountsCategoryIdList" close=")" open="(" separator="," item="item">
@@ -199,7 +199,7 @@
             <if test="discountsFlag != null">
                 `discounts_flag` = #{discountsFlag} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.DiscountsCategory$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.DiscountsCategory$QueryBuilder) == true">
                     <if test="discountsCategoryIdList != null">
                         `discounts_category_id` in
                         <foreach collection="discountsCategoryIdList" close=")" open="(" separator="," item="item">
@@ -261,7 +261,7 @@
 
     <sql id="baseResult">
         <trim suffixOverrides=",">
-            <if test = "(_parameter instanceof com.teenyda.dao.DiscountsCategory$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.DiscountsCategory$QueryBuilder) == true">
 
                 <if test="fetchFields==null">
                     <include refid="allResult"></include>
@@ -302,7 +302,7 @@
                     </if>
                 </if>
             </if>
-            <if test="(_parameter instanceof com.teenyda.dao.DiscountsCategory$QueryBuilder) == false" >
+            <if test="(_parameter instanceof com.teenyda.domain.DiscountsCategory$QueryBuilder) == false" >
                 <include refid="allResult"></include>
             </if>
 

@@ -139,7 +139,7 @@
     </update>
 
 
-    <resultMap type="com.teenyda.dao.Wallet" id="WalletMap">
+    <resultMap type="com.teenyda.domain.Wallet" id="WalletMap">
         <result property="walletId" column="wallet_id"/>
         <result property="userId" column="user_id"/>
         <result property="balance" column="balance"/>
@@ -164,7 +164,7 @@
             <if test="password != null and password!=''">
                 `password` = #{password} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.Wallet$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Wallet$QueryBuilder) == true">
                 <if test="walletIdList != null">
                     `wallet_id` in
                     <foreach collection="walletIdList" close=")" open="(" separator="," item="item">
@@ -242,7 +242,7 @@
             <if test="password != null and password!=''">
                 `password` = #{password} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.Wallet$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Wallet$QueryBuilder) == true">
                     <if test="walletIdList != null">
                         `wallet_id` in
                         <foreach collection="walletIdList" close=")" open="(" separator="," item="item">
@@ -317,7 +317,7 @@
 
     <sql id="baseResult">
         <trim suffixOverrides=",">
-            <if test = "(_parameter instanceof com.teenyda.dao.Wallet$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Wallet$QueryBuilder) == true">
 
                 <if test="fetchFields==null">
                     <include refid="allResult"></include>
@@ -364,7 +364,7 @@
                     </if>
                 </if>
             </if>
-            <if test="(_parameter instanceof com.teenyda.dao.Wallet$QueryBuilder) == false" >
+            <if test="(_parameter instanceof com.teenyda.domain.Wallet$QueryBuilder) == false" >
                 <include refid="allResult"></include>
             </if>
 

@@ -371,7 +371,7 @@
     </update>
 
 
-    <resultMap type="com.teenyda.dao.Product" id="ProductMap">
+    <resultMap type="com.teenyda.domain.Product" id="ProductMap">
         <result property="productId" column="product_id"/>
         <result property="productCategoryId" column="product_category_id"/>
         <result property="name" column="name"/>
@@ -432,7 +432,7 @@
             <if test="createUserId != null">
                 `create_user_id` = #{createUserId} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.Product$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Product$QueryBuilder) == true">
                 <if test="productIdList != null">
                     `product_id` in
                     <foreach collection="productIdList" close=")" open="(" separator="," item="item">
@@ -661,7 +661,7 @@
             <if test="createUserId != null">
                 `create_user_id` = #{createUserId} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.Product$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Product$QueryBuilder) == true">
                     <if test="productIdList != null">
                         `product_id` in
                         <foreach collection="productIdList" close=")" open="(" separator="," item="item">
@@ -869,7 +869,7 @@
 
     <sql id="baseResult">
         <trim suffixOverrides=",">
-            <if test = "(_parameter instanceof com.teenyda.dao.Product$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Product$QueryBuilder) == true">
 
                 <if test="fetchFields==null">
                     <include refid="allResult"></include>
@@ -970,7 +970,7 @@
                     </if>
                 </if>
             </if>
-            <if test="(_parameter instanceof com.teenyda.dao.Product$QueryBuilder) == false" >
+            <if test="(_parameter instanceof com.teenyda.domain.Product$QueryBuilder) == false" >
                 <include refid="allResult"></include>
             </if>
 

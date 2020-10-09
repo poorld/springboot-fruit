@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.dao.SpecDao">
+
+    <resultMap type="com.teenyda.entity.Spec" id="SpecMap">
+        <result property="specId" column="spec_id" jdbcType="INTEGER"/>
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="specName" column="spec_name" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SpecMap">
+        select
+          spec_id, product_id, spec_name, price, quantity
+        from fruit.spec
+        where spec_id = #{specId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SpecMap">
+        select
+          spec_id, product_id, spec_name, price, quantity
+        from fruit.spec
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SpecMap">
+        select
+        spec_id, product_id, spec_name, price, quantity
+        from fruit.spec
+        <where>
+            <if test="specId != null">
+                and spec_id = #{specId}
+            </if>
+            <if test="productId != null">
+                and product_id = #{productId}
+            </if>
+            <if test="specName != null and specName != ''">
+                and spec_name = #{specName}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="quantity != null">
+                and quantity = #{quantity}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="specId" useGeneratedKeys="true">
+        insert into fruit.spec(product_id, spec_name, price, quantity)
+        values (#{productId}, #{specName}, #{price}, #{quantity})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="specId" useGeneratedKeys="true">
+        insert into fruit.spec(product_id, spec_name, price, quantity)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.productId}, #{entity.specName}, #{entity.price}, #{entity.quantity})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="specId" useGeneratedKeys="true">
+        insert into fruit.spec(product_id, spec_name, price, quantity)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.productId}, #{entity.specName}, #{entity.price}, #{entity.quantity})
+        </foreach>
+        on duplicate key update
+        product_id = values(product_id) , spec_name = values(spec_name) , price = values(price) , quantity =
+        values(quantity)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fruit.spec
+        <set>
+            <if test="productId != null">
+                product_id = #{productId},
+            </if>
+            <if test="specName != null and specName != ''">
+                spec_name = #{specName},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity},
+            </if>
+        </set>
+        where spec_id = #{specId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from fruit.spec where spec_id = #{specId}
+    </delete>
+
+</mapper>

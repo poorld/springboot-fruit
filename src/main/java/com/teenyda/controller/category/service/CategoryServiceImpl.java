@@ -1,7 +1,7 @@
 package com.teenyda.controller.category.service;
 
 import com.teenyda.controller.category.dto.CategoryDto;
-import com.teenyda.dao.ProductCategory;
+import com.teenyda.domain.ProductCategory;
 import com.teenyda.mapping.ProductCategoryMapper;
 import com.teenyda.utils.CloneBeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

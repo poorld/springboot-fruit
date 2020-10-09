@@ -130,7 +130,7 @@
     </update>
 
 
-    <resultMap type="com.teenyda.dao.UserMember" id="UserMemberMap">
+    <resultMap type="com.teenyda.domain.UserMember" id="UserMemberMap">
         <result property="userId" column="user_id"/>
         <result property="membersId" column="members_id"/>
         <result property="startTime" column="start_time"/>
@@ -155,7 +155,7 @@
             <if test="endTime != null">
                 `end_time` = #{endTime} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.UserMember$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.UserMember$QueryBuilder) == true">
                 <if test="userIdList != null">
                     `user_id` in
                     <foreach collection="userIdList" close=")" open="(" separator="," item="item">
@@ -225,7 +225,7 @@
             <if test="endTime != null">
                 `end_time` = #{endTime} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.UserMember$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.UserMember$QueryBuilder) == true">
                     <if test="userIdList != null">
                         `user_id` in
                         <foreach collection="userIdList" close=")" open="(" separator="," item="item">
@@ -292,7 +292,7 @@
 
     <sql id="baseResult">
         <trim suffixOverrides=",">
-            <if test = "(_parameter instanceof com.teenyda.dao.UserMember$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.UserMember$QueryBuilder) == true">
 
                 <if test="fetchFields==null">
                     <include refid="allResult"></include>
@@ -339,7 +339,7 @@
                     </if>
                 </if>
             </if>
-            <if test="(_parameter instanceof com.teenyda.dao.UserMember$QueryBuilder) == false" >
+            <if test="(_parameter instanceof com.teenyda.domain.UserMember$QueryBuilder) == false" >
                 <include refid="allResult"></include>
             </if>
 

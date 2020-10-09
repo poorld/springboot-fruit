@@ -166,7 +166,7 @@
     </update>
 
 
-    <resultMap type="com.teenyda.dao.NewProduct" id="NewProductMap">
+    <resultMap type="com.teenyda.domain.NewProduct" id="NewProductMap">
         <result property="newProductId" column="new_product_id"/>
         <result property="productId" column="product_id"/>
         <result property="image" column="image"/>
@@ -195,7 +195,7 @@
             <if test="desc != null and desc!=''">
                 `desc` = #{desc} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.NewProduct$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.NewProduct$QueryBuilder) == true">
                 <if test="newProductIdList != null">
                     `new_product_id` in
                     <foreach collection="newProductIdList" close=")" open="(" separator="," item="item">
@@ -296,7 +296,7 @@
             <if test="desc != null and desc!=''">
                 `desc` = #{desc} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.NewProduct$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.NewProduct$QueryBuilder) == true">
                     <if test="newProductIdList != null">
                         `new_product_id` in
                         <foreach collection="newProductIdList" close=")" open="(" separator="," item="item">
@@ -392,7 +392,7 @@
 
     <sql id="baseResult">
         <trim suffixOverrides=",">
-            <if test = "(_parameter instanceof com.teenyda.dao.NewProduct$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.NewProduct$QueryBuilder) == true">
 
                 <if test="fetchFields==null">
                     <include refid="allResult"></include>
@@ -445,7 +445,7 @@
                     </if>
                 </if>
             </if>
-            <if test="(_parameter instanceof com.teenyda.dao.NewProduct$QueryBuilder) == false" >
+            <if test="(_parameter instanceof com.teenyda.domain.NewProduct$QueryBuilder) == false" >
                 <include refid="allResult"></include>
             </if>
 

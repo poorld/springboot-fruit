@@ -219,7 +219,7 @@
     </update>
 
 
-    <resultMap type="com.teenyda.dao.OrderItem" id="OrderItemMap">
+    <resultMap type="com.teenyda.domain.OrderItem" id="OrderItemMap">
         <result property="orderItemId" column="order_item_id"/>
         <result property="orderNum" column="order_num"/>
         <result property="productId" column="product_id"/>
@@ -256,7 +256,7 @@
             <if test="specId != null">
                 `spec_id` = #{specId} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.OrderItem$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.OrderItem$QueryBuilder) == true">
                 <if test="orderItemIdList != null">
                     `order_item_id` in
                     <foreach collection="orderItemIdList" close=")" open="(" separator="," item="item">
@@ -387,7 +387,7 @@
             <if test="specId != null">
                 `spec_id` = #{specId} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.OrderItem$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.OrderItem$QueryBuilder) == true">
                     <if test="orderItemIdList != null">
                         `order_item_id` in
                         <foreach collection="orderItemIdList" close=")" open="(" separator="," item="item">
@@ -509,7 +509,7 @@
 
     <sql id="baseResult">
         <trim suffixOverrides=",">
-            <if test = "(_parameter instanceof com.teenyda.dao.OrderItem$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.OrderItem$QueryBuilder) == true">
 
                 <if test="fetchFields==null">
                     <include refid="allResult"></include>
@@ -574,7 +574,7 @@
                     </if>
                 </if>
             </if>
-            <if test="(_parameter instanceof com.teenyda.dao.OrderItem$QueryBuilder) == false" >
+            <if test="(_parameter instanceof com.teenyda.domain.OrderItem$QueryBuilder) == false" >
                 <include refid="allResult"></include>
             </if>
 

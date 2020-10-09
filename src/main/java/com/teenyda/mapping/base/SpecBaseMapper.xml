@@ -163,7 +163,7 @@
     </update>
 
 
-    <resultMap type="com.teenyda.dao.Spec" id="SpecMap">
+    <resultMap type="com.teenyda.domain.Spec" id="SpecMap">
         <result property="specId" column="spec_id"/>
         <result property="productId" column="product_id"/>
         <result property="specName" column="spec_name"/>
@@ -192,7 +192,7 @@
             <if test="quantity != null">
                 `quantity` = #{quantity} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.Spec$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Spec$QueryBuilder) == true">
                 <if test="specIdList != null">
                     `spec_id` in
                     <foreach collection="specIdList" close=")" open="(" separator="," item="item">
@@ -285,7 +285,7 @@
             <if test="quantity != null">
                 `quantity` = #{quantity} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.Spec$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Spec$QueryBuilder) == true">
                     <if test="specIdList != null">
                         `spec_id` in
                         <foreach collection="specIdList" close=")" open="(" separator="," item="item">
@@ -373,7 +373,7 @@
 
     <sql id="baseResult">
         <trim suffixOverrides=",">
-            <if test = "(_parameter instanceof com.teenyda.dao.Spec$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Spec$QueryBuilder) == true">
 
                 <if test="fetchFields==null">
                     <include refid="allResult"></include>
@@ -426,7 +426,7 @@
                     </if>
                 </if>
             </if>
-            <if test="(_parameter instanceof com.teenyda.dao.Spec$QueryBuilder) == false" >
+            <if test="(_parameter instanceof com.teenyda.domain.Spec$QueryBuilder) == false" >
                 <include refid="allResult"></include>
             </if>
 

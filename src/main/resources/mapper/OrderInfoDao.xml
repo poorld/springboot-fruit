@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.dao.OrderInfoDao">
+
+    <resultMap type="com.teenyda.entity.OrderInfo" id="OrderInfoMap">
+        <result property="orderNum" column="order_num" jdbcType="VARCHAR"/>
+        <result property="paymentFlag" column="payment_flag" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="contactMobile" column="contact_mobile" jdbcType="VARCHAR"/>
+        <result property="contactAddress" column="contact_address" jdbcType="VARCHAR"/>
+        <result property="message" column="message" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="paymentType" column="payment_type" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OrderInfoMap">
+        select
+          order_num, payment_flag, user_id, contact_name, contact_mobile, contact_address, message, status, type, payment_type, create_time
+        from fruit.order_info
+        where order_num = #{orderNum}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OrderInfoMap">
+        select
+          order_num, payment_flag, user_id, contact_name, contact_mobile, contact_address, message, status, type, payment_type, create_time
+        from fruit.order_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="OrderInfoMap">
+        select
+        order_num, payment_flag, user_id, contact_name, contact_mobile, contact_address, message, status, type,
+        payment_type, create_time
+        from fruit.order_info
+        <where>
+            <if test="orderNum != null and orderNum != ''">
+                and order_num = #{orderNum}
+            </if>
+            <if test="paymentFlag != null">
+                and payment_flag = #{paymentFlag}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="contactName != null and contactName != ''">
+                and contact_name = #{contactName}
+            </if>
+            <if test="contactMobile != null and contactMobile != ''">
+                and contact_mobile = #{contactMobile}
+            </if>
+            <if test="contactAddress != null and contactAddress != ''">
+                and contact_address = #{contactAddress}
+            </if>
+            <if test="message != null and message != ''">
+                and message = #{message}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="paymentType != null">
+                and payment_type = #{paymentType}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="orderNum" useGeneratedKeys="true">
+        insert into fruit.order_info(payment_flag, user_id, contact_name, contact_mobile, contact_address, message, status, type, payment_type, create_time)
+        values (#{paymentFlag}, #{userId}, #{contactName}, #{contactMobile}, #{contactAddress}, #{message}, #{status}, #{type}, #{paymentType}, #{createTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="orderNum" useGeneratedKeys="true">
+        insert into fruit.order_info(payment_flag, user_id, contact_name, contact_mobile, contact_address, message,
+        status, type, payment_type, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.paymentFlag}, #{entity.userId}, #{entity.contactName}, #{entity.contactMobile},
+            #{entity.contactAddress}, #{entity.message}, #{entity.status}, #{entity.type}, #{entity.paymentType},
+            #{entity.createTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="orderNum" useGeneratedKeys="true">
+        insert into fruit.order_info(payment_flag, user_id, contact_name, contact_mobile, contact_address, message,
+        status, type, payment_type, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.paymentFlag}, #{entity.userId}, #{entity.contactName}, #{entity.contactMobile},
+            #{entity.contactAddress}, #{entity.message}, #{entity.status}, #{entity.type}, #{entity.paymentType},
+            #{entity.createTime})
+        </foreach>
+        on duplicate key update
+        payment_flag = values(payment_flag) , user_id = values(user_id) , contact_name = values(contact_name) ,
+        contact_mobile = values(contact_mobile) , contact_address = values(contact_address) , message = values(message)
+        , status = values(status) , type = values(type) , payment_type = values(payment_type) , create_time =
+        values(create_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fruit.order_info
+        <set>
+            <if test="paymentFlag != null">
+                payment_flag = #{paymentFlag},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="contactName != null and contactName != ''">
+                contact_name = #{contactName},
+            </if>
+            <if test="contactMobile != null and contactMobile != ''">
+                contact_mobile = #{contactMobile},
+            </if>
+            <if test="contactAddress != null and contactAddress != ''">
+                contact_address = #{contactAddress},
+            </if>
+            <if test="message != null and message != ''">
+                message = #{message},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="paymentType != null">
+                payment_type = #{paymentType},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where order_num = #{orderNum}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from fruit.order_info where order_num = #{orderNum}
+    </delete>
+
+</mapper>

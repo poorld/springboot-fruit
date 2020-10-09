@@ -227,7 +227,7 @@
     </update>
 
 
-    <resultMap type="com.teenyda.dao.ProductCategory" id="ProductCategoryMap">
+    <resultMap type="com.teenyda.domain.ProductCategory" id="ProductCategoryMap">
         <result property="productCategoryId" column="product_category_id"/>
         <result property="name" column="name"/>
         <result property="sortOrder" column="sort_order"/>
@@ -264,7 +264,7 @@
             <if test="updateUserId != null">
                 `update_user_id` = #{updateUserId} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.ProductCategory$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.ProductCategory$QueryBuilder) == true">
                 <if test="productCategoryIdList != null">
                     `product_category_id` in
                     <foreach collection="productCategoryIdList" close=")" open="(" separator="," item="item">
@@ -403,7 +403,7 @@
             <if test="updateUserId != null">
                 `update_user_id` = #{updateUserId} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.ProductCategory$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.ProductCategory$QueryBuilder) == true">
                     <if test="productCategoryIdList != null">
                         `product_category_id` in
                         <foreach collection="productCategoryIdList" close=")" open="(" separator="," item="item">
@@ -533,7 +533,7 @@
 
     <sql id="baseResult">
         <trim suffixOverrides=",">
-            <if test = "(_parameter instanceof com.teenyda.dao.ProductCategory$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.ProductCategory$QueryBuilder) == true">
 
                 <if test="fetchFields==null">
                     <include refid="allResult"></include>
@@ -598,7 +598,7 @@
                     </if>
                 </if>
             </if>
-            <if test="(_parameter instanceof com.teenyda.dao.ProductCategory$QueryBuilder) == false" >
+            <if test="(_parameter instanceof com.teenyda.domain.ProductCategory$QueryBuilder) == false" >
                 <include refid="allResult"></include>
             </if>
 

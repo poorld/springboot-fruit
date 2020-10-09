@@ -315,7 +315,7 @@
     </update>
 
 
-    <resultMap type="com.teenyda.dao.Comments" id="CommentsMap">
+    <resultMap type="com.teenyda.domain.Comments" id="CommentsMap">
         <result property="commentsId" column="comments_id"/>
         <result property="userId" column="user_id"/>
         <result property="productId" column="product_id"/>
@@ -364,7 +364,7 @@
             <if test="createTime != null">
                 `create_time` = #{createTime} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.Comments$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Comments$QueryBuilder) == true">
                 <if test="commentsIdList != null">
                     `comments_id` in
                     <foreach collection="commentsIdList" close=")" open="(" separator="," item="item">
@@ -564,7 +564,7 @@
             <if test="createTime != null">
                 `create_time` = #{createTime} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.Comments$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Comments$QueryBuilder) == true">
                     <if test="commentsIdList != null">
                         `comments_id` in
                         <foreach collection="commentsIdList" close=")" open="(" separator="," item="item">
@@ -749,7 +749,7 @@
 
     <sql id="baseResult">
         <trim suffixOverrides=",">
-            <if test = "(_parameter instanceof com.teenyda.dao.Comments$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.Comments$QueryBuilder) == true">
 
                 <if test="fetchFields==null">
                     <include refid="allResult"></include>
@@ -832,7 +832,7 @@
                     </if>
                 </if>
             </if>
-            <if test="(_parameter instanceof com.teenyda.dao.Comments$QueryBuilder) == false" >
+            <if test="(_parameter instanceof com.teenyda.domain.Comments$QueryBuilder) == false" >
                 <include refid="allResult"></include>
             </if>
 

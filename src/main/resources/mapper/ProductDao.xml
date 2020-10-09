@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.dao.ProductDao">
+
+    <resultMap type="com.teenyda.entity.Product" id="ProductMap">
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="productCategoryId" column="product_category_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="explain" column="explain" jdbcType="VARCHAR"/>
+        <result property="shopPrice" column="shop_price" jdbcType="NUMERIC"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="hot" column="hot" jdbcType="INTEGER"/>
+        <result property="productStatus" column="product_status" jdbcType="INTEGER"/>
+        <result property="defaultImg" column="default_img" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUserId" column="update_user_id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUserId" column="create_user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProductMap">
+        select
+          product_id, product_category_id, name, explain, shop_price, price, hot, product_status, default_img, update_time, update_user_id, create_time, create_user_id
+        from fruit.product
+        where product_id = #{productId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProductMap">
+        select
+          product_id, product_category_id, name, explain, shop_price, price, hot, product_status, default_img, update_time, update_user_id, create_time, create_user_id
+        from fruit.product
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProductMap">
+        select
+        product_id, product_category_id, name, explain, shop_price, price, hot, product_status, default_img,
+        update_time, update_user_id, create_time, create_user_id
+        from fruit.product
+        <where>
+            <if test="productId != null">
+                and product_id = #{productId}
+            </if>
+            <if test="productCategoryId != null">
+                and product_category_id = #{productCategoryId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="explain != null and explain != ''">
+                and explain = #{explain}
+            </if>
+            <if test="shopPrice != null">
+                and shop_price = #{shopPrice}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="hot != null">
+                and hot = #{hot}
+            </if>
+            <if test="productStatus != null">
+                and product_status = #{productStatus}
+            </if>
+            <if test="defaultImg != null and defaultImg != ''">
+                and default_img = #{defaultImg}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateUserId != null">
+                and update_user_id = #{updateUserId}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="productId" useGeneratedKeys="true">
+        insert into fruit.product(product_category_id, name, explain, shop_price, price, hot, product_status, default_img, update_time, update_user_id, create_time, create_user_id)
+        values (#{productCategoryId}, #{name}, #{explain}, #{shopPrice}, #{price}, #{hot}, #{productStatus}, #{defaultImg}, #{updateTime}, #{updateUserId}, #{createTime}, #{createUserId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="productId" useGeneratedKeys="true">
+        insert into fruit.product(product_category_id, name, explain, shop_price, price, hot, product_status,
+        default_img, update_time, update_user_id, create_time, create_user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.productCategoryId}, #{entity.name}, #{entity.explain}, #{entity.shopPrice}, #{entity.price},
+            #{entity.hot}, #{entity.productStatus}, #{entity.defaultImg}, #{entity.updateTime}, #{entity.updateUserId},
+            #{entity.createTime}, #{entity.createUserId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="productId" useGeneratedKeys="true">
+        insert into fruit.product(product_category_id, name, explain, shop_price, price, hot, product_status,
+        default_img, update_time, update_user_id, create_time, create_user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.productCategoryId}, #{entity.name}, #{entity.explain}, #{entity.shopPrice}, #{entity.price},
+            #{entity.hot}, #{entity.productStatus}, #{entity.defaultImg}, #{entity.updateTime}, #{entity.updateUserId},
+            #{entity.createTime}, #{entity.createUserId})
+        </foreach>
+        on duplicate key update
+        product_category_id = values(product_category_id) , name = values(name) , explain = values(explain) , shop_price
+        = values(shop_price) , price = values(price) , hot = values(hot) , product_status = values(product_status) ,
+        default_img = values(default_img) , update_time = values(update_time) , update_user_id = values(update_user_id)
+        , create_time = values(create_time) , create_user_id = values(create_user_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fruit.product
+        <set>
+            <if test="productCategoryId != null">
+                product_category_id = #{productCategoryId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="explain != null and explain != ''">
+                explain = #{explain},
+            </if>
+            <if test="shopPrice != null">
+                shop_price = #{shopPrice},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="hot != null">
+                hot = #{hot},
+            </if>
+            <if test="productStatus != null">
+                product_status = #{productStatus},
+            </if>
+            <if test="defaultImg != null and defaultImg != ''">
+                default_img = #{defaultImg},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUserId != null">
+                update_user_id = #{updateUserId},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId},
+            </if>
+        </set>
+        where product_id = #{productId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from fruit.product where product_id = #{productId}
+    </delete>
+
+</mapper>

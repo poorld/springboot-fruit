@@ -150,7 +150,7 @@
     </update>
 
 
-    <resultMap type="com.teenyda.dao.SnapUp" id="SnapUpMap">
+    <resultMap type="com.teenyda.domain.SnapUp" id="SnapUpMap">
         <result property="snapUpId" column="snap_up_id"/>
         <result property="productId" column="product_id"/>
         <result property="price" column="price"/>
@@ -179,7 +179,7 @@
             <if test="endTime != null">
                 `end_time` = #{endTime} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.SnapUp$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.SnapUp$QueryBuilder) == true">
                 <if test="snapUpIdList != null">
                     `snap_up_id` in
                     <foreach collection="snapUpIdList" close=")" open="(" separator="," item="item">
@@ -264,7 +264,7 @@
             <if test="endTime != null">
                 `end_time` = #{endTime} and
             </if>
-            <if test = "(_parameter instanceof com.teenyda.dao.SnapUp$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.SnapUp$QueryBuilder) == true">
                     <if test="snapUpIdList != null">
                         `snap_up_id` in
                         <foreach collection="snapUpIdList" close=")" open="(" separator="," item="item">
@@ -344,7 +344,7 @@
 
     <sql id="baseResult">
         <trim suffixOverrides=",">
-            <if test = "(_parameter instanceof com.teenyda.dao.SnapUp$QueryBuilder) == true">
+            <if test = "(_parameter instanceof com.teenyda.domain.SnapUp$QueryBuilder) == true">
 
                 <if test="fetchFields==null">
                     <include refid="allResult"></include>
@@ -397,7 +397,7 @@
                     </if>
                 </if>
             </if>
-            <if test="(_parameter instanceof com.teenyda.dao.SnapUp$QueryBuilder) == false" >
+            <if test="(_parameter instanceof com.teenyda.domain.SnapUp$QueryBuilder) == false" >
                 <include refid="allResult"></include>
             </if>
 

@@ -1,6 +1,6 @@
 package com.teenyda.controller.product.service;
 
-import com.teenyda.dao.Product;
+import com.teenyda.domain.Product;
 
 public interface IProductService {
 

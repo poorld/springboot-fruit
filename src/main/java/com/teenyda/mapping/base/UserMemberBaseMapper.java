@@ -2,7 +2,7 @@ package com.teenyda.mapping.base;
 
 import java.util.List;
 
-import com.teenyda.dao.UserMember;
+import com.teenyda.domain.UserMember;
 /**
 *  @author mymx.banner
 */

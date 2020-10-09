@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.dao.CommentsDao">
+
+    <resultMap type="com.teenyda.entity.Comments" id="CommentsMap">
+        <result property="commentsId" column="comments_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="img1" column="img1" jdbcType="VARCHAR"/>
+        <result property="img2" column="img2" jdbcType="VARCHAR"/>
+        <result property="img3" column="img3" jdbcType="VARCHAR"/>
+        <result property="audit" column="audit" jdbcType="INTEGER"/>
+        <result property="reply" column="reply" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CommentsMap">
+        select
+          comments_id, user_id, product_id, content, img1, img2, img3, audit, reply, create_time
+        from fruit.comments
+        where comments_id = #{commentsId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CommentsMap">
+        select
+          comments_id, user_id, product_id, content, img1, img2, img3, audit, reply, create_time
+        from fruit.comments
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CommentsMap">
+        select
+        comments_id, user_id, product_id, content, img1, img2, img3, audit, reply, create_time
+        from fruit.comments
+        <where>
+            <if test="commentsId != null">
+                and comments_id = #{commentsId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="productId != null">
+                and product_id = #{productId}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="img1 != null and img1 != ''">
+                and img1 = #{img1}
+            </if>
+            <if test="img2 != null and img2 != ''">
+                and img2 = #{img2}
+            </if>
+            <if test="img3 != null and img3 != ''">
+                and img3 = #{img3}
+            </if>
+            <if test="audit != null">
+                and audit = #{audit}
+            </if>
+            <if test="reply != null and reply != ''">
+                and reply = #{reply}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="commentsId" useGeneratedKeys="true">
+        insert into fruit.comments(user_id, product_id, content, img1, img2, img3, audit, reply, create_time)
+        values (#{userId}, #{productId}, #{content}, #{img1}, #{img2}, #{img3}, #{audit}, #{reply}, #{createTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="commentsId" useGeneratedKeys="true">
+        insert into fruit.comments(user_id, product_id, content, img1, img2, img3, audit, reply, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.productId}, #{entity.content}, #{entity.img1}, #{entity.img2}, #{entity.img3},
+            #{entity.audit}, #{entity.reply}, #{entity.createTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="commentsId" useGeneratedKeys="true">
+        insert into fruit.comments(user_id, product_id, content, img1, img2, img3, audit, reply, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.productId}, #{entity.content}, #{entity.img1}, #{entity.img2}, #{entity.img3},
+            #{entity.audit}, #{entity.reply}, #{entity.createTime})
+        </foreach>
+        on duplicate key update
+        user_id = values(user_id) , product_id = values(product_id) , content = values(content) , img1 = values(img1) ,
+        img2 = values(img2) , img3 = values(img3) , audit = values(audit) , reply = values(reply) , create_time =
+        values(create_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fruit.comments
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="img1 != null and img1 != ''">
+                img1 = #{img1},
+            </if>
+            <if test="img2 != null and img2 != ''">
+                img2 = #{img2},
+            </if>
+            <if test="img3 != null and img3 != ''">
+                img3 = #{img3},
+            </if>
+            <if test="audit != null">
+                audit = #{audit},
+            </if>
+            <if test="reply != null and reply != ''">
+                reply = #{reply},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where comments_id = #{commentsId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from fruit.comments where comments_id = #{commentsId}
+    </delete>
+
+</mapper>

@@ -4,7 +4,7 @@ import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.controller.category.exception.CategoryException;
 import com.teenyda.controller.category.service.CategoryService;
-import com.teenyda.dao.ProductCategory;
+import com.teenyda.domain.ProductCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

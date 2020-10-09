@@ -1,7 +1,7 @@
 package com.teenyda.controller.product;
 
 import com.teenyda.controller.product.service.IProductService;
-import com.teenyda.dao.Product;
+import com.teenyda.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

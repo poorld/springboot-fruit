@@ -1,6 +1,6 @@
 package com.teenyda.controller.product.service;
 
-import com.teenyda.dao.Product;
+import com.teenyda.domain.Product;
 import com.teenyda.mapping.base.ProductBaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

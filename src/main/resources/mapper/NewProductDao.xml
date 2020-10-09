@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.dao.NewProductDao">
+
+    <resultMap type="com.teenyda.entity.NewProduct" id="NewProductMap">
+        <result property="newProductId" column="new_product_id" jdbcType="INTEGER"/>
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="desc" column="desc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="NewProductMap">
+        select
+          new_product_id, product_id, image, price, desc
+        from fruit.new_product
+        where new_product_id = #{newProductId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="NewProductMap">
+        select
+          new_product_id, product_id, image, price, desc
+        from fruit.new_product
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="NewProductMap">
+        select
+        new_product_id, product_id, image, price, desc
+        from fruit.new_product
+        <where>
+            <if test="newProductId != null">
+                and new_product_id = #{newProductId}
+            </if>
+            <if test="productId != null">
+                and product_id = #{productId}
+            </if>
+            <if test="image != null and image != ''">
+                and image = #{image}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="desc != null and desc != ''">
+                and desc = #{desc}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="newProductId" useGeneratedKeys="true">
+        insert into fruit.new_product(image, price, desc)
+        values (#{image}, #{price}, #{desc})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="newProductId" useGeneratedKeys="true">
+        insert into fruit.new_product(image, price, desc)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.image}, #{entity.price}, #{entity.desc})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="newProductId" useGeneratedKeys="true">
+        insert into fruit.new_product(image, price, desc)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.image}, #{entity.price}, #{entity.desc})
+        </foreach>
+        on duplicate key update
+        image = values(image) , price = values(price) , desc = values(desc)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fruit.new_product
+        <set>
+            <if test="image != null and image != ''">
+                image = #{image},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="desc != null and desc != ''">
+                desc = #{desc},
+            </if>
+        </set>
+        where new_product_id = #{newProductId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from fruit.new_product where new_product_id = #{newProductId}
+    </delete>
+
+</mapper>

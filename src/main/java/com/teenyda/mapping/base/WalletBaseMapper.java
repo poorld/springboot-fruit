@@ -2,7 +2,7 @@ package com.teenyda.mapping.base;
 
 import java.util.List;
 
-import com.teenyda.dao.Wallet;
+import com.teenyda.domain.Wallet;
 /**
 *  @author mymx.banner
 */

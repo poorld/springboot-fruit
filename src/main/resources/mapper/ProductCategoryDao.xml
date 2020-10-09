@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.dao.ProductCategoryDao">
+
+    <resultMap type="com.teenyda.entity.ProductCategory" id="ProductCategoryMap">
+        <result property="productCategoryId" column="product_category_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="sortOrder" column="sort_order" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUserId" column="update_user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProductCategoryMap">
+        select
+          product_category_id, name, sort_order, description, image, update_time, update_user_id
+        from fruit.product_category
+        where product_category_id = #{productCategoryId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProductCategoryMap">
+        select
+          product_category_id, name, sort_order, description, image, update_time, update_user_id
+        from fruit.product_category
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProductCategoryMap">
+        select
+        product_category_id, name, sort_order, description, image, update_time, update_user_id
+        from fruit.product_category
+        <where>
+            <if test="productCategoryId != null">
+                and product_category_id = #{productCategoryId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="sortOrder != null">
+                and sort_order = #{sortOrder}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="image != null and image != ''">
+                and image = #{image}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateUserId != null">
+                and update_user_id = #{updateUserId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="productCategoryId" useGeneratedKeys="true">
+        insert into fruit.product_category(name, sort_order, description, image, update_time, update_user_id)
+        values (#{name}, #{sortOrder}, #{description}, #{image}, #{updateTime}, #{updateUserId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="productCategoryId" useGeneratedKeys="true">
+        insert into fruit.product_category(name, sort_order, description, image, update_time, update_user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.sortOrder}, #{entity.description}, #{entity.image}, #{entity.updateTime},
+            #{entity.updateUserId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="productCategoryId" useGeneratedKeys="true">
+        insert into fruit.product_category(name, sort_order, description, image, update_time, update_user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.sortOrder}, #{entity.description}, #{entity.image}, #{entity.updateTime},
+            #{entity.updateUserId})
+        </foreach>
+        on duplicate key update
+        name = values(name) , sort_order = values(sort_order) , description = values(description) , image =
+        values(image) , update_time = values(update_time) , update_user_id = values(update_user_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fruit.product_category
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="image != null and image != ''">
+                image = #{image},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUserId != null">
+                update_user_id = #{updateUserId},
+            </if>
+        </set>
+        where product_category_id = #{productCategoryId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from fruit.product_category where product_category_id = #{productCategoryId}
+    </delete>
+
+</mapper>
