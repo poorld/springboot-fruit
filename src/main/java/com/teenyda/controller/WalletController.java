@@ -1,5 +1,7 @@
 package com.teenyda.controller;
 
+import com.teenyda.common.ResultBody;
+import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.Wallet;
 import com.teenyda.service.WalletService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +14,11 @@ import javax.annotation.Resource;
  * (Wallet)表控制层
  *
  * @author makejava
- * @since 2020-10-09 17:11:06
+ * @since 2020-10-09 20:17:26
  */
 @RestController
 @RequestMapping("wallet")
-public class WalletController {
+public class WalletController extends AbstractApiController {
     /**
      * 服务对象
      */
@@ -30,8 +32,8 @@ public class WalletController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public Wallet selectOne(Integer id) {
-        return this.walletService.queryById(id);
+    public ResultBody<Wallet> selectOne(Integer id) {
+        return responseSuccessJson(this.walletService.queryById(id));
     }
 
 }

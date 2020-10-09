@@ -1,5 +1,7 @@
 package com.teenyda.controller;
 
+import com.teenyda.common.ResultBody;
+import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.Product;
 import com.teenyda.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +14,11 @@ import javax.annotation.Resource;
  * (Product)表控制层
  *
  * @author makejava
- * @since 2020-10-09 17:10:52
+ * @since 2020-10-09 20:17:18
  */
 @RestController
 @RequestMapping("product")
-public class ProductController {
+public class ProductController extends AbstractApiController {
     /**
      * 服务对象
      */
@@ -30,8 +32,8 @@ public class ProductController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public Product selectOne(Integer id) {
-        return this.productService.queryById(id);
+    public ResultBody<Product> selectOne(Integer id) {
+        return responseSuccessJson(this.productService.queryById(id));
     }
 
 }

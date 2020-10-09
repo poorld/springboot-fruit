@@ -1,5 +1,7 @@
 package com.teenyda.controller;
 
+import com.teenyda.common.ResultBody;
+import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.Discounts;
 import com.teenyda.service.DiscountsService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +14,11 @@ import javax.annotation.Resource;
  * (Discounts)表控制层
  *
  * @author makejava
- * @since 2020-10-09 17:10:42
+ * @since 2020-10-09 20:17:11
  */
 @RestController
 @RequestMapping("discounts")
-public class DiscountsController {
+public class DiscountsController extends AbstractApiController {
     /**
      * 服务对象
      */
@@ -30,8 +32,8 @@ public class DiscountsController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public Discounts selectOne(Integer id) {
-        return this.discountsService.queryById(id);
+    public ResultBody<Discounts> selectOne(Integer id) {
+        return responseSuccessJson(this.discountsService.queryById(id));
     }
 
 }

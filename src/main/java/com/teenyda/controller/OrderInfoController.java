@@ -1,5 +1,7 @@
 package com.teenyda.controller;
 
+import com.teenyda.common.ResultBody;
+import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.OrderInfo;
 import com.teenyda.service.OrderInfoService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +14,11 @@ import javax.annotation.Resource;
  * (OrderInfo)表控制层
  *
  * @author makejava
- * @since 2020-10-09 17:10:49
+ * @since 2020-10-09 20:17:16
  */
 @RestController
 @RequestMapping("orderInfo")
-public class OrderInfoController {
+public class OrderInfoController extends AbstractApiController {
     /**
      * 服务对象
      */
@@ -30,8 +32,8 @@ public class OrderInfoController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public OrderInfo selectOne(String id) {
-        return this.orderInfoService.queryById(id);
+    public ResultBody<OrderInfo> selectOne(String id) {
+        return responseSuccessJson(this.orderInfoService.queryById(id));
     }
 
 }

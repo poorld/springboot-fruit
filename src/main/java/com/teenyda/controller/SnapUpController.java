@@ -1,5 +1,7 @@
 package com.teenyda.controller;
 
+import com.teenyda.common.ResultBody;
+import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.SnapUp;
 import com.teenyda.service.SnapUpService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +14,11 @@ import javax.annotation.Resource;
  * (SnapUp)表控制层
  *
  * @author makejava
- * @since 2020-10-09 17:10:57
+ * @since 2020-10-09 20:17:20
  */
 @RestController
 @RequestMapping("snapUp")
-public class SnapUpController {
+public class SnapUpController extends AbstractApiController {
     /**
      * 服务对象
      */
@@ -30,8 +32,8 @@ public class SnapUpController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public SnapUp selectOne(Integer id) {
-        return this.snapUpService.queryById(id);
+    public ResultBody<SnapUp> selectOne(Integer id) {
+        return responseSuccessJson(this.snapUpService.queryById(id));
     }
 
 }

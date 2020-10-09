@@ -1,5 +1,7 @@
 package com.teenyda.controller;
 
+import com.teenyda.common.ResultBody;
+import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.User;
 import com.teenyda.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +14,11 @@ import javax.annotation.Resource;
  * (User)表控制层
  *
  * @author makejava
- * @since 2020-10-09 17:11:01
+ * @since 2020-10-09 20:17:23
  */
 @RestController
 @RequestMapping("user")
-public class UserController {
+public class UserController extends AbstractApiController {
     /**
      * 服务对象
      */
@@ -30,8 +32,8 @@ public class UserController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public User selectOne(Integer id) {
-        return this.userService.queryById(id);
+    public ResultBody<User> selectOne(Integer id) {
+        return responseSuccessJson(this.userService.queryById(id));
     }
 
 }

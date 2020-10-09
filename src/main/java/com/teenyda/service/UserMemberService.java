@@ -18,7 +18,7 @@ public interface UserMemberService {
      * @param 主键
      * @return 实例对象
      */
-    UserMember queryById();
+    UserMember queryById(Integer userId);
 
     /**
      * 查询多条数据

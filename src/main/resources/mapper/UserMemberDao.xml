@@ -14,7 +14,7 @@
         select
           user_id, members_id, start_time, end_time
         from fruit.user_member
-        where  = #{}
+        where user_id = #{userId}
     </select>
 
     <!--查询指定行数据-->
@@ -88,12 +88,12 @@
                 end_time = #{endTime},
             </if>
         </set>
-        where = #{}
+        where user_id = #{userId}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from fruit.user_member where  = #{}
+        delete from fruit.user_member where  user_id = #{userId}
     </delete>
 
 </mapper>

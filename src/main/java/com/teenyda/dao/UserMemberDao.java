@@ -19,7 +19,7 @@ public interface UserMemberDao {
      * @param 主键
      * @return 实例对象
      */
-    UserMember queryById();
+    UserMember queryById(Integer userId);
 
     /**
      * 查询指定行数据

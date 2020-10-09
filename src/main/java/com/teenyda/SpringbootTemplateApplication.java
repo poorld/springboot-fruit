@@ -23,7 +23,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 // 解决Property 'sqlSessionFactory' or 'sqlSessionTemplate' are required
 @EnableAutoConfiguration
-@MapperScan({"com.teenyda.mapping", "com.teenyda.mapping.base"})
+@MapperScan({"com.teenyda.mapping", "com.teenyda.mapping.base", "com.teenyda.dao"})
 
 public class SpringbootTemplateApplication {
 

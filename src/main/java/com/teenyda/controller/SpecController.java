@@ -1,5 +1,7 @@
 package com.teenyda.controller;
 
+import com.teenyda.common.ResultBody;
+import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.Spec;
 import com.teenyda.service.SpecService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +14,11 @@ import javax.annotation.Resource;
  * (Spec)表控制层
  *
  * @author makejava
- * @since 2020-10-09 17:10:59
+ * @since 2020-10-09 20:17:21
  */
 @RestController
 @RequestMapping("spec")
-public class SpecController {
+public class SpecController extends AbstractApiController {
     /**
      * 服务对象
      */
@@ -30,8 +32,8 @@ public class SpecController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public Spec selectOne(Integer id) {
-        return this.specService.queryById(id);
+    public ResultBody<Spec> selectOne(Integer id) {
+        return responseSuccessJson(this.specService.queryById(id));
     }
 
 }

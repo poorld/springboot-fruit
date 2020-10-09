@@ -26,8 +26,8 @@ public class UserMemberServiceImpl implements UserMemberService {
      * @return 实例对象
      */
     @Override
-    public UserMember queryById() {
-        return this.userMemberDao.queryById();
+    public UserMember queryById(Integer userId) {
+        return this.userMemberDao.queryById(userId);
     }
 
     /**
@@ -63,7 +63,7 @@ public class UserMemberServiceImpl implements UserMemberService {
     @Override
     public UserMember update(UserMember userMember) {
         this.userMemberDao.update(userMember);
-        return this.queryById(userMember.get());
+        return this.queryById(userMember.getUserId());
     }
 
     /**
