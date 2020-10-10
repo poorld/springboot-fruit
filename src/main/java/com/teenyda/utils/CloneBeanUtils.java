@@ -2,6 +2,7 @@ package com.teenyda.utils;
 
 import org.springframework.beans.BeanUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -19,8 +20,34 @@ public class CloneBeanUtils extends BeanUtils {
         void callBack(S t, T s);
     }
 
+    public static <S, T> T copyProperties(S source,Class<T> clazz){
+        if (source == null)
+            return null;
+
+
+        T t = null;
+
+        try {
+
+            t = clazz.getDeclaredConstructor().newInstance();
+            copyProperties(source, t);
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+
+        return t;
+    }
+
     public static <S, T> List<T> copyListProperties(List<S> source, Supplier<T> target){
-        return copyListProperties(source, target);
+        return copyListProperties(source, target, null);
     }
 
     /**

@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
  * @description: 商品分类
  **/
 
-@RestController
-@RequestMapping("/fruit")
+// @RestController
+// @RequestMapping("/fruit")
 @Slf4j
 public class CategoryController extends AbstractApiController {
 
@@ -29,14 +29,14 @@ public class CategoryController extends AbstractApiController {
     @Autowired
     ProductCategory category;
 
-    @GetMapping("/category/{id}")
+    // @GetMapping("/category/{id}")
     public ResultBody<ProductCategory> getCategory(@PathVariable("id") Integer id) {
         category.setProductCategoryId(id);
         log.info("category", category.getProductCategoryId());
         return responseSuccessJson(service.getCategoryById(category));
     }
 
-    @PostMapping("/category")
+    // @PostMapping("/category")
     public ResultBody<ProductCategory> addCategory(@RequestBody ProductCategory category) {
         category.setUpdateTime(LocalDateTime.now());
         int i = service.addCategory(category);

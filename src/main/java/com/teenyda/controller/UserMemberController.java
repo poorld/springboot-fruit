@@ -32,8 +32,8 @@ public class UserMemberController extends AbstractApiController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public ResultBody<UserMember> selectOne(id) {
-        return responseSuccessJson(this.userMemberService.queryById(id));
+    public ResultBody<UserMember> selectOne() {
+        return responseSuccessJson(this.userMemberService.queryById(1));
     }
 
 }
