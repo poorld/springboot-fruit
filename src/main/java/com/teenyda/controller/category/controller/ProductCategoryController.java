@@ -1,8 +1,11 @@
 package com.teenyda.controller.category.controller;
 
+import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.controller.category.dto.CategoryDto;
+import com.teenyda.controller.category.exception.CategoryException;
+import com.teenyda.controller.file.exception.FileUploadException;
 import com.teenyda.entity.ProductCategory;
 import com.teenyda.service.ProductCategoryService;
 import com.teenyda.utils.CloneBeanUtils;
@@ -58,5 +61,13 @@ public class ProductCategoryController extends AbstractApiController {
         ProductCategory productCategory = this.productCategoryService.update(category);
         CategoryDto categoryDto = CloneBeanUtils.copyProperties(productCategory, CategoryDto.class);
         return responseSuccessJson(categoryDto);
+    }
+
+    @DeleteMapping("category")
+    public ResultBody<CategoryDto> removeCategory(@RequestBody ProductCategory category) throws GlobalErrorInfoException {
+        boolean res = this.productCategoryService.deleteById(category.getProductCategoryId());
+        if (res)
+            return responseSuccessJson();
+        throw new GlobalErrorInfoException(CategoryException.ERROR_DELETE);
     }
 }
