@@ -1,4 +1,4 @@
-package com.teenyda.controller;
+package com.teenyda.controller.discounts_category;
 
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (DiscountsCategory)表控制层
@@ -17,7 +18,7 @@ import javax.annotation.Resource;
  * @since 2020-10-09 20:17:12
  */
 @RestController
-@RequestMapping("discountsCategory")
+@RequestMapping("fruit")
 public class DiscountsCategoryController extends AbstractApiController {
     /**
      * 服务对象
@@ -34,6 +35,17 @@ public class DiscountsCategoryController extends AbstractApiController {
     @GetMapping("selectOne")
     public ResultBody<DiscountsCategory> selectOne(Integer id) {
         return responseSuccessJson(this.discountsCategoryService.queryById(id));
+    }
+
+    /**
+     * 通过主键查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
+    @GetMapping("discountsCategory")
+    public ResultBody<List<DiscountsCategory>> all() {
+        return responseSuccessJson(this.discountsCategoryService.queryAllByLimit(0, 100));
     }
 
 }

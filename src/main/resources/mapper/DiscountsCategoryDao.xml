@@ -6,12 +6,13 @@
         <result property="discountsCategoryId" column="discounts_category_id" jdbcType="INTEGER"/>
         <result property="discountsType" column="discounts_type" jdbcType="VARCHAR"/>
         <result property="discountsFlag" column="discounts_flag" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="DiscountsCategoryMap">
         select
-          discounts_category_id, discounts_type, discounts_flag
+          discounts_category_id, discounts_type, discounts_flag, description
         from fruit.discounts_category
         where discounts_category_id = #{discountsCategoryId}
     </select>
@@ -19,7 +20,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="DiscountsCategoryMap">
         select
-          discounts_category_id, discounts_type, discounts_flag
+          discounts_category_id, discounts_type, discounts_flag, description
         from fruit.discounts_category
         limit #{offset}, #{limit}
     </select>
@@ -27,7 +28,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="DiscountsCategoryMap">
         select
-        discounts_category_id, discounts_type, discounts_flag
+        discounts_category_id, discounts_type, discounts_flag, description
         from fruit.discounts_category
         <where>
             <if test="discountsCategoryId != null">
@@ -39,31 +40,34 @@
             <if test="discountsFlag != null">
                 and discounts_flag = #{discountsFlag}
             </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="discountsCategoryId" useGeneratedKeys="true">
-        insert into fruit.discounts_category(discounts_type, discounts_flag)
-        values (#{discountsType}, #{discountsFlag})
+        insert into fruit.discounts_category(discounts_type, discounts_flag, description)
+        values (#{discountsType}, #{discountsFlag}, #{description})
     </insert>
 
     <insert id="insertBatch" keyProperty="discountsCategoryId" useGeneratedKeys="true">
-        insert into fruit.discounts_category(discounts_type, discounts_flag)
+        insert into fruit.discounts_category(discounts_type, discounts_flag, description)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.discountsType}, #{entity.discountsFlag})
+            (#{entity.discountsType}, #{entity.discountsFlag}, #{entity.description})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="discountsCategoryId" useGeneratedKeys="true">
-        insert into fruit.discounts_category(discounts_type, discounts_flag)
+        insert into fruit.discounts_category(discounts_type, discounts_flag, description)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.discountsType}, #{entity.discountsFlag})
+            (#{entity.discountsType}, #{entity.discountsFlag}, #{entity.description})
         </foreach>
         on duplicate key update
-        discounts_type = values(discounts_type) , discounts_flag = values(discounts_flag)
+        discounts_type = values(discounts_type) , discounts_flag = values(discounts_flag) , description = values(description)
     </insert>
 
     <!--通过主键修改数据-->
@@ -75,6 +79,9 @@
             </if>
             <if test="discountsFlag != null">
                 discounts_flag = #{discountsFlag},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
             </if>
         </set>
         where discounts_category_id = #{discountsCategoryId}
