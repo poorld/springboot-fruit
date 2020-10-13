@@ -3,11 +3,9 @@ package com.teenyda.controller.discounts.controller;
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.Discounts;
+import com.teenyda.entity.DiscountsCategory;
 import com.teenyda.service.DiscountsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -47,6 +45,11 @@ public class DiscountsController extends AbstractApiController {
     @GetMapping("discounts")
     public ResultBody<List<Discounts>> discounts() {
         return responseSuccessJson(this.discountsService.queryAllByLimit(0, 100));
+    }
+
+    @PostMapping("discounts")
+    public ResultBody<Discounts> add(@RequestBody Discounts discounts) {
+        return responseSuccessJson(this.discountsService.insert(discounts));
     }
 
 }

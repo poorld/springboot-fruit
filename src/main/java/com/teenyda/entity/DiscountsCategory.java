@@ -1,5 +1,7 @@
 package com.teenyda.entity;
 
+import lombok.ToString;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-10-12 18:44:25
  */
+@ToString
 public class DiscountsCategory implements Serializable {
     private static final long serialVersionUID = 520668961860415181L;
 

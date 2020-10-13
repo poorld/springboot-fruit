@@ -4,18 +4,25 @@
 
     <resultMap type="com.teenyda.entity.Discounts" id="DiscountsMap">
         <result property="discountsId" column="discounts_id" jdbcType="INTEGER"/>
-        <result property="discountsCategoryId" column="discounts_category_id" jdbcType="INTEGER"/>
+<!--        <result property="discountsCategoryId" column="discounts_category_id" jdbcType="INTEGER"/>-->
         <result property="explain" column="explain" jdbcType="VARCHAR"/>
         <result property="conditions" column="conditions" jdbcType="INTEGER"/>
         <result property="conditionsExplain" column="conditions_explain" jdbcType="VARCHAR"/>
         <result property="discounts" column="discounts" jdbcType="VARCHAR"/>
         <result property="members" column="members" jdbcType="INTEGER"/>
+
+        <association property="discountsCategory" >
+            <id property="discountsCategoryId" column="discounts_category_id" jdbcType="INTEGER"/>
+            <result property="discountsType" column="discounts_type" jdbcType="VARCHAR"/>
+            <result property="discountsFlag" column="discounts_flag" jdbcType="INTEGER"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+        </association>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="DiscountsMap">
         select
-          discounts_id, discounts_category_id, explain, conditions, conditions_explain, discounts, members
+          discounts_id, discounts_category_id, `explain`, conditions, conditions_explain, discounts, members
         from fruit.discounts
         where discounts_id = #{discountsId}
     </select>
@@ -23,7 +30,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="DiscountsMap">
         select
-          discounts_id, discounts_category_id, explain, conditions, conditions_explain, discounts, members
+          discounts_id, discounts_category_id, `explain`, conditions, conditions_explain, discounts, members
         from fruit.discounts
         limit #{offset}, #{limit}
     </select>
@@ -31,7 +38,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="DiscountsMap">
         select
-        discounts_id, discounts_category_id, explain, conditions, conditions_explain, discounts, members
+        discounts_id, discounts_category_id, `explain`, conditions, conditions_explain, discounts, members
         from fruit.discounts
         <where>
             <if test="discountsId != null">
@@ -60,12 +67,12 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="discountsId" useGeneratedKeys="true">
-        insert into fruit.discounts(discounts_category_id, explain, conditions, conditions_explain, discounts, members)
-        values (#{discountsCategoryId}, #{explain}, #{conditions}, #{conditionsExplain}, #{discounts}, #{members})
+        insert into fruit.discounts(discounts_category_id, `explain`, conditions, conditions_explain, discounts, members)
+        values (#{discountsCategory.discountsCategoryId}, #{explain}, #{conditions}, #{conditionsExplain}, #{discounts}, #{members})
     </insert>
 
     <insert id="insertBatch" keyProperty="discountsId" useGeneratedKeys="true">
-        insert into fruit.discounts(discounts_category_id, explain, conditions, conditions_explain, discounts, members)
+        insert into fruit.discounts(discounts_category_id, `explain`, conditions, conditions_explain, discounts, members)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.discountsCategoryId}, #{entity.explain}, #{entity.conditions}, #{entity.conditionsExplain},
@@ -74,7 +81,7 @@
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="discountsId" useGeneratedKeys="true">
-        insert into fruit.discounts(discounts_category_id, explain, conditions, conditions_explain, discounts, members)
+        insert into fruit.discounts(discounts_category_id, `explain`, conditions, conditions_explain, discounts, members)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.discountsCategoryId}, #{entity.explain}, #{entity.conditions}, #{entity.conditionsExplain},
@@ -94,7 +101,7 @@
                 discounts_category_id = #{discountsCategoryId},
             </if>
             <if test="explain != null and explain != ''">
-                explain = #{explain},
+                `explain` = #{explain},
             </if>
             <if test="conditions != null">
                 conditions = #{conditions},

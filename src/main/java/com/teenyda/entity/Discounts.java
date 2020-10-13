@@ -1,5 +1,7 @@
 package com.teenyda.entity;
 
+import lombok.ToString;
+
 import java.io.Serializable;
 
 /**
@@ -8,12 +10,14 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-10-09 17:10:41
  */
+
+@ToString
 public class Discounts implements Serializable {
     private static final long serialVersionUID = -78622205559742887L;
 
     private Integer discountsId;
 
-    private Integer discountsCategoryId;
+    // private Integer discountsCategoryId;
     /**
      * 说明
      */
@@ -33,7 +37,12 @@ public class Discounts implements Serializable {
     /**
      * 会员限制
      */
-    private Integer members;
+    private Boolean members;
+
+    /**
+     * 优惠类型
+     */
+    private DiscountsCategory discountsCategory;
 
 
     public Integer getDiscountsId() {
@@ -44,13 +53,13 @@ public class Discounts implements Serializable {
         this.discountsId = discountsId;
     }
 
-    public Integer getDiscountsCategoryId() {
-        return discountsCategoryId;
-    }
+    // public Integer getDiscountsCategoryId() {
+    //     return discountsCategoryId;
+    // }
 
-    public void setDiscountsCategoryId(Integer discountsCategoryId) {
-        this.discountsCategoryId = discountsCategoryId;
-    }
+    // public void setDiscountsCategoryId(Integer discountsCategoryId) {
+    //     this.discountsCategoryId = discountsCategoryId;
+    // }
 
     public String getExplain() {
         return explain;
@@ -84,12 +93,19 @@ public class Discounts implements Serializable {
         this.discounts = discounts;
     }
 
-    public Integer getMembers() {
+    public Boolean getMembers() {
         return members;
     }
 
-    public void setMembers(Integer members) {
+    public void setMembers(Boolean members) {
         this.members = members;
     }
 
+    public DiscountsCategory getDiscountsCategory() {
+        return discountsCategory;
+    }
+
+    public void setDiscountsCategory(DiscountsCategory discountsCategory) {
+        this.discountsCategory = discountsCategory;
+    }
 }
