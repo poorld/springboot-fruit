@@ -52,4 +52,14 @@ public class DiscountsController extends AbstractApiController {
         return responseSuccessJson(this.discountsService.insert(discounts));
     }
 
+    @PutMapping("discounts")
+    public ResultBody<Discounts> update(@RequestBody Discounts discounts) {
+        return responseSuccessJson(this.discountsService.insert(discounts));
+    }
+
+
+    @DeleteMapping("discounts/{discountsId}")
+    public ResultBody<Boolean> delete(@RequestBody @PathVariable("discountsId")Integer discountsId) {
+        return responseSuccessJson(this.discountsService.deleteById(discountsId));
+    }
 }
