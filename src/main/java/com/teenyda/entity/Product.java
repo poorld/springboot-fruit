@@ -1,7 +1,10 @@
 package com.teenyda.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * (Product)实体类
@@ -9,25 +12,33 @@ import java.util.Date;
  * @author makejava
  * @since 2020-10-09 17:10:52
  */
+@Data
 public class Product implements Serializable {
     private static final long serialVersionUID = 441512402768951880L;
 
     private Integer productId;
 
-    private Integer productCategoryId;
-
     private String name;
 
+    // 描述
     private String explain;
 
+    // 市场价格
     private Double shopPrice;
 
+    // 售卖价格
     private Double price;
 
     private Integer hot;
 
+
+    // 是否加推荐标签
+    private Boolean recommended;
+
+    // 产品状态 0上线 1下线
     private Integer productStatus;
 
+    // 封面图片
     private String defaultImg;
 
     private Date updateTime;
@@ -38,109 +49,119 @@ public class Product implements Serializable {
 
     private Integer createUserId;
 
+    // 产品分类
+    private ProductCategory productCategory;
 
-    public Integer getProductId() {
-        return productId;
-    }
+    // 规格
+    private List<Spec> spec;
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
+    // 优惠
+    private List<Discounts> discounts;
 
-    public Integer getProductCategoryId() {
-        return productCategoryId;
-    }
+    // 产品图片
+    private List<ProductInfoImage> productInfoImages;
 
-    public void setProductCategoryId(Integer productCategoryId) {
-        this.productCategoryId = productCategoryId;
-    }
+    // 产品幻灯片
+    private List<ProductBannerImage> productBannerImages;
 
-    public String getName() {
-        return name;
-    }
+    // 产品标签
+    private List<Tag> tags;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    // 评论
+    private List<Comments> comments;
 
-    public String getExplain() {
-        return explain;
-    }
-
-    public void setExplain(String explain) {
-        this.explain = explain;
-    }
-
-    public Double getShopPrice() {
-        return shopPrice;
-    }
-
-    public void setShopPrice(Double shopPrice) {
-        this.shopPrice = shopPrice;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Integer getHot() {
-        return hot;
-    }
-
-    public void setHot(Integer hot) {
-        this.hot = hot;
-    }
-
-    public Integer getProductStatus() {
-        return productStatus;
-    }
-
-    public void setProductStatus(Integer productStatus) {
-        this.productStatus = productStatus;
-    }
-
-    public String getDefaultImg() {
-        return defaultImg;
-    }
-
-    public void setDefaultImg(String defaultImg) {
-        this.defaultImg = defaultImg;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public void setUpdateUserId(Integer updateUserId) {
-        this.updateUserId = updateUserId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(Integer createUserId) {
-        this.createUserId = createUserId;
-    }
-
+    /**
+     *
+     {
+         "productId":1,
+         "name":"新疆葡萄",
+         "explain":"特色新疆美味葡萄巴拉巴拉",
+         "shopPrice":35.2,
+         "price":23.5,
+         "hot":null,
+         "recommended":null,
+         "productStatus":0,
+         "defaultImg":null,
+         "updateTime":null,
+         "updateUserId":null,
+         "createTime":null,
+         "createUserId":null,
+         "productCategory":{
+         "productCategoryId":11001,
+         "name":"新疆葡萄",
+         "sortOrder":null,
+         "description":"葡萄类哦",
+         "image":null,
+         "updateTime":null,
+         "updateUserId":null
+         },
+         "spec":[
+         {
+         "specId":12100,
+         "productId":1,
+         "specName":"小果",
+         "price":23.5,
+         "quantity":30,
+         "sku":{
+         "skuId":101,
+         "attrbute":"斤"
+         }
+         }
+         ],
+         "discounts":[
+         {
+         "discountsId":2,
+         "discountsExplain":"特色新疆美味葡萄巴拉巴拉",
+         "conditions":22,
+         "conditionsExplain":"满22元才能享受优惠",
+         "discounts":"2",
+         "members":true,
+         "discountsCategory":{
+         "discountsCategoryId":2001,
+         "discountsType":"满减",
+         "discountsFlag":0,
+         "discountsDescription":"满减呀呀呀"
+         }
+         }
+         ],
+         "productInfoImages":[
+         {
+         "productId":1,
+         "sort":null,
+         "url":null
+         }
+         ],
+         "productBannerImages":[
+         {
+         "productId":1,
+         "type":null,
+         "url":null
+         }
+         ],
+         "tags":[
+         {
+         "tagId":13100,
+         "name":"产地直销"
+         },
+         {
+         "tagId":13101,
+         "name":"会员优惠"
+         }
+         ],
+         "comments":[
+         {
+         "commentsId":null,
+         "user":null,
+         "productId":1,
+         "content":null,
+         "img1":null,
+         "img2":null,
+         "img3":null,
+         "audit":null,
+         "reply":null,
+         "createTime":null
+         }
+         ]
+     }
+     */
 }

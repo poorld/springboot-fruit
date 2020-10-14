@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Product)表控制层
@@ -17,7 +18,7 @@ import javax.annotation.Resource;
  * @since 2020-10-09 20:17:18
  */
 @RestController
-@RequestMapping("product")
+@RequestMapping("fruit")
 public class ProductController extends AbstractApiController {
     /**
      * 服务对象
@@ -36,4 +37,8 @@ public class ProductController extends AbstractApiController {
         return responseSuccessJson(this.productService.queryById(id));
     }
 
+    @GetMapping("product")
+    public ResultBody<List<Product>> all() {
+        return responseSuccessJson(this.productService.queryAllByLimit(0, 100));
+    }
 }

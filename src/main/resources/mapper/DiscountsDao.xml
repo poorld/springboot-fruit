@@ -5,7 +5,7 @@
     <resultMap type="com.teenyda.entity.Discounts" id="DiscountsMap">
         <result property="discountsId" column="discounts_id" jdbcType="INTEGER"/>
 <!--        <result property="discountsCategoryId" column="discounts_category_id" jdbcType="INTEGER"/>-->
-        <result property="explain" column="explain" jdbcType="VARCHAR"/>
+        <result property="discountsExplain" column="discounts_explain" jdbcType="VARCHAR"/>
         <result property="conditions" column="conditions" jdbcType="INTEGER"/>
         <result property="conditionsExplain" column="conditions_explain" jdbcType="VARCHAR"/>
         <result property="discounts" column="discounts" jdbcType="VARCHAR"/>
@@ -15,14 +15,14 @@
             <id property="discountsCategoryId" column="discounts_category_id" jdbcType="INTEGER"/>
             <result property="discountsType" column="discounts_type" jdbcType="VARCHAR"/>
             <result property="discountsFlag" column="discounts_flag" jdbcType="INTEGER"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="discountsDescription" column="discounts_description" jdbcType="VARCHAR"/>
         </association>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="DiscountsMap">
         select
-          discounts_id, discounts_category_id, `explain`, conditions, conditions_explain, discounts, members
+          discounts_id, discounts_category_id, discounts_explain, conditions, conditions_explain, discounts, members
         from fruit.discounts
         where discounts_id = #{discountsId}
     </select>
@@ -30,8 +30,8 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="DiscountsMap">
         select
-            discounts_id,  `explain`, conditions, conditions_explain, discounts, members,
-            dc.discounts_category_id, dc.discounts_flag, dc.discounts_type, dc.description
+            discounts_id,  discounts_explain, conditions, conditions_explain, discounts, members,
+            dc.discounts_category_id, dc.discounts_flag, dc.discounts_type, dc.discounts_description
         from fruit.discounts d,fruit.discounts_category dc
         WHERE d.discounts_category_id = dc.discounts_category_id
         limit #{offset}, #{limit}
@@ -40,7 +40,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="DiscountsMap">
         select
-        discounts_id, discounts_category_id, `explain`, conditions, conditions_explain, discounts, members
+        discounts_id, discounts_category_id, discounts_explain, conditions, conditions_explain, discounts, members
         from fruit.discounts
         <where>
             <if test="discountsId != null">
@@ -49,8 +49,8 @@
             <if test="discountsCategoryId != null">
                 and discounts_category_id = #{discountsCategoryId}
             </if>
-            <if test="explain != null and explain != ''">
-                and explain = #{explain}
+            <if test="discountsExplain != null and discountsExplain != ''">
+                and discounts_explain = #{discountsExplain}
             </if>
             <if test="conditions != null">
                 and conditions = #{conditions}
@@ -69,28 +69,28 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="discountsId" useGeneratedKeys="true">
-        insert into fruit.discounts(discounts_category_id, `explain`, conditions, conditions_explain, discounts, members)
-        values (#{discountsCategory.discountsCategoryId}, #{explain}, #{conditions}, #{conditionsExplain}, #{discounts}, #{members})
+        insert into fruit.discounts(discounts_category_id, `discounts_explain`, conditions, conditions_explain, discounts, members)
+        values (#{discountsCategory.discountsCategoryId}, #{discountsExplain}, #{conditions}, #{conditionsExplain}, #{discounts}, #{members})
     </insert>
 
     <insert id="insertBatch" keyProperty="discountsId" useGeneratedKeys="true">
-        insert into fruit.discounts(discounts_category_id, `explain`, conditions, conditions_explain, discounts, members)
+        insert into fruit.discounts(discounts_category_id, `discounts_explain`, conditions, conditions_explain, discounts, members)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.discountsCategoryId}, #{entity.explain}, #{entity.conditions}, #{entity.conditionsExplain},
+            (#{entity.discountsCategoryId}, #{entity.discountsExplain}, #{entity.conditions}, #{entity.conditionsExplain},
             #{entity.discounts}, #{entity.members})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="discountsId" useGeneratedKeys="true">
-        insert into fruit.discounts(discounts_category_id, `explain`, conditions, conditions_explain, discounts, members)
+        insert into fruit.discounts(discounts_category_id, `discounts_explain`, conditions, conditions_explain, discounts, members)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.discountsCategoryId}, #{entity.explain}, #{entity.conditions}, #{entity.conditionsExplain},
+            (#{entity.discountsCategoryId}, #{entity.discountsExplain}, #{entity.conditions}, #{entity.conditionsExplain},
             #{entity.discounts}, #{entity.members})
         </foreach>
         on duplicate key update
-        discounts_category_id = values(discounts_category_id) , explain = values(explain) , conditions =
+        discounts_category_id = values(discounts_category_id) , discounts_explain = values(discounts_explain) , conditions =
         values(conditions) , conditions_explain = values(conditions_explain) , discounts = values(discounts) , members =
         values(members)
     </insert>
@@ -99,11 +99,11 @@
     <update id="update">
         update fruit.discounts
         <set>
-            <if test="discountsCategoryId != null">
-                discounts_category_id = #{discountsCategoryId},
+            <if test="discountsCategory != null">
+                discounts_category_id = #{discountsCategory.discountsCategoryId},
             </if>
-            <if test="explain != null and explain != ''">
-                `explain` = #{explain},
+            <if test="discountsExplain != null and discountsExplain != ''">
+                `discounts_explain` = #{discountsExplain},
             </if>
             <if test="conditions != null">
                 conditions = #{conditions},

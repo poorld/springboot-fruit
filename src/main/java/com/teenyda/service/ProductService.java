@@ -29,6 +29,8 @@ public interface ProductService {
      */
     List<Product> queryAllByLimit(int offset, int limit);
 
+    List<Product> queryAll();
+
     /**
      * 新增数据
      *

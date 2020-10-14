@@ -4,7 +4,7 @@
 
     <resultMap type="com.teenyda.entity.Comments" id="CommentsMap">
         <result property="commentsId" column="comments_id" jdbcType="INTEGER"/>
-        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+<!--        <result property="userId" column="user_id" jdbcType="INTEGER"/>-->
         <result property="productId" column="product_id" jdbcType="INTEGER"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="img1" column="img1" jdbcType="VARCHAR"/>
@@ -13,6 +13,19 @@
         <result property="audit" column="audit" jdbcType="INTEGER"/>
         <result property="reply" column="reply" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+
+        <association property="user" javaType="com.teenyda.entity.User">
+            <id property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="image" column="image" jdbcType="VARCHAR"/>
+            <result property="qq" column="QQ" jdbcType="VARCHAR"/>
+            <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+            <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+            <result property="registerTime" column="register_time" jdbcType="TIMESTAMP"/>
+        </association>
     </resultMap>
 
     <!--查询单个-->

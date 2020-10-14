@@ -1,5 +1,6 @@
 package com.teenyda.entity;
 
+import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * @since 2020-10-09 17:10:41
  */
 
-@ToString
+@Data
 public class Discounts implements Serializable {
     private static final long serialVersionUID = -78622205559742887L;
 
@@ -21,7 +22,7 @@ public class Discounts implements Serializable {
     /**
      * 说明
      */
-    private String explain;
+    private String discountsExplain;
     /**
      * 满足条件的价格
      */
@@ -45,67 +46,5 @@ public class Discounts implements Serializable {
     private DiscountsCategory discountsCategory;
 
 
-    public Integer getDiscountsId() {
-        return discountsId;
-    }
 
-    public void setDiscountsId(Integer discountsId) {
-        this.discountsId = discountsId;
-    }
-
-    // public Integer getDiscountsCategoryId() {
-    //     return discountsCategoryId;
-    // }
-
-    // public void setDiscountsCategoryId(Integer discountsCategoryId) {
-    //     this.discountsCategoryId = discountsCategoryId;
-    // }
-
-    public String getExplain() {
-        return explain;
-    }
-
-    public void setExplain(String explain) {
-        this.explain = explain;
-    }
-
-    public Integer getConditions() {
-        return conditions;
-    }
-
-    public void setConditions(Integer conditions) {
-        this.conditions = conditions;
-    }
-
-    public String getConditionsExplain() {
-        return conditionsExplain;
-    }
-
-    public void setConditionsExplain(String conditionsExplain) {
-        this.conditionsExplain = conditionsExplain;
-    }
-
-    public String getDiscounts() {
-        return discounts;
-    }
-
-    public void setDiscounts(String discounts) {
-        this.discounts = discounts;
-    }
-
-    public Boolean getMembers() {
-        return members;
-    }
-
-    public void setMembers(Boolean members) {
-        this.members = members;
-    }
-
-    public DiscountsCategory getDiscountsCategory() {
-        return discountsCategory;
-    }
-
-    public void setDiscountsCategory(DiscountsCategory discountsCategory) {
-        this.discountsCategory = discountsCategory;
-    }
 }

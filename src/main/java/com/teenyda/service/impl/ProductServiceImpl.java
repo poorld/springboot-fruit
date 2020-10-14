@@ -42,6 +42,11 @@ public class ProductServiceImpl implements ProductService {
         return this.productDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Product> queryAll() {
+        return this.productDao.queryAll(null);
+    }
+
     /**
      * 新增数据
      *

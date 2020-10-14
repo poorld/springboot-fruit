@@ -54,7 +54,7 @@ public class DiscountsController extends AbstractApiController {
 
     @PutMapping("discounts")
     public ResultBody<Discounts> update(@RequestBody Discounts discounts) {
-        return responseSuccessJson(this.discountsService.insert(discounts));
+        return responseSuccessJson(this.discountsService.update(discounts));
     }
 
 

@@ -1,5 +1,6 @@
 package com.teenyda.entity;
 
+import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-10-12 18:44:25
  */
-@ToString
+@Data
 public class DiscountsCategory implements Serializable {
     private static final long serialVersionUID = 520668961860415181L;
 
@@ -22,39 +23,8 @@ public class DiscountsCategory implements Serializable {
 
     private Integer discountsFlag;
 
-    private String description;
+    private String discountsDescription;
 
 
-    public Integer getDiscountsCategoryId() {
-        return discountsCategoryId;
-    }
-
-    public void setDiscountsCategoryId(Integer discountsCategoryId) {
-        this.discountsCategoryId = discountsCategoryId;
-    }
-
-    public String getDiscountsType() {
-        return discountsType;
-    }
-
-    public void setDiscountsType(String discountsType) {
-        this.discountsType = discountsType;
-    }
-
-    public Integer getDiscountsFlag() {
-        return discountsFlag;
-    }
-
-    public void setDiscountsFlag(Integer discountsFlag) {
-        this.discountsFlag = discountsFlag;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
 }

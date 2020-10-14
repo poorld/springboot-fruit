@@ -2,9 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.teenyda.dao.ProductDao">
 
+    <resultMap type="com.teenyda.entity.Spec" id="SpecMap">
+        <result property="specId" column="spec_id" jdbcType="INTEGER"/>
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="specName" column="spec_name" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+
+        <association property="sku" javaType="com.teenyda.entity.Sku">
+            <id property="skuId" column="sku_id" jdbcType="INTEGER"/>
+            <result property="attrbute" column="attrbute" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <resultMap type="com.teenyda.entity.Discounts" id="DiscountsMap">
+        <result property="discountsId" column="discounts_id" jdbcType="INTEGER"/>
+        <result property="discountsExplain" column="explain" jdbcType="VARCHAR"/>
+        <result property="conditions" column="conditions" jdbcType="INTEGER"/>
+        <result property="conditionsExplain" column="conditions_explain" jdbcType="VARCHAR"/>
+        <result property="discounts" column="discounts" jdbcType="VARCHAR"/>
+        <result property="members" column="members" jdbcType="INTEGER"/>
+
+        <association property="discountsCategory" javaType="com.teenyda.entity.DiscountsCategory">
+            <id property="discountsCategoryId" column="discounts_category_id" jdbcType="INTEGER"/>
+            <result property="discountsType" column="discounts_type" jdbcType="VARCHAR"/>
+            <result property="discountsFlag" column="discounts_flag" jdbcType="INTEGER"/>
+            <result property="discountsDescription" column="discounts_description" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="ProductInfoImagesMap" type="com.teenyda.entity.ProductInfoImage">
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ProductBannerImagesMap" type="com.teenyda.entity.ProductBannerImage">
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="OTHER"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="TagsMap" type="com.teenyda.entity.Tag">
+        <result property="tagId" column="tag_id" jdbcType="INTEGER"/>
+        <result property="name" column="tag_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="CommentsMap" type="com.teenyda.entity.Comments">
+        <result property="commentsId" column="comments_id" jdbcType="INTEGER"/>
+<!--        <result property="user" column="user_id" jdbcType="INTEGER"/>-->
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="img1" column="img1" jdbcType="VARCHAR"/>
+        <result property="img2" column="img2" jdbcType="VARCHAR"/>
+        <result property="img3" column="img3" jdbcType="VARCHAR"/>
+        <result property="audit" column="audit" jdbcType="INTEGER"/>
+        <result property="reply" column="reply" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+
+        <association property="user" javaType="com.teenyda.entity.User">
+            <id property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="image" column="image" jdbcType="VARCHAR"/>
+            <result property="qq" column="QQ" jdbcType="VARCHAR"/>
+            <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+            <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+            <result property="registerTime" column="register_time" jdbcType="TIMESTAMP"/>
+        </association>
+    </resultMap>
+
     <resultMap type="com.teenyda.entity.Product" id="ProductMap">
         <result property="productId" column="product_id" jdbcType="INTEGER"/>
-        <result property="productCategoryId" column="product_category_id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="explain" column="explain" jdbcType="VARCHAR"/>
         <result property="shopPrice" column="shop_price" jdbcType="NUMERIC"/>
@@ -16,6 +87,29 @@
         <result property="updateUserId" column="update_user_id" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="createUserId" column="create_user_id" jdbcType="INTEGER"/>
+
+        <association property="productCategory" javaType="com.teenyda.entity.ProductCategory">
+            <id property="productCategoryId" column="product_category_id" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="sortOrder" column="sort_order" jdbcType="INTEGER"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="image" column="image" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUserId" column="update_user_id" jdbcType="INTEGER"/>
+        </association>
+
+        <collection property="spec" ofType="com.teenyda.entity.Spec"  resultMap="SpecMap" />
+
+        <collection property="discounts" ofType="com.teenyda.entity.Discounts"  resultMap="DiscountsMap" />
+
+        <collection property="productInfoImages" ofType="com.teenyda.entity.ProductInfoImage"  resultMap="ProductInfoImagesMap" />
+
+        <collection property="productBannerImages" ofType="com.teenyda.entity.ProductBannerImage"  resultMap="ProductBannerImagesMap" />
+
+        <collection property="tags" ofType="com.teenyda.entity.Tag"  resultMap="TagsMap" />
+
+        <collection property="comments" ofType="com.teenyda.entity.Comments"  resultMap="CommentsMap" />
+
     </resultMap>
 
     <!--查询单个-->
@@ -26,11 +120,37 @@
         where product_id = #{productId}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ProductMap">
-        select
+    <!--
+       select
           product_id, product_category_id, name, explain, shop_price, price, hot, product_status, default_img, update_time, update_user_id, create_time, create_user_id
         from fruit.product
+        limit #{offset}, #{limit}
+      -->
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProductMap">
+        SELECT
+            product.*,
+            pc.*,
+            spec.*,
+            sku.*,
+            discounts.*,
+            dc.*,
+            pii.*,
+            pbi.*,
+            pt.*,
+            tag.tag_id, tag.name as `tag_name`
+        FROM
+            product
+            LEFT JOIN product_category pc ON product.product_category_id = pc.product_category_id
+            LEFT JOIN spec ON product.product_id = spec.product_id
+            LEFT JOIN sku ON spec.sku_id = sku.sku_id
+            LEFT JOIN product_discounts pd ON product.product_id = pd.product_id
+            LEFT JOIN discounts ON discounts.discounts_id = pd.discounts_id
+            LEFT JOIN discounts_category dc ON dc.discounts_category_id = discounts.discounts_category_id
+            LEFT JOIN product_info_image pii ON pii.product_id = product.product_id
+            LEFT JOIN product_banner_image pbi ON pbi.product_id = product.product_id
+            LEFT JOIN product_tag pt ON pt.product_id = product.product_id
+            LEFT JOIN tag ON tag.tag_id = pt.tag_id
         limit #{offset}, #{limit}
     </select>
 

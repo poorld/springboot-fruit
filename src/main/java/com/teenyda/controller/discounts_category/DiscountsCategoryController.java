@@ -30,10 +30,10 @@ public class DiscountsCategoryController extends AbstractApiController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne")
-    public ResultBody<DiscountsCategory> selectOne(Integer id) {
-        return responseSuccessJson(this.discountsCategoryService.queryById(id));
-    }
+    // @GetMapping("selectOne")
+    // public ResultBody<DiscountsCategory> selectOne(Integer id) {
+    //     return responseSuccessJson(this.discountsCategoryService.queryById(id));
+    // }
 
     /**
      *
