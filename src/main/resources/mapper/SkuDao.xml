@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.dao.SkuDao">
+
+    <resultMap type="com.teenyda.entity.Sku" id="SkuMap">
+        <result property="skuId" column="sku_id" jdbcType="INTEGER"/>
+        <result property="attrbute" column="attrbute" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SkuMap">
+        select sku_id,
+               attrbute
+        from fruit.sku
+        where sku_id = #{skuId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SkuMap">
+        select sku_id,
+               attrbute
+        from fruit.sku
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SkuMap">
+        select
+        sku_id, attrbute
+        from fruit.sku
+        <where>
+            <if test="skuId != null">
+                and sku_id = #{skuId}
+            </if>
+            <if test="attrbute != null and attrbute != ''">
+                and attrbute = #{attrbute}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="skuId" useGeneratedKeys="true">
+        insert into fruit.sku(attrbute)
+        values (#{attrbute})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="skuId" useGeneratedKeys="true">
+        insert into fruit.sku(attrbute)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.attrbute})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="skuId" useGeneratedKeys="true">
+        insert into fruit.sku(attrbute)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.attrbute})
+        </foreach>
+        on duplicate key update
+        attrbute = values(attrbute)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fruit.sku
+        <set>
+            <if test="attrbute != null and attrbute != ''">
+                attrbute = #{attrbute},
+            </if>
+        </set>
+        where sku_id = #{skuId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from fruit.sku
+        where sku_id = #{skuId}
+    </delete>
+
+</mapper>

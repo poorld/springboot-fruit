@@ -138,7 +138,9 @@
             pii.*,
             pbi.*,
             pt.*,
-            tag.tag_id, tag.name as `tag_name`
+            tag.tag_id, tag.name as `tag_name`,
+            comments.*,
+	        `user`.*
         FROM
             product
             LEFT JOIN product_category pc ON product.product_category_id = pc.product_category_id
@@ -151,6 +153,8 @@
             LEFT JOIN product_banner_image pbi ON pbi.product_id = product.product_id
             LEFT JOIN product_tag pt ON pt.product_id = product.product_id
             LEFT JOIN tag ON tag.tag_id = pt.tag_id
+            LEFT JOIN comments ON comments.product_id = product.product_id
+	        LEFT JOIN `user` ON `user`.user_id = comments.user_id
         limit #{offset}, #{limit}
     </select>
 
