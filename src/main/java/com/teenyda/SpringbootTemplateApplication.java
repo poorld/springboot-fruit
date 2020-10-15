@@ -28,6 +28,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class SpringbootTemplateApplication {
 
 	public static void main(String[] args) {
+		//app.setBannerMode(Banner.Mode.OFF);
 		SpringApplication.run(SpringbootTemplateApplication.class, args);
 		System.out.println(Util.resourcePath());
 		System.out.println(Util.lunchAddress());
