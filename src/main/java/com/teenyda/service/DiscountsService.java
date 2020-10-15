@@ -29,6 +29,9 @@ public interface DiscountsService {
      */
     List<Discounts> queryAllByLimit(int offset, int limit);
 
+
+    List<Discounts> queryAll(Discounts discounts);
+
     /**
      * 新增数据
      *

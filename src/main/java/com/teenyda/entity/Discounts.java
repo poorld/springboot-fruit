@@ -18,7 +18,6 @@ public class Discounts implements Serializable {
 
     private Integer discountsId;
 
-    // private Integer discountsCategoryId;
     /**
      * 说明
      */

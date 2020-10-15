@@ -25,6 +25,7 @@ public class DiscountsController extends AbstractApiController {
     @Resource
     private DiscountsService discountsService;
 
+
     /**
      * 通过主键查询单条数据
      *
@@ -45,6 +46,20 @@ public class DiscountsController extends AbstractApiController {
     @GetMapping("discounts")
     public ResultBody<List<Discounts>> discounts() {
         return responseSuccessJson(this.discountsService.queryAllByLimit(0, 100));
+    }
+
+    @GetMapping("discounts/user")
+    public ResultBody<List<Discounts>> userDiscounts() {
+        Discounts discounts = new Discounts();
+        discounts.setMembers(false);
+        return responseSuccessJson(this.discountsService.queryAll(discounts));
+    }
+
+    @GetMapping("discounts/member")
+    public ResultBody<List<Discounts>> memberDiscounts() {
+        Discounts discounts = new Discounts();
+        discounts.setMembers(true);
+        return responseSuccessJson(this.discountsService.queryAll(discounts));
     }
 
     @PostMapping("discounts")

@@ -4,7 +4,6 @@
 
     <resultMap type="com.teenyda.entity.Discounts" id="DiscountsMap">
         <result property="discountsId" column="discounts_id" jdbcType="INTEGER"/>
-<!--        <result property="discountsCategoryId" column="discounts_category_id" jdbcType="INTEGER"/>-->
         <result property="discountsExplain" column="discounts_explain" jdbcType="VARCHAR"/>
         <result property="conditions" column="conditions" jdbcType="INTEGER"/>
         <result property="conditionsExplain" column="conditions_explain" jdbcType="VARCHAR"/>
@@ -37,34 +36,35 @@
         limit #{offset}, #{limit}
     </select>
 
+
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="DiscountsMap">
         select
-        discounts_id, discounts_category_id, discounts_explain, conditions, conditions_explain, discounts, members
-        from fruit.discounts
-        <where>
-            <if test="discountsId != null">
-                and discounts_id = #{discountsId}
-            </if>
-            <if test="discountsCategoryId != null">
-                and discounts_category_id = #{discountsCategoryId}
-            </if>
-            <if test="discountsExplain != null and discountsExplain != ''">
-                and discounts_explain = #{discountsExplain}
-            </if>
-            <if test="conditions != null">
-                and conditions = #{conditions}
-            </if>
-            <if test="conditionsExplain != null and conditionsExplain != ''">
-                and conditions_explain = #{conditionsExplain}
-            </if>
-            <if test="discounts != null and discounts != ''">
-                and discounts = #{discounts}
-            </if>
-            <if test="members != null">
-                and members = #{members}
-            </if>
-        </where>
+        discounts_id,  discounts_explain, conditions, conditions_explain, discounts, members,
+        dc.discounts_category_id, dc.discounts_flag, dc.discounts_type, dc.discounts_description
+        from fruit.discounts d,fruit.discounts_category dc
+        WHERE d.discounts_category_id = dc.discounts_category_id
+        <if test="discountsId != null">
+            and discounts_id = #{discountsId}
+        </if>
+        <if test="discountsCategory != null and discountsCategory.discountsCategoryId != null">
+            and discounts_category_id = #{discountsCategory.discountsCategoryId}
+        </if>
+        <if test="discountsExplain != null and discountsExplain != ''">
+            and discounts_explain = #{discountsExplain}
+        </if>
+        <if test="conditions != null">
+            and conditions = #{conditions}
+        </if>
+        <if test="conditionsExplain != null and conditionsExplain != ''">
+            and conditions_explain = #{conditionsExplain}
+        </if>
+        <if test="discounts != null and discounts != ''">
+            and discounts = #{discounts}
+        </if>
+        <if test="members != null">
+            and members = #{members}
+        </if>
     </select>
 
     <!--新增所有列-->

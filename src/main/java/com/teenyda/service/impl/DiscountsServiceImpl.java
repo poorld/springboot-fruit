@@ -42,6 +42,11 @@ public class DiscountsServiceImpl implements DiscountsService {
         return this.discountsDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Discounts> queryAll(Discounts discounts) {
+        return this.discountsDao.queryAll(discounts);
+    }
+
     /**
      * 新增数据
      *
