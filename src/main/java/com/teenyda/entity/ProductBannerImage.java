@@ -6,16 +6,16 @@ import java.io.Serializable;
  * (ProductBannerImage)实体类
  *
  * @author makejava
- * @since 2020-10-14 12:39:30
+ * @since 2020-10-16 19:07:56
  */
 public class ProductBannerImage implements Serializable {
-    private static final long serialVersionUID = 492254558049560612L;
+    private static final long serialVersionUID = -81726258007280983L;
 
     private Integer productId;
     /**
      * 0图片 1视频
      */
-    private Object type;
+    private Integer type;
     /**
      * 地址
      */
@@ -30,11 +30,11 @@ public class ProductBannerImage implements Serializable {
         this.productId = productId;
     }
 
-    public Object getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Object type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

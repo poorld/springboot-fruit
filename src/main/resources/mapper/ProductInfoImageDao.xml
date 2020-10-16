@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.dao.ProductInfoImageDao">
+
+    <resultMap type="com.teenyda.entity.ProductInfoImage" id="ProductInfoImageMap">
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProductInfoImageMap">
+        select product_id,
+               sort,
+               url
+        from fruit.product_info_image
+        where product_id = #{productId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProductInfoImageMap">
+        select product_id,
+               sort,
+               url
+        from fruit.product_info_image
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProductInfoImageMap">
+        select
+        product_id, sort, url
+        from fruit.product_info_image
+        <where>
+            <if test="productId != null">
+                and product_id = #{productId}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into fruit.product_info_image(product_id, sort, url)
+        values (#{productId}, #{sort}, #{url})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into fruit.product_info_image(product_id, sort, url)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.productId}, #{entity.sort}, #{entity.url})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into fruit.product_info_image(product_id, sort, url)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.productId}, #{entity.sort}, #{entity.url})
+        </foreach>
+        on duplicate key update
+        product_id = values(product_id) , sort = values(sort) , url = values(url)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fruit.product_info_image
+        <set>
+            <if test="productId != null">
+                product_id = #{productId},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+        </set>
+        where = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from fruit.product_info_image
+        where product_id = #{productId}
+    </delete>
+
+</mapper>

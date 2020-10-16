@@ -9,16 +9,16 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="ProductDiscountsMap">
-        select
-          product_id, discounts_id
+        select product_id,
+               discounts_id
         from fruit.product_discounts
         where product_id = #{productId}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ProductDiscountsMap">
-        select
-          product_id, discounts_id
+        select product_id,
+               discounts_id
         from fruit.product_discounts
         limit #{offset}, #{limit}
     </select>
@@ -40,23 +40,23 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="productId" useGeneratedKeys="true">
-        insert into fruit.product_discounts()
-        values ()
+        insert into fruit.product_discounts(product_id, discounts_id)
+        values (#{productId}, #{discountsId})
     </insert>
 
     <insert id="insertBatch" keyProperty="productId" useGeneratedKeys="true">
-        insert into fruit.product_discounts()
+        insert into fruit.product_discounts(product_id, discounts_id)
         values
         <foreach collection="entities" item="entity" separator=",">
-            ()
+            (#{entity.productId}, #{entity.discountsId})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="productId" useGeneratedKeys="true">
-        insert into fruit.product_discounts()
+        insert into fruit.product_discounts(product_id, discounts_id)
         values
         <foreach collection="entities" item="entity" separator=",">
-            ()
+            (#{entity.productId}, #{entity.discountsId})
         </foreach>
         on duplicate key update
     </insert>
@@ -65,13 +65,16 @@
     <update id="update">
         update fruit.product_discounts
         <set>
+            discounts_id = #{discountsId}
         </set>
         where product_id = #{productId}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from fruit.product_discounts where product_id = #{productId}
+        delete
+        from fruit.product_discounts
+        where product_id = #{productId}
     </delete>
 
 </mapper>

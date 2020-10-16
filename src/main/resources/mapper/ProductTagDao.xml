@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teenyda.dao.ProductTagDao">
+
+    <resultMap type="com.teenyda.entity.ProductTag" id="ProductTagMap">
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="tagId" column="tag_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProductTagMap">
+        select product_id,
+               tag_id
+        from fruit.product_tag
+        where product_id = #{productId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProductTagMap">
+        select product_id,
+               tag_id
+        from fruit.product_tag
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProductTagMap">
+        select
+        product_id, tag_id
+        from fruit.product_tag
+        <where>
+            <if test="productId != null">
+                and product_id = #{productId}
+            </if>
+            <if test="tagId != null">
+                and tag_id = #{tagId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into fruit.product_tag(product_id, tag_id)
+        values (#{productId}, #{tagId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into fruit.product_tag(product_id, tag_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.productId}, #{entity.tagId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into fruit.product_tag(product_id, tag_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.productId}, #{entity.tagId})
+        </foreach>
+        on duplicate key update
+        product_id = values(product_id) , tag_id = values(tag_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fruit.product_tag
+        <set>
+            <if test="productId != null">
+                product_id = #{productId},
+            </if>
+            <if test="tagId != null">
+                tag_id = #{tagId},
+            </if>
+        </set>
+        where = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from fruit.product_tag
+        where product_id = #{productId}
+    </delete>
+
+</mapper>

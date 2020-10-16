@@ -81,4 +81,7 @@ public class Util {
         return DateTimeUtil.nowStrTime();
     }
 
+    public static String buildDownloadFilePath(String filename) {
+        return lunchAddress() + "/file/downloadFile/" + filename;
+    }
 }

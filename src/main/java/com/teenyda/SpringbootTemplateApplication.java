@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
@@ -24,7 +25,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 // 解决Property 'sqlSessionFactory' or 'sqlSessionTemplate' are required
 @EnableAutoConfiguration
 @MapperScan({"com.teenyda.mapping", "com.teenyda.mapping.base", "com.teenyda.dao"})
-
+// 开启事务
+@EnableTransactionManagement
 public class SpringbootTemplateApplication {
 
 	public static void main(String[] args) {

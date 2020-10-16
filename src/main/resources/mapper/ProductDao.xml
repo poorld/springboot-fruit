@@ -208,9 +208,88 @@
     </select>
 
     <!--新增所有列-->
+<!-- (product_category_id, name, explain, shop_price, price, hot, product_status, default_img, update_time, update_user_id, create_time, create_user_id)-->
     <insert id="insert" keyProperty="productId" useGeneratedKeys="true">
-        insert into fruit.product(product_category_id, name, explain, shop_price, price, hot, product_status, default_img, update_time, update_user_id, create_time, create_user_id)
-        values (#{productCategoryId}, #{name}, #{explain}, #{shopPrice}, #{price}, #{hot}, #{productStatus}, #{defaultImg}, #{updateTime}, #{updateUserId}, #{createTime}, #{createUserId})
+        insert into fruit.product
+
+
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="productCategory != null and productCategory.productCategoryId != null">
+                product_category_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="explain != null">
+                `explain`,
+            </if>
+            <if test="shopPrice != null">
+                shop_price,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="hot != null">
+                hot,
+            </if>
+            <if test="productStatus != null">
+                product_status,
+            </if>
+            <if test="defaultImg != null">
+                default_img,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateUserId != null">
+                update_user_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUserId != null">
+                create_user_id
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="productCategory != null and productCategory.productCategoryId != null">
+                #{productCategory.productCategoryId},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="explain != null">
+                #{explain},
+            </if>
+            <if test="shopPrice != null">
+                #{shopPrice},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="hot != null">
+                #{hot},
+            </if>
+            <if test="productStatus != null">
+                #{productStatus},
+            </if>
+            <if test="defaultImg != null">
+                #{defaultImg},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="updateUserId != null">
+                #{updateUserId},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId})
+            </if>
+        </trim>
     </insert>
 
     <insert id="insertBatch" keyProperty="productId" useGeneratedKeys="true">

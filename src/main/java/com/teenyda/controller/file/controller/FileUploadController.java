@@ -1,9 +1,6 @@
 package com.teenyda.controller.file.controller;
 
-import com.teenyda.common.GlobalErrorInfoException;
-import com.teenyda.common.GlobalResponseInfoEnum;
-import com.teenyda.common.ResultBody;
-import com.teenyda.common.ResultUtil;
+import com.teenyda.common.*;
 import com.teenyda.controller.file.dto.FileUploadResponse;
 import com.teenyda.controller.file.exception.FileUploadException;
 import com.teenyda.controller.file.service.FileService;
@@ -45,11 +42,14 @@ public class FileUploadController {
     public ResultBody<FileUploadResponse> uploadFile(@RequestParam("file") MultipartFile file) throws GlobalErrorInfoException {
 
         String fileName = fileService.saveToFile(file);
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/file")
-                .path("/downloadFile/")
-                .path(fileName)
-                .toUriString();
+
+        // String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+        //         .path("/file")
+        //         .path("/downloadFile/")
+        //         .path(fileName)
+        //         .toUriString();
+        // 已改成这个
+        String fileDownloadUri = Util.buildDownloadFilePath(fileName);
 
         FileUploadResponse response = new FileUploadResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
         return ResultUtil.success(GlobalResponseInfoEnum.SUCCESS, response);

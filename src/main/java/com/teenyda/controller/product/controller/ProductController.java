@@ -1,12 +1,10 @@
-package com.teenyda.controller;
+package com.teenyda.controller.product.controller;
 
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.Product;
-import com.teenyda.service.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.teenyda.controller.product.service.ProductService;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -40,5 +38,11 @@ public class ProductController extends AbstractApiController {
     @GetMapping("product")
     public ResultBody<List<Product>> all() {
         return responseSuccessJson(this.productService.queryAllByLimit(0, 100));
+    }
+
+    @PostMapping("product")
+    public ResultBody<Product> insert(@RequestBody Product product) {
+        Product p = this.productService.insert(product);
+        return responseSuccessJson(p);
     }
 }
