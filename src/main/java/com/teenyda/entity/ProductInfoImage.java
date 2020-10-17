@@ -11,6 +11,8 @@ import java.io.Serializable;
 public class ProductInfoImage implements Serializable {
     private static final long serialVersionUID = 485888426861903348L;
 
+    private Integer piiId;
+
     private Integer productId;
     /**
      * 排序

@@ -2,6 +2,7 @@ package com.teenyda.controller.product.service;
 
 import com.teenyda.dao.*;
 import com.teenyda.entity.*;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @since 2020-10-09 17:10:52
  */
 @Service("productService")
+@Log
 public class ProductServiceImpl implements ProductService {
     @Resource
     private ProductDao productDao;
@@ -70,10 +72,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Product insert(Product product) {
+        log.info("添加产品");
         product.setCreateTime(new Date());
-        // 先获取产品id
-        int productId = this.productDao.insert(product);
-
+        this.productDao.insert(product);
+        Integer productId = product.getProductId();
+        log.info(product.getProductId() + "");
+        log.info("产品id=" + productId);
         // 获取规格
         List<Spec> spec = product.getSpec();
         for (Spec item : spec){

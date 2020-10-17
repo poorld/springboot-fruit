@@ -17,7 +17,7 @@
 
     <resultMap type="com.teenyda.entity.Discounts" id="DiscountsMap">
         <result property="discountsId" column="discounts_id" jdbcType="INTEGER"/>
-        <result property="discountsExplain" column="explain" jdbcType="VARCHAR"/>
+        <result property="discountsExplain" column="discounts_explain" jdbcType="VARCHAR"/>
         <result property="conditions" column="conditions" jdbcType="INTEGER"/>
         <result property="conditionsExplain" column="conditions_explain" jdbcType="VARCHAR"/>
         <result property="discounts" column="discounts" jdbcType="VARCHAR"/>

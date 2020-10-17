@@ -11,6 +11,8 @@ import java.io.Serializable;
 public class ProductBannerImage implements Serializable {
     private static final long serialVersionUID = -81726258007280983L;
 
+    private Integer pbiId;
+
     private Integer productId;
     /**
      * 0图片 1视频
