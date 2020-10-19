@@ -185,14 +185,16 @@
     </select>
 
     <!-- 根据分类和状态查询 -->
-    <select id="query" resultMap="ProductMap">
+    <!--  使用like('%#{}%' 会出现Could not set parameters for mapping 错误，
+    改为CONCAT('%',#{keyword},'%') 或者 ${query.name}-->
+    <select id="query" resultMap="ProductMap" parameterType="com.teenyda.controller.product.dto.ProductQueryDto">
         <include refid="baseSql" />
         <where>
-            <if test="null != query.name">
-                product.name = like('%#{obj.name}%')
+            <if test="null != query.name and '' != query.name">
+                product.name like CONCAT('%',#{query.name},'%')
             </if>
             <if test="null != query.status">
-                AND product.product_status = #{obj.status}
+                AND product.product_status = #{query.status}
             </if>
             <if test="null != query.categories and query.categories.size > 0">
                 AND
@@ -203,8 +205,51 @@
                 )
             </if>
         </where>
-
     </select>
+<!--  SELECT
+	product.*,
+	pc.product_category_id,
+	pc.NAME AS pc_name,
+	pc.sort_order,
+	pc.description,
+	pc.image,
+	pc.update_time,
+	spec.*,
+	sku.*,
+	discounts.*,
+	dc.*,
+	pii.*,
+	pbi.*,
+	pt.*,
+	tag.tag_id,
+	tag.NAME AS `tag_name`,
+	comments.*,
+	`user`.*
+FROM
+	product
+	LEFT JOIN product_category pc ON product.product_category_id = pc.product_category_id
+	LEFT JOIN spec ON product.product_id = spec.product_id
+	LEFT JOIN sku ON spec.sku_id = sku.sku_id
+	LEFT JOIN product_discounts pd ON product.product_id = pd.product_id
+	LEFT JOIN discounts ON discounts.discounts_id = pd.discounts_id
+	LEFT JOIN discounts_category dc ON dc.discounts_category_id = discounts.discounts_category_id
+	LEFT JOIN product_info_image pii ON pii.product_id = product.product_id
+	LEFT JOIN product_banner_image pbi ON pbi.product_id = product.product_id
+	LEFT JOIN product_tag pt ON pt.product_id = product.product_id
+	LEFT JOIN tag ON tag.tag_id = pt.tag_id
+	LEFT JOIN comments ON comments.product_id = product.product_id
+	LEFT JOIN `user` ON `user`.user_id = comments.user_id
+WHERE
+product.product_status = 0
+AND
+product.`name` LIKE '%苹果%'
+AND
+(
+	pc.product_category_id = 11001
+	OR pc.product_category_id = 11003
+	)
+
+  -->
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="ProductMap">
