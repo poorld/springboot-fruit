@@ -1,5 +1,7 @@
 package com.teenyda.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-10-14 12:39:30
  */
+@Data
 public class ProductInfoImage implements Serializable {
     private static final long serialVersionUID = 485888426861903348L;
 
@@ -21,29 +24,5 @@ public class ProductInfoImage implements Serializable {
 
     private String url;
 
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
 }

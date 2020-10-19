@@ -32,15 +32,17 @@
     </resultMap>
 
     <resultMap id="ProductInfoImagesMap" type="com.teenyda.entity.ProductInfoImage">
+        <result property="piiId" column="pii_id" jdbcType="INTEGER"/>
         <result property="productId" column="product_id" jdbcType="INTEGER"/>
-        <result property="sort" column="sort" jdbcType="INTEGER"/>
-        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="sort" column="pii_sort" jdbcType="INTEGER"/>
+        <result property="url" column="pii_url" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="ProductBannerImagesMap" type="com.teenyda.entity.ProductBannerImage">
+        <result property="pbiId" column="pbi_id" jdbcType="INTEGER"/>
         <result property="productId" column="product_id" jdbcType="INTEGER"/>
-        <result property="type" column="type" jdbcType="OTHER"/>
-        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="type" column="pbi_type" jdbcType="INTEGER"/>
+        <result property="url" column="pbi_url" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="TagsMap" type="com.teenyda.entity.Tag">
@@ -120,8 +122,8 @@
             sku.*,
             discounts.*,
             dc.*,
-            pii.*,
-            pbi.*,
+            pii.pii_id, pii.product_id, pii.sort AS pii_sort,pii.url AS pii_url,
+            pbi.pbi_id, pbi.product_id, pbi.type AS pbi_type,pbi.url AS pbi_url,
             pt.*,
             tag.tag_id, tag.name as `tag_name`,
             comments.*,
