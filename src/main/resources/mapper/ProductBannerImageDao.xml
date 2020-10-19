@@ -3,7 +3,7 @@
 <mapper namespace="com.teenyda.dao.ProductBannerImageDao">
 
     <resultMap type="com.teenyda.entity.ProductBannerImage" id="ProductBannerImageMap">
-        <result property="pbiId" column="pbi_id" jdbcType="INTEGER" />
+        <result property="pbiId" column="pbi_id" jdbcType="INTEGER"/>
         <result property="productId" column="product_id" jdbcType="INTEGER"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
         <result property="url" column="url" jdbcType="VARCHAR"/>
@@ -35,6 +35,9 @@
         pbi_id, product_id, type, url
         from fruit.product_banner_image
         <where>
+            <if test="pbiId != null">
+                and pbi_id = #{pbiId}
+            </if>
             <if test="productId != null">
                 and product_id = #{productId}
             </if>

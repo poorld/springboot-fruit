@@ -62,13 +62,15 @@
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="piiId" useGeneratedKeys="true">
-        insert into fruit.product_info_image(product_id, sort, url)
+        insert into fruit.product_info_image(pii_id, product_id, sort)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.productId}, #{entity.sort}, #{entity.url})
+            (#{entity.piiId}, #{entity.productId}, #{entity.sort})
         </foreach>
         on duplicate key update
-        product_id = values(product_id) , sort = values(sort) , url = values(url)
+            pii_id = values(pii_id) ,
+            product_id = values(product_id) ,
+            sort = values(sort)
     </insert>
 
     <!--通过主键修改数据-->
