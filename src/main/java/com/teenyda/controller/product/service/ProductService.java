@@ -1,6 +1,8 @@
 package com.teenyda.controller.product.service;
 
+import com.teenyda.controller.product.dto.ProductQueryDto;
 import com.teenyda.entity.Product;
+import com.teenyda.entity.ProductCategory;
 
 import java.util.List;
 
@@ -31,6 +33,9 @@ public interface ProductService {
 
     List<Product> queryAll();
 
+    List<Product> queryByCategory(List<ProductCategory> productCategories);
+
+    List<Product> query(ProductQueryDto queryDto);
     /**
      * 新增数据
      *

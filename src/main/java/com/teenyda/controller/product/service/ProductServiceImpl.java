@@ -1,5 +1,6 @@
 package com.teenyda.controller.product.service;
 
+import com.teenyda.controller.product.dto.ProductQueryDto;
 import com.teenyda.dao.*;
 import com.teenyda.entity.*;
 import lombok.extern.java.Log;
@@ -61,6 +62,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> queryAll() {
         return this.productDao.queryAll(null);
+    }
+
+    @Override
+    public List<Product> queryByCategory(List<ProductCategory> productCategories) {
+        return this.productDao.queryByCategory(productCategories);
+    }
+
+    @Override
+    public List<Product> query(ProductQueryDto queryDto) {
+        return this.productDao.query(queryDto);
     }
 
     /**

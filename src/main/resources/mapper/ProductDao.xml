@@ -85,12 +85,12 @@
         <result property="defaultImg" column="default_img" jdbcType="VARCHAR"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="updateUserId" column="update_user_id" jdbcType="INTEGER"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
         <result property="createUserId" column="create_user_id" jdbcType="INTEGER"/>
 
         <association property="productCategory" javaType="com.teenyda.entity.ProductCategory">
             <id property="productCategoryId" column="product_category_id" jdbcType="INTEGER"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="name" column="pc_name" jdbcType="VARCHAR"/>
             <result property="sortOrder" column="sort_order" jdbcType="INTEGER"/>
             <result property="description" column="description" jdbcType="VARCHAR"/>
             <result property="image" column="image" jdbcType="VARCHAR"/>
@@ -112,25 +112,10 @@
 
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="ProductMap">
-        select
-          product_id, product_category_id, name, explain, shop_price, price, hot, product_status, default_img, update_time, update_user_id, create_time, create_user_id
-        from fruit.product
-        where product_id = #{productId}
-    </select>
-
-    <!--
-       select
-          product_id, product_category_id, name, explain, shop_price, price, hot, product_status, default_img, update_time, update_user_id, create_time, create_user_id
-        from fruit.product
-        limit #{offset}, #{limit}
-      -->
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ProductMap">
+    <sql id="baseSql">
         SELECT
             product.*,
-            pc.*,
+            pc.product_category_id, pc.name as pc_name, pc.sort_order, pc.description, pc.image, pc.update_time,
             spec.*,
             sku.*,
             discounts.*,
@@ -155,7 +140,70 @@
             LEFT JOIN tag ON tag.tag_id = pt.tag_id
             LEFT JOIN comments ON comments.product_id = product.product_id
 	        LEFT JOIN `user` ON `user`.user_id = comments.user_id
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProductMap">
+        <include refid="baseSql" />
+        where product.product_id = #{productId}
+    </select>
+
+    <!--
+       select
+          product_id, product_category_id, name, explain, shop_price, price, hot, product_status, default_img, update_time, update_user_id, create_time, create_user_id
+        from fruit.product
         limit #{offset}, #{limit}
+      -->
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProductMap">
+        <include refid="baseSql" />
+        limit #{offset}, #{limit}
+    </select>
+
+    <!-- 根据分类查询 -->
+    <select id="queryByCategory" resultMap="ProductMap">
+        <include refid="baseSql" />
+        WHERE
+        <foreach collection="categories" item="category" separator=" or ">
+            pc.product_category_id = ${category.productCategoryId}
+        </foreach>
+    </select>
+
+    <!-- 根据分类和状态查询 -->
+    <select id="queryByCategoryAndStatus" resultMap="ProductMap">
+        <include refid="baseSql" />
+        WHERE
+        product.product_status = #{status}
+        <if test="null != categories and categories.size > 0">
+            AND
+            (
+                <foreach collection="categories" item="category" separator=" or ">
+                pc.product_category_id = #{category.productCategoryId}
+                </foreach>
+            )
+        </if>
+    </select>
+
+    <!-- 根据分类和状态查询 -->
+    <select id="query" resultMap="ProductMap">
+        <include refid="baseSql" />
+        <where>
+            <if test="null != query.name">
+                product.name = like('%#{obj.name}%')
+            </if>
+            <if test="null != query.status">
+                AND product.product_status = #{obj.status}
+            </if>
+            <if test="null != query.categories and query.categories.size > 0">
+                AND
+                (
+                <foreach collection="query.categories" item="category" separator=" or ">
+                    pc.product_category_id = #{category.productCategoryId}
+                </foreach>
+                )
+            </if>
+        </where>
+
     </select>
 
     <!--通过实体作为筛选条件查询-->

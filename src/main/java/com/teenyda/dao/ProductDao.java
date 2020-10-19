@@ -1,6 +1,8 @@
 package com.teenyda.dao;
 
+import com.teenyda.controller.product.dto.ProductQueryDto;
 import com.teenyda.entity.Product;
+import com.teenyda.entity.ProductCategory;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -39,6 +41,10 @@ public interface ProductDao {
      */
     List<Product> queryAll(Product product);
 
+    List<Product> queryByCategory(@Param("categories") List<ProductCategory> categories);
+    List<Product> queryByCategoryAndStatus(@Param("categories") List<ProductCategory> categories,@Param("status") Integer status);
+
+    List<Product> query(@Param("query")ProductQueryDto queryDto);
     /**
      * 新增数据
      *
