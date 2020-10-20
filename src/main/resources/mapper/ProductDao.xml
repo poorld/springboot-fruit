@@ -418,14 +418,14 @@ AND
     <update id="update">
         update fruit.product
         <set>
-            <if test="productCategoryId != null">
-                product_category_id = #{productCategoryId},
+            <if test="productCategory != null and productCategory.productCategoryId != null">
+                product_category_id = #{productCategory.productCategoryId},
             </if>
             <if test="name != null and name != ''">
                 name = #{name},
             </if>
             <if test="explain != null and explain != ''">
-                explain = #{explain},
+                `explain` = #{explain},
             </if>
             <if test="shopPrice != null">
                 shop_price = #{shopPrice},

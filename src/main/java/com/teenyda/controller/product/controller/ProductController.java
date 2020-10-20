@@ -57,4 +57,10 @@ public class ProductController extends AbstractApiController {
         Product p = this.productService.insert(product);
         return responseSuccessJson(p);
     }
+
+    @PutMapping("product")
+    public ResultBody<Product> update(@RequestBody Product product) {
+        Product p = this.productService.update(product);
+        return responseSuccessJson(p);
+    }
 }
