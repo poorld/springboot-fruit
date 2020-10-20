@@ -1,4 +1,4 @@
-package com.teenyda.service;
+package com.teenyda.controller.spec.service;
 
 import com.teenyda.entity.Spec;
 

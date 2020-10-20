@@ -1,23 +1,21 @@
-package com.teenyda.controller;
+package com.teenyda.controller.spec.controller;
 
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.Spec;
-import com.teenyda.service.SpecService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.teenyda.controller.spec.service.SpecService;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 /**
  * (Spec)表控制层
- *
+ * 规格
  * @author makejava
  * @since 2020-10-09 20:17:21
  */
 @RestController
-@RequestMapping("spec")
+@RequestMapping("fruit")
 public class SpecController extends AbstractApiController {
     /**
      * 服务对象
@@ -34,6 +32,11 @@ public class SpecController extends AbstractApiController {
     @GetMapping("selectOne")
     public ResultBody<Spec> selectOne(Integer id) {
         return responseSuccessJson(this.specService.queryById(id));
+    }
+
+    @PutMapping("spec")
+    public ResultBody<Spec> update(@RequestBody Spec spec) {
+        return responseSuccessJson(this.specService.update(spec));
     }
 
 }

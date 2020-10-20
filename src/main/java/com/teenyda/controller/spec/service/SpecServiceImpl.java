@@ -1,8 +1,7 @@
-package com.teenyda.service.impl;
+package com.teenyda.controller.spec.service;
 
 import com.teenyda.dao.SpecDao;
 import com.teenyda.entity.Spec;
-import com.teenyda.service.SpecService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

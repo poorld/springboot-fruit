@@ -109,8 +109,8 @@
             <if test="quantity != null">
                 quantity = #{quantity},
             </if>
-            <if test="skuId != null">
-                sku_id = #{skuId},
+            <if test="sku != null and sku.skuId != null">
+                sku_id = #{sku.skuId},
             </if>
         </set>
         where spec_id = #{specId}
