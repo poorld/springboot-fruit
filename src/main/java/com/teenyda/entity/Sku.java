@@ -1,5 +1,7 @@
 package com.teenyda.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-10-14 12:39:31
  */
+@Data
 public class Sku implements Serializable {
     private static final long serialVersionUID = -34203287261462875L;
 
@@ -16,21 +19,5 @@ public class Sku implements Serializable {
     // 斤、箱、袋
     private String attrbute;
 
-
-    public Integer getSkuId() {
-        return skuId;
-    }
-
-    public void setSkuId(Integer skuId) {
-        this.skuId = skuId;
-    }
-
-    public String getAttrbute() {
-        return attrbute;
-    }
-
-    public void setAttrbute(String attrbute) {
-        this.attrbute = attrbute;
-    }
 
 }

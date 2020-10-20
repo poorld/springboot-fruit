@@ -70,7 +70,7 @@
         insert into fruit.spec(product_id, spec_name, price, quantity, sku_id)
         values (#{productId}, #{specName}, #{price}, #{quantity},
         <if test="sku != null and sku.skuId != null">
-            #{skuId}
+            #{sku.skuId}
         </if>)
     </insert>
 

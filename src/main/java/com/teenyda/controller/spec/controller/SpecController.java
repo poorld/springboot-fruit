@@ -29,14 +29,24 @@ public class SpecController extends AbstractApiController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne")
+    @GetMapping("spec")
     public ResultBody<Spec> selectOne(Integer id) {
         return responseSuccessJson(this.specService.queryById(id));
+    }
+
+    @PostMapping("spec")
+    public ResultBody<Spec> insert(@RequestBody Spec spec) {
+        return responseSuccessJson(this.specService.insert(spec));
     }
 
     @PutMapping("spec")
     public ResultBody<Spec> update(@RequestBody Spec spec) {
         return responseSuccessJson(this.specService.update(spec));
+    }
+
+    @DeleteMapping("spec/{id}")
+    public ResultBody<Boolean> delete(@PathVariable("id") Integer id) {
+        return responseSuccessJson(this.specService.deleteById(id));
     }
 
 }

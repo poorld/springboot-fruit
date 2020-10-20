@@ -2,15 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.teenyda.dao.ProductDao">
 
+    <!-- spec_product_id, spec_name,spec_price, spec_quantity, spec_sku_id -->
     <resultMap type="com.teenyda.entity.Spec" id="SpecMap">
         <result property="specId" column="spec_id" jdbcType="INTEGER"/>
-        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="productId" column="spec_product_id" jdbcType="INTEGER"/>
         <result property="specName" column="spec_name" jdbcType="VARCHAR"/>
-        <result property="price" column="price" jdbcType="NUMERIC"/>
-        <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+        <result property="price" column="spec_price" jdbcType="NUMERIC"/>
+        <result property="quantity" column="spec_quantity" jdbcType="INTEGER"/>
 
         <association property="sku" javaType="com.teenyda.entity.Sku">
-            <id property="skuId" column="sku_id" jdbcType="INTEGER"/>
+            <id property="skuId" column="spec_sku_id" jdbcType="INTEGER"/>
             <result property="attrbute" column="attrbute" jdbcType="VARCHAR"/>
         </association>
     </resultMap>
@@ -124,7 +125,7 @@
         SELECT
             product.*,
             pc.product_category_id, pc.name as pc_name, pc.sort_order, pc.description, pc.image, pc.update_time,
-            spec.*,
+            spec.spec_id, spec.product_id as spec_product_id, spec.spec_name, spec.price as spec_price, spec.quantity as spec_quantity, spec.sku_id as spec_sku_id,
             sku.*,
             discounts.*,
             dc.*,
