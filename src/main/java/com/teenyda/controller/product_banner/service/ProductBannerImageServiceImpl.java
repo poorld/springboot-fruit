@@ -1,8 +1,8 @@
-package com.teenyda.service.impl;
+package com.teenyda.controller.product_banner.service;
 
 import com.teenyda.dao.ProductBannerImageDao;
 import com.teenyda.entity.ProductBannerImage;
-import com.teenyda.service.ProductBannerImageService;
+import com.teenyda.controller.product_banner.service.ProductBannerImageService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,7 +12,7 @@ import java.util.List;
  * (ProductBannerImage)表服务实现类
  *
  * @author makejava
- * @since 2020-10-16 18:20:30
+ * @since 2020-10-20 18:59:05
  */
 @Service("productBannerImageService")
 public class ProductBannerImageServiceImpl implements ProductBannerImageService {
@@ -22,12 +22,12 @@ public class ProductBannerImageServiceImpl implements ProductBannerImageService 
     /**
      * 通过ID查询单条数据
      *
-     * @param 主键
+     * @param pbiId 主键
      * @return 实例对象
      */
     @Override
-    public ProductBannerImage queryById() {
-        return this.productBannerImageDao.queryById();
+    public ProductBannerImage queryById(Integer pbiId) {
+        return this.productBannerImageDao.queryById(pbiId);
     }
 
     /**
@@ -63,18 +63,17 @@ public class ProductBannerImageServiceImpl implements ProductBannerImageService 
     @Override
     public ProductBannerImage update(ProductBannerImage productBannerImage) {
         this.productBannerImageDao.update(productBannerImage);
-        // return this.queryById(productBannerImage.getProductId());
-        return null;
+        return this.queryById(productBannerImage.getPbiId());
     }
 
     /**
      * 通过主键删除数据
      *
-     * @param 主键
+     * @param pbiId 主键
      * @return 是否成功
      */
     @Override
-    public boolean deleteById() {
-        return this.productBannerImageDao.deleteById() > 0;
+    public boolean deleteById(Integer pbiId) {
+        return this.productBannerImageDao.deleteById(pbiId) > 0;
     }
 }

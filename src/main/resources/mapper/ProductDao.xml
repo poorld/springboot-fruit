@@ -31,16 +31,22 @@
         </association>
     </resultMap>
 
+    <!--
+        把列名product_id改为pii_product_id
+        是因为ProductInfoImages的product_id与Product的product_id一样，
+        没有数据时会填充一条null的数据[{piiId=null,productId=1,sort=null,url=null}]，而期待的是得到空数组[]，
+        为了避免空数据，这里重复的列名要改一下
+    -->
     <resultMap id="ProductInfoImagesMap" type="com.teenyda.entity.ProductInfoImage">
         <result property="piiId" column="pii_id" jdbcType="INTEGER"/>
-        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="productId" column="pii_product_id" jdbcType="INTEGER"/>
         <result property="sort" column="pii_sort" jdbcType="INTEGER"/>
         <result property="url" column="pii_url" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="ProductBannerImagesMap" type="com.teenyda.entity.ProductBannerImage">
         <result property="pbiId" column="pbi_id" jdbcType="INTEGER"/>
-        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="productId" column="pbi_product_id" jdbcType="INTEGER"/>
         <result property="type" column="pbi_type" jdbcType="INTEGER"/>
         <result property="url" column="pbi_url" jdbcType="VARCHAR"/>
     </resultMap>
@@ -122,8 +128,8 @@
             sku.*,
             discounts.*,
             dc.*,
-            pii.pii_id, pii.product_id, pii.sort AS pii_sort,pii.url AS pii_url,
-            pbi.pbi_id, pbi.product_id, pbi.type AS pbi_type,pbi.url AS pbi_url,
+            pii.pii_id, pii.product_id AS pii_product_id, pii.sort AS pii_sort,pii.url AS pii_url,
+            pbi.pbi_id, pbi.product_id AS pbi_product_id, pbi.type AS pbi_type,pbi.url AS pbi_url,
             pt.*,
             tag.tag_id, tag.name as `tag_name`,
             comments.*,

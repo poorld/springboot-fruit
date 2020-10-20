@@ -1,4 +1,4 @@
-package com.teenyda.service;
+package com.teenyda.controller.product_banner.service;
 
 import com.teenyda.entity.ProductBannerImage;
 
@@ -8,17 +8,17 @@ import java.util.List;
  * (ProductBannerImage)表服务接口
  *
  * @author makejava
- * @since 2020-10-16 18:20:30
+ * @since 2020-10-20 18:59:03
  */
 public interface ProductBannerImageService {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param 主键
+     * @param pbiId 主键
      * @return 实例对象
      */
-    ProductBannerImage queryById();
+    ProductBannerImage queryById(Integer pbiId);
 
     /**
      * 查询多条数据
@@ -48,9 +48,9 @@ public interface ProductBannerImageService {
     /**
      * 通过主键删除数据
      *
-     * @param 主键
+     * @param pbiId 主键
      * @return 是否成功
      */
-    boolean deleteById();
+    boolean deleteById(Integer pbiId);
 
 }

@@ -19,7 +19,7 @@ public interface ProductBannerImageDao {
      * @param 主键
      * @return 实例对象
      */
-    ProductBannerImage queryById();
+    ProductBannerImage queryById(Integer pbiId);
 
     /**
      * 查询指定行数据
@@ -77,6 +77,6 @@ public interface ProductBannerImageDao {
      * @param 主键
      * @return 影响行数
      */
-    int deleteById();
+    int deleteById(Integer pbiId);
 
 }
