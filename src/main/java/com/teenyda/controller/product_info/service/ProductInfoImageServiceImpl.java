@@ -1,8 +1,7 @@
-package com.teenyda.service.impl;
+package com.teenyda.controller.product_info.service;
 
 import com.teenyda.dao.ProductInfoImageDao;
 import com.teenyda.entity.ProductInfoImage;
-import com.teenyda.service.ProductInfoImageService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,7 +11,7 @@ import java.util.List;
  * (ProductInfoImage)表服务实现类
  *
  * @author makejava
- * @since 2020-10-16 18:16:06
+ * @since 2020-10-21 09:57:13
  */
 @Service("productInfoImageService")
 public class ProductInfoImageServiceImpl implements ProductInfoImageService {
@@ -22,12 +21,12 @@ public class ProductInfoImageServiceImpl implements ProductInfoImageService {
     /**
      * 通过ID查询单条数据
      *
-     * @param 主键
+     * @param piiId 主键
      * @return 实例对象
      */
     @Override
-    public ProductInfoImage queryById() {
-        return this.productInfoImageDao.queryById();
+    public ProductInfoImage queryById(Integer piiId) {
+        return this.productInfoImageDao.queryById(piiId);
     }
 
     /**
@@ -63,18 +62,30 @@ public class ProductInfoImageServiceImpl implements ProductInfoImageService {
     @Override
     public ProductInfoImage update(ProductInfoImage productInfoImage) {
         this.productInfoImageDao.update(productInfoImage);
-        // return this.queryById(productInfoImage.get());
-        return  null;
+        return this.queryById(productInfoImage.getPiiId());
+    }
+
+
+    /**
+     * 修改排序
+     *
+     * @param productInfoImage 实例对象
+     * @return 实例对象
+     */
+    @Override
+    public Integer updateSort(List<ProductInfoImage> productInfoImage) {
+        return this.productInfoImageDao.insertOrUpdateBatch(productInfoImage);
+        // return this.queryById(productInfoImage.getPiiId());
     }
 
     /**
      * 通过主键删除数据
      *
-     * @param 主键
+     * @param piiId 主键
      * @return 是否成功
      */
     @Override
-    public boolean deleteById() {
-        return this.productInfoImageDao.deleteById() > 0;
+    public boolean deleteById(Integer piiId) {
+        return this.productInfoImageDao.deleteById(piiId) > 0;
     }
 }

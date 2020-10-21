@@ -61,6 +61,7 @@
         </foreach>
     </insert>
 
+    <!-- 这里只用来更新图片序号，不更新其他信息-->
     <insert id="insertOrUpdateBatch" keyProperty="piiId" useGeneratedKeys="true">
         insert into fruit.product_info_image(pii_id, product_id, sort)
         values
@@ -87,14 +88,14 @@
                 url = #{url},
             </if>
         </set>
-        where pii_id = #{pbiId}
+        where pii_id = #{piiId}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">
         delete
         from fruit.product_info_image
-        where pii_id = #{pbiId}
+        where pii_id = #{piiId}
     </delete>
 
 </mapper>

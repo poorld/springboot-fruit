@@ -47,6 +47,7 @@ public class Product implements Serializable {
 
     private Integer updateUserId;
 
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;

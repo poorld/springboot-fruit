@@ -77,6 +77,6 @@ public interface ProductTagDao {
      * @param 主键
      * @return 影响行数
      */
-    int deleteById();
+    int deleteById(Integer productId);
 
 }

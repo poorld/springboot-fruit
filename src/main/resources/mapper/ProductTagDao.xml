@@ -52,6 +52,7 @@
         </foreach>
     </insert>
 
+    <!--  用来修改携带的标签  -->
     <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
         insert into fruit.product_tag(product_id, tag_id)
         values

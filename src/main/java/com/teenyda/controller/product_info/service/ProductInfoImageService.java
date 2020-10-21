@@ -1,4 +1,4 @@
-package com.teenyda.service;
+package com.teenyda.controller.product_info.service;
 
 import com.teenyda.entity.ProductInfoImage;
 
@@ -8,17 +8,17 @@ import java.util.List;
  * (ProductInfoImage)表服务接口
  *
  * @author makejava
- * @since 2020-10-16 18:16:05
+ * @since 2020-10-21 09:57:11
  */
 public interface ProductInfoImageService {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param 主键
+     * @param piiId 主键
      * @return 实例对象
      */
-    ProductInfoImage queryById();
+    ProductInfoImage queryById(Integer piiId);
 
     /**
      * 查询多条数据
@@ -46,11 +46,18 @@ public interface ProductInfoImageService {
     ProductInfoImage update(ProductInfoImage productInfoImage);
 
     /**
+     * 修改排序
+     * @param productInfoImage
+     * @return
+     */
+    Integer updateSort(List<ProductInfoImage> productInfoImage);
+
+    /**
      * 通过主键删除数据
      *
-     * @param 主键
+     * @param piiId 主键
      * @return 是否成功
      */
-    boolean deleteById();
+    boolean deleteById(Integer piiId);
 
 }

@@ -96,6 +96,7 @@
         <result property="updateUserId" column="update_user_id" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
         <result property="createUserId" column="create_user_id" jdbcType="INTEGER"/>
+        <result property="recommended" column="recommended" jdbcType="INTEGER"/>
 
         <association property="productCategory" javaType="com.teenyda.entity.ProductCategory">
             <id property="productCategoryId" column="product_category_id" jdbcType="INTEGER"/>
@@ -155,6 +156,7 @@
     <select id="queryById" resultMap="ProductMap">
         <include refid="baseSql" />
         where product.product_id = #{productId}
+        ORDER BY pii.sort
     </select>
 
     <!--
@@ -460,6 +462,9 @@ AND
             </if>
             <if test="createUserId != null">
                 create_user_id = #{createUserId},
+            </if>
+            <if test="recommended != null">
+                recommended = #{recommended}
             </if>
         </set>
         where product_id = #{productId}
