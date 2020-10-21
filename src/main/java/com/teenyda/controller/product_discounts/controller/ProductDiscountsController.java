@@ -52,7 +52,7 @@ public class ProductDiscountsController extends AbstractApiController {
      * @param id
      * @return
      */
-    @PostMapping("product/user/discounts/{productId}")
+    @PostMapping("product/member/discounts/{productId}")
     public ResultBody<Integer> updateMembersDiscounts(@RequestBody List<ProductDiscounts> pds, @PathVariable("productId") Integer productId) {
         return responseSuccessJson(this.productDiscountsService.updateMemberDiscounts(pds, productId));
     }
