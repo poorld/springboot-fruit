@@ -26,7 +26,7 @@ public class ProductDiscountsServiceImpl implements ProductDiscountsService {
      * @return 实例对象
      */
     @Override
-    public ProductDiscounts queryById(Integer productId) {
+    public List<ProductDiscounts> queryById(Integer productId) {
         return this.productDiscountsDao.queryById(productId);
     }
 
@@ -55,15 +55,32 @@ public class ProductDiscountsServiceImpl implements ProductDiscountsService {
     }
 
     /**
-     * 修改数据
+     * 修改用户优惠数据
+     * 先删除再插入数据
      *
      * @param productDiscounts 实例对象
+     * @param productId
      * @return 实例对象
      */
     @Override
-    public ProductDiscounts update(ProductDiscounts productDiscounts) {
-        this.productDiscountsDao.update(productDiscounts);
-        return this.queryById(productDiscounts.getProductId());
+    public Integer updateUserDiscounts(List<ProductDiscounts> productDiscounts, Integer productId) {
+        int i = this.productDiscountsDao.deleteUserPDbyProductId(productId);
+        if (productDiscounts.size() > 0)
+            return this.productDiscountsDao.insertBatch(productDiscounts);
+
+        // return this.queryById(productDiscounts.getProductId());
+        return i;
+    }
+
+    @Override
+    public Integer updateMemberDiscounts(List<ProductDiscounts> productDiscounts, Integer productId) {
+        int i = this.productDiscountsDao.deleteMembersPDbyProductId(productId);
+
+        if (productDiscounts.size() > 0)
+            return this.productDiscountsDao.insertBatch(productDiscounts);
+
+        // return this.queryById(productDiscounts.getProductId());
+        return i;
     }
 
     /**

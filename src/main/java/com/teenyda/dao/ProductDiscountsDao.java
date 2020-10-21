@@ -19,7 +19,7 @@ public interface ProductDiscountsDao {
      * @param productId 主键
      * @return 实例对象
      */
-    ProductDiscounts queryById(Integer productId);
+    List<ProductDiscounts> queryById(Integer productId);
 
     /**
      * 查询指定行数据
@@ -78,5 +78,19 @@ public interface ProductDiscountsDao {
      * @return 影响行数
      */
     int deleteById(Integer productId);
+
+    /**
+     * 根据产品id删除全部用户优惠
+     * @param productId
+     * @return
+     */
+    int deleteUserPDbyProductId(Integer productId);
+
+    /**
+     * 根据产品id删除全部会员优惠
+     * @param productId
+     * @return
+     */
+    int deleteMembersPDbyProductId(Integer productId);
 
 }

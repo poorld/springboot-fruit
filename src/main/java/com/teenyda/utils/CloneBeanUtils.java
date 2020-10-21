@@ -8,12 +8,18 @@ import java.util.List;
 import java.util.function.Supplier;
 
 /**
+ * 对象拷贝 - 优雅的解决方案 Mapstruct
+ * https://yunlongn.github.io/2019/05/29/%E5%AF%B9%E8%B1%A1%E6%8B%B7%E8%B4%9D-%E4%BC%98%E9%9B%85%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Mapstruct/
+ */
+
+/**
  * @program: personal_information
  * @author: Teenyda
  * @create: 2020-10-08 10:55
  * @description: 对象克隆
  * https://www.cnblogs.com/Johnson-lin/p/12123012.html
  **/
+
 public class CloneBeanUtils extends BeanUtils {
 
     public interface CloneBeanUtilsCallBack<S, T> {

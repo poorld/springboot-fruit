@@ -139,3 +139,6 @@ insert、update、query生成 主键查询生成XXXById
 > 为了区分mybatis-generoter与EasyCode生成的代码，
 > mybatis-generoter生成的代码位于com.teenyda.domain(实体类) com.teenyda.mapper(数据库访问) 
 > EasyCode生成的代码位于com.teenyda.entity(实体类) com.teenyda.dao(数据库访问) com.teenyda.service(数据库访问) 
+
+
+有机会上mapstruct+lombok+validator

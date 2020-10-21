@@ -11,6 +11,8 @@ import java.io.Serializable;
 public class ProductDiscounts implements Serializable {
     private static final long serialVersionUID = 715522272173965833L;
 
+    private Integer pdId;
+
     private Integer productId;
 
     private Integer discountsId;

@@ -18,7 +18,7 @@ public interface ProductDiscountsService {
      * @param productId 主键
      * @return 实例对象
      */
-    ProductDiscounts queryById(Integer productId);
+    List<ProductDiscounts> queryById(Integer productId);
 
     /**
      * 查询多条数据
@@ -38,12 +38,21 @@ public interface ProductDiscountsService {
     ProductDiscounts insert(ProductDiscounts productDiscounts);
 
     /**
-     * 修改数据
+     * 修改用户优惠
      *
      * @param productDiscounts 实例对象
+     * @param productId
      * @return 实例对象
      */
-    ProductDiscounts update(ProductDiscounts productDiscounts);
+    Integer updateUserDiscounts(List<ProductDiscounts> productDiscounts, Integer productId);
+
+    /**
+     * 修改会员
+     * @param productDiscounts
+     * @param productId
+     * @return
+     */
+    Integer updateMemberDiscounts(List<ProductDiscounts> productDiscounts, Integer productId);
 
     /**
      * 通过主键删除数据

@@ -36,6 +36,28 @@
         limit #{offset}, #{limit}
     </select>
 
+<!--    <select id="queryAllByProductId" resultMap="DiscountsMap">-->
+<!--        select-->
+<!--            discounts_id,  discounts_explain, conditions, conditions_explain, discounts, members,-->
+<!--            dc.discounts_category_id, dc.discounts_flag, dc.discounts_type, dc.discounts_description-->
+<!--        from fruit.discounts d,fruit.discounts_category dc-->
+<!--        WHERE d.discounts_category_id = dc.discounts_category_id-->
+<!--        AND-->
+<!--    </select>-->
+
+
+    <sql id="discountsColumn">
+        <trim suffixOverrides=",">
+            d.`discounts_id`,
+            d.`discounts_category_id` AS `dc_id`,
+            d.`explain` AS `d_explain`,
+            d.`conditions`  AS `conditions`,
+            d.`conditions_explain` AS `conditions_explain`,
+            d.`discounts` AS `d_discounts`,
+            d.`members` AS `d_members`,
+        </trim>
+    </sql>
+
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="DiscountsMap">

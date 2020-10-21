@@ -3,17 +3,81 @@
 <mapper namespace="com.teenyda.dao.ProductDiscountsDao">
 
     <resultMap type="com.teenyda.entity.ProductDiscounts" id="ProductDiscountsMap">
+        <result property="pdId" column="pd_id" jdbcType="INTEGER"/>
         <result property="productId" column="product_id" jdbcType="INTEGER"/>
         <result property="discountsId" column="discounts_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="ProductDiscountsMap">
-        select product_id,
+        select pd_id
+               product_id,
                discounts_id
         from fruit.product_discounts
-        where product_id = #{productId}
+        where pd_id = #{pdId}
     </select>
+
+    <!--    mysql 1093 - You can't specify target table 'xx表' for ...
+    update/delete语句中包含的子查询的表和update的表为同一张表时，报错：1093-You can’t specify target table for update in FROM clause
+    mysql不允许update/delete目标表和子查询里面的表为同一张表
+    原来的写法：delete
+		from fruit.product_discounts
+		where pd_id IN
+        (
+        SELECT
+            pd.pd_id
+        FROM
+            fruit.discounts d
+            LEFT JOIN fruit.discounts_category dc ON d.discounts_category_id = dc.discounts_category_id
+            LEFT JOIN product_discounts pd ON pd.discounts_id = d.discounts_id
+            AND d.members = 0
+        WHERE
+            pd.product_id = 11
+        )
+    -->
+    <!--  根据产品id删除全部用户优惠  -->
+    <delete id="deleteUserPDbyProductId">
+        delete
+        from fruit.product_discounts
+        where pd_id IN
+              (
+                  SELECT * FROM
+                      (
+                          SELECT
+                              pd.pd_id
+                          FROM
+                              fruit.discounts d
+                                  LEFT JOIN fruit.discounts_category dc ON d.discounts_category_id = dc.discounts_category_id
+                                  LEFT JOIN product_discounts pd ON pd.discounts_id = d.discounts_id
+                                  AND d.members = 0
+                          WHERE
+                              pd.product_id = #{productId}
+                      )
+                          AS temp
+              )
+    </delete>
+
+    <!--  根据产品id删除全部会员优惠  -->
+    <delete id="deleteMembersPDbyProductId">
+        delete
+        from fruit.product_discounts
+        where pd_id IN
+              (
+                  SELECT * FROM
+                      (
+                          SELECT
+                              pd.pd_id
+                          FROM
+                              fruit.discounts d
+                                  LEFT JOIN fruit.discounts_category dc ON d.discounts_category_id = dc.discounts_category_id
+                                  LEFT JOIN product_discounts pd ON pd.discounts_id = d.discounts_id
+                                  AND d.members = 1
+                          WHERE
+                              pd.product_id = #{productId}
+                      )
+                          AS temp
+              )
+    </delete>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ProductDiscountsMap">
@@ -39,12 +103,12 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="productId" useGeneratedKeys="true">
+    <insert id="insert" keyProperty="pdId" useGeneratedKeys="true">
         insert into fruit.product_discounts(product_id, discounts_id)
         values (#{productId}, #{discountsId})
     </insert>
 
-    <insert id="insertBatch" keyProperty="productId" useGeneratedKeys="true">
+    <insert id="insertBatch" keyProperty="pdId" useGeneratedKeys="true">
         insert into fruit.product_discounts(product_id, discounts_id)
         values
         <foreach collection="entities" item="entity" separator=",">
@@ -52,7 +116,7 @@
         </foreach>
     </insert>
 
-    <insert id="insertOrUpdateBatch" keyProperty="productId" useGeneratedKeys="true">
+    <insert id="insertOrUpdateBatch" keyProperty="pdId" useGeneratedKeys="true">
         insert into fruit.product_discounts(product_id, discounts_id)
         values
         <foreach collection="entities" item="entity" separator=",">
@@ -65,16 +129,17 @@
     <update id="update">
         update fruit.product_discounts
         <set>
-            discounts_id = #{discountsId}
+            discounts_id = #{discountsId},
+            product_id = #{productId}
         </set>
-        where product_id = #{productId}
+        where pd_id = #{pdId}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">
         delete
         from fruit.product_discounts
-        where product_id = #{productId}
+        where pd_id = #{pdId}
     </delete>
 
 </mapper>
