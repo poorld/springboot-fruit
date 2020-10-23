@@ -1,5 +1,6 @@
 package com.teenyda.service;
 
+import com.teenyda.controller.banner.dto.BannerDto;
 import com.teenyda.entity.Banner;
 
 import java.util.List;
@@ -28,6 +29,9 @@ public interface BannerService {
      * @return 对象列表
      */
     List<Banner> queryAllByLimit(int offset, int limit);
+
+
+    List<BannerDto> queryBanners();
 
     /**
      * 新增数据

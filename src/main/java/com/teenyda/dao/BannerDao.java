@@ -1,5 +1,6 @@
 package com.teenyda.dao;
 
+import com.teenyda.controller.banner.dto.BannerDto;
 import com.teenyda.entity.Banner;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,6 +31,7 @@ public interface BannerDao {
      */
     List<Banner> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
+    List<BannerDto> queryBanners();
 
     /**
      * 通过实体作为筛选条件查询

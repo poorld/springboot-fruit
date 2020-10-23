@@ -1,5 +1,6 @@
 package com.teenyda.service.impl;
 
+import com.teenyda.controller.banner.dto.BannerDto;
 import com.teenyda.dao.BannerDao;
 import com.teenyda.entity.Banner;
 import com.teenyda.service.BannerService;
@@ -40,6 +41,11 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public List<Banner> queryAllByLimit(int offset, int limit) {
         return this.bannerDao.queryAllByLimit(offset, limit);
+    }
+
+    @Override
+    public List<BannerDto> queryBanners() {
+        return this.bannerDao.queryBanners();
     }
 
     /**
