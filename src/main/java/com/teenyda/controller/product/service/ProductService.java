@@ -1,6 +1,7 @@
 package com.teenyda.controller.product.service;
 
 import com.teenyda.controller.product.dto.ProductQueryDto;
+import com.teenyda.controller.product.dto.SimpleProductDto;
 import com.teenyda.entity.Product;
 import com.teenyda.entity.ProductCategory;
 
@@ -30,6 +31,16 @@ public interface ProductService {
      * @return 对象列表
      */
     List<Product> queryAllByLimit(int offset, int limit);
+
+    /**
+     * 用户app数据列表
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<SimpleProductDto> simpleProduct(int offset, int limit);
+
+    List<SimpleProductDto> queryByCategoryId(Integer categoryId);
 
     List<Product> queryAll();
 

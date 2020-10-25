@@ -3,6 +3,7 @@ package com.teenyda.controller.product.controller;
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.controller.product.dto.ProductQueryDto;
+import com.teenyda.controller.product.dto.SimpleProductDto;
 import com.teenyda.entity.Product;
 import com.teenyda.controller.product.service.ProductService;
 import com.teenyda.entity.ProductCategory;
@@ -40,6 +41,16 @@ public class ProductController extends AbstractApiController {
     @GetMapping("product")
     public ResultBody<List<Product>> all() {
         return responseSuccessJson(this.productService.queryAllByLimit(0, 100));
+    }
+
+    @GetMapping("product/list/simple")
+    public ResultBody<List<SimpleProductDto>> simple() {
+        return responseSuccessJson(this.productService.simpleProduct(0, 100));
+    }
+
+    @GetMapping("product/list/simple/category/{categoryId}")
+    public ResultBody<List<SimpleProductDto>> simpleByCategoryId(@PathVariable("categoryId") Integer categoryId) {
+        return responseSuccessJson(this.productService.queryByCategoryId(categoryId));
     }
 
     @PostMapping("product/category")

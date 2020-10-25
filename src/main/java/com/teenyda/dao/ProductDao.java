@@ -1,6 +1,7 @@
 package com.teenyda.dao;
 
 import com.teenyda.controller.product.dto.ProductQueryDto;
+import com.teenyda.controller.product.dto.SimpleProductDto;
 import com.teenyda.entity.Product;
 import com.teenyda.entity.ProductCategory;
 import org.apache.ibatis.annotations.Param;
@@ -32,6 +33,10 @@ public interface ProductDao {
      */
     List<Product> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
+    // @Param("offset") int offset, @Param("limit") int limit
+    List<SimpleProductDto> simpleProduct();
+
+    List<SimpleProductDto> queryByCategoryId(@Param("categoryId") Integer categoryId);
 
     /**
      * 通过实体作为筛选条件查询
@@ -42,6 +47,8 @@ public interface ProductDao {
     List<Product> queryAll(Product product);
 
     List<Product> queryByCategory(@Param("categories") List<ProductCategory> categories);
+
+
     List<Product> queryByCategoryAndStatus(@Param("categories") List<ProductCategory> categories,@Param("status") Integer status);
 
     List<Product> query(@Param("query")ProductQueryDto queryDto);

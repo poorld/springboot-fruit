@@ -1,6 +1,10 @@
 package com.teenyda.controller.product.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * @program: personal_information
@@ -10,7 +14,7 @@ import lombok.Data;
  **/
 
 @Data
-public class Product {
+public class ProductDto {
 
     /**
      * 主键
@@ -62,6 +66,11 @@ public class Product {
     private Integer productStatus;
 
     /**
+     * 是否加推荐标签
+     */
+    private Boolean recommended;
+
+    /**
      *
      * isNullAble:1
      */
@@ -71,14 +80,16 @@ public class Product {
      *
      * isNullAble:1
      */
-    private java.time.LocalDateTime updateTime;
+    private Date updateTime;
 
 
     /**
      *
      * isNullAble:1
      */
-    private java.time.LocalDateTime createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private Date createTime;
 
 
 }

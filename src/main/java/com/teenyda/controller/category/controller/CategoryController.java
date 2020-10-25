@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
  * @author: Teenyda
  * @create: 2020-10-06 09:52
  * @description: 商品分类
+ * 已废弃
  **/
 
 // @RestController

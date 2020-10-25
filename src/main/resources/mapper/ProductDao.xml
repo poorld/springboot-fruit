@@ -122,6 +122,39 @@
 
     </resultMap>
 
+
+    <!--  查询产品和产品标签、用于展示简单的数据列表  -->
+    <sql id="simpleColumn">
+        SELECT
+            product.*,
+            pt.*,
+            tag.tag_id,
+            tag.NAME AS `tag_name`
+        FROM
+            product
+            LEFT JOIN product_tag pt ON pt.product_id = product.product_id
+            LEFT JOIN tag ON tag.tag_id = pt.tag_id
+    </sql>
+    <select id="simpleProduct" resultMap="simpleProductMap">
+        <include refid="simpleColumn" />
+    </select>
+    <resultMap id="simpleProductMap" type="com.teenyda.controller.product.dto.SimpleProductDto">
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="explain" column="explain" jdbcType="VARCHAR"/>
+        <result property="shopPrice" column="shop_price" jdbcType="NUMERIC"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="hot" column="hot" jdbcType="INTEGER"/>
+        <result property="productStatus" column="product_status" jdbcType="INTEGER"/>
+        <result property="defaultImg" column="default_img" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result property="recommended" column="recommended" jdbcType="INTEGER"/>
+
+        <collection property="tags" ofType="com.teenyda.entity.Tag"  resultMap="TagsMap" />
+    </resultMap>
+
+
     <sql id="baseSql">
         SELECT
             product.*,
@@ -159,6 +192,7 @@
         ORDER BY pii.sort
     </select>
 
+
     <!--
        select
           product_id, product_category_id, name, explain, shop_price, price, hot, product_status, default_img, update_time, update_user_id, create_time, create_user_id
@@ -178,6 +212,12 @@
         <foreach collection="categories" item="category" separator=" or ">
             pc.product_category_id = ${category.productCategoryId}
         </foreach>
+    </select>
+
+    <!--  app 根据分类ID  -->
+    <select id="queryByCategoryId" resultMap="simpleProductMap">
+        <include refid="simpleColumn" />
+        WHERE product_category_id = ${categoryId}
     </select>
 
     <!-- 根据分类和状态查询 -->
