@@ -35,6 +35,11 @@ public class CommentsServiceImpl implements CommentsService {
         return this.commentsDao.selectByProductId(productId);
     }
 
+    @Override
+    public Comments bestCommentsByProductId(Integer productId) {
+        return this.commentsDao.selectByProductIdLimit1(productId);
+    }
+
     /**
      * 查询多条数据
      *

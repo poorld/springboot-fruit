@@ -41,6 +41,7 @@ public interface CommentsDao {
 
 
     List<Comments> selectByProductId(@Param("productId")int productId);
+    Comments selectByProductIdLimit1(@Param("productId")int productId);
 
     /**
      * 新增数据

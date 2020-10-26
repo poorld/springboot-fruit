@@ -114,6 +114,16 @@
         LEFT JOIN `product` ON `product`.product_id = comments.product_id
         WHERE product.product_id = #{productId}
     </select>
+    <select id="selectByProductIdLimit1" resultMap="CommentsMap">
+        select
+        <include refid="commentsAndUserColumn" />
+        FROM
+        `user`
+        LEFT JOIN comments ON `user`.user_id = comments.user_id
+        LEFT JOIN `product` ON `product`.product_id = comments.product_id
+        WHERE product.product_id = #{productId}
+        limit 0,1
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="commentsId" useGeneratedKeys="true">

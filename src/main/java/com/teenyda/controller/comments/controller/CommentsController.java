@@ -45,4 +45,9 @@ public class CommentsController extends AbstractApiController {
         List<Comments> comments = this.commentsService.queryByProductId(id);
         return responseSuccessJson(CloneBeanUtils.copyListProperties(comments, CommentsDto::new));
     }
+
+    @GetMapping("comments/product/{productId}/best")
+    public ResultBody<Comments> bestCommentsByProductId(@PathVariable("productId")Integer id) {
+        return responseSuccessJson(this.commentsService.bestCommentsByProductId(id));
+    }
 }
