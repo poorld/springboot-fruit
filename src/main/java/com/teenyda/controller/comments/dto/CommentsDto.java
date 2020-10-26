@@ -1,24 +1,25 @@
-package com.teenyda.entity;
+package com.teenyda.controller.comments.dto;
 
+import com.teenyda.controller.user.dto.UserDto;
+import com.teenyda.entity.User;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * (Comments)实体类
- * 评论
- * @author makejava
- * @since 2020-10-09 17:10:37
- */
-
+ * @program: personal_information
+ * @author: Teenyda
+ * @create: 2020-10-26 19:36
+ * @description: 用户评论
+ **/
 @Data
-public class Comments implements Serializable {
-    private static final long serialVersionUID = -25444406065751623L;
+public class CommentsDto {
 
     private Integer commentsId;
 
     // private Integer userId;
+
+    // todo UserDto 居然复制不了，先用User
     private User user;
 
     private Integer productId;
@@ -40,6 +41,4 @@ public class Comments implements Serializable {
     private String reply;
 
     private Date createTime;
-
-
 }

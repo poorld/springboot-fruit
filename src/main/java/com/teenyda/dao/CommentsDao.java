@@ -39,6 +39,9 @@ public interface CommentsDao {
      */
     List<Comments> queryAll(Comments comments);
 
+
+    List<Comments> selectByProductId(@Param("productId")int productId);
+
     /**
      * 新增数据
      *

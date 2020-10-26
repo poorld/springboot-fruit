@@ -53,6 +53,8 @@ public class CloneBeanUtils extends BeanUtils {
     }
 
     public static <S, T> List<T> copyListProperties(List<S> source, Supplier<T> target){
+        if (source == null)
+            return new ArrayList<T>();
         return copyListProperties(source, target, null);
     }
 

@@ -82,6 +82,38 @@
             </if>
         </where>
     </select>
+    
+    <sql id="commentsAndUserColumn">
+        comments.comments_id,
+        comments.product_id,
+        comments.content,
+        comments.img1,
+        comments.img2,
+        comments.img3,
+        comments.audit,
+        comments.reply,
+        comments.create_time,
+
+        `user`.user_id,
+        `user`.`username`,
+        `user`.`password`,
+        `user`.`nickname`,
+        `user`.`email`,
+        `user`.`image`,
+        `user`.`QQ`,
+        `user`.`mobile`,
+        `user`.`last_login_time`,
+        `user`.`register_time`
+    </sql>
+    <select id="selectByProductId" resultMap="CommentsMap">
+        select
+            <include refid="commentsAndUserColumn" />
+        FROM
+        `user`
+        LEFT JOIN comments ON `user`.user_id = comments.user_id
+        LEFT JOIN `product` ON `product`.product_id = comments.product_id
+        WHERE product.product_id = #{productId}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="commentsId" useGeneratedKeys="true">

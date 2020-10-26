@@ -30,6 +30,11 @@ public class CommentsServiceImpl implements CommentsService {
         return this.commentsDao.queryById(commentsId);
     }
 
+    @Override
+    public List<Comments> queryByProductId(Integer productId) {
+        return this.commentsDao.selectByProductId(productId);
+    }
+
     /**
      * 查询多条数据
      *

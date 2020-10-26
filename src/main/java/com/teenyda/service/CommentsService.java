@@ -20,6 +20,8 @@ public interface CommentsService {
      */
     Comments queryById(Integer commentsId);
 
+    List<Comments> queryByProductId(Integer productId);
+
     /**
      * 查询多条数据
      *
