@@ -18,7 +18,7 @@ public interface OrderItemService {
      * @param orderItemId 主键
      * @return 实例对象
      */
-    OrderItem queryById(String orderItemId);
+    OrderItem queryById(String orderNum);
 
     /**
      * 查询多条数据

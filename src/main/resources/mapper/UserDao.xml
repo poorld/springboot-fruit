@@ -13,14 +13,27 @@
         <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
         <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
         <result property="registerTime" column="register_time" jdbcType="TIMESTAMP"/>
+
+        <association property="members" resultMap="MembersMap" />
+    </resultMap>
+
+    <resultMap type="com.teenyda.entity.Members" id="MembersMap">
+        <result property="membersId" column="members_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="price" column="price" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="UserMap">
-        select
-          user_id, username, password, nickname, email, image, QQ, mobile, last_login_time, register_time
-        from fruit.user
-        where user_id = #{userId}
+        SELECT
+            *
+        FROM
+            `user` u
+                LEFT JOIN user_member um ON u.user_id = um.user_id
+                LEFT JOIN members m ON um.members_id = m.members_id
+        WHERE
+            u.user_id = #{userId}
     </select>
 
     <!--查询指定行数据-->

@@ -1,5 +1,6 @@
 package com.teenyda.controller.user.dto;
 
+import com.teenyda.entity.Members;
 import lombok.Data;
 
 import java.util.Date;
@@ -31,4 +32,6 @@ public class UserDto {
     private Date lastLoginTime;
 
     private Date registerTime;
+
+    private Members members;
 }

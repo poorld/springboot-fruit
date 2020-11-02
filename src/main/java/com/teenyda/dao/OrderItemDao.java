@@ -1,5 +1,6 @@
 package com.teenyda.dao;
 
+import com.teenyda.controller.order.dto.SettlementOrder;
 import com.teenyda.entity.OrderItem;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,7 +20,7 @@ public interface OrderItemDao {
      * @param orderItemId 主键
      * @return 实例对象
      */
-    OrderItem queryById(String orderItemId);
+    OrderItem queryByOrderNumber(@Param("orderNum")String orderNum);
 
     /**
      * 查询指定行数据

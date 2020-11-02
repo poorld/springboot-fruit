@@ -35,6 +35,7 @@ public class User implements Serializable {
 
     private Date registerTime;
 
-
+    // 会员
+    private Members members;
 
 }

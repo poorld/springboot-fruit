@@ -33,8 +33,8 @@ public class OrderItemServiceImpl implements OrderItemService {
      * @return 实例对象
      */
     @Override
-    public OrderItem queryById(String orderItemId) {
-        return this.orderItemDao.queryById(orderItemId);
+    public OrderItem queryById(String orderNum) {
+        return this.orderItemDao.queryByOrderNumber(orderNum);
     }
 
     /**

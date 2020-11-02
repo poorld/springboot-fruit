@@ -29,9 +29,9 @@ public class OrderItemController extends AbstractApiController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("order/{id}")
-    public ResultBody<OrderItem> selectOne(String id) {
-        return responseSuccessJson(this.orderItemService.queryById(id));
+    @GetMapping("order/{orderNum}")
+    public ResultBody<OrderItem> selectOne(@PathVariable("orderNum") String orderNum) {
+        return responseSuccessJson(this.orderItemService.queryById(orderNum));
     }
 
     @PostMapping("order/cart")
