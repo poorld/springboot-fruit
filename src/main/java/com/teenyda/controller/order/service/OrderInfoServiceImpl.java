@@ -1,8 +1,8 @@
-package com.teenyda.service.impl;
+package com.teenyda.controller.order.service;
 
 import com.teenyda.dao.OrderInfoDao;
 import com.teenyda.entity.OrderInfo;
-import com.teenyda.service.OrderInfoService;
+import com.teenyda.controller.order.service.OrderInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

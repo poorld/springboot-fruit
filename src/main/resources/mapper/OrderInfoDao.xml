@@ -18,16 +18,34 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="OrderInfoMap">
-        select
-          order_num, payment_flag, user_id, contact_name, contact_mobile, contact_address, message, status, type, payment_type, create_time
+        select order_num,
+               payment_flag,
+               user_id,
+               contact_name,
+               contact_mobile,
+               contact_address,
+               message,
+               status,
+               type,
+               payment_type,
+               create_time
         from fruit.order_info
         where order_num = #{orderNum}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="OrderInfoMap">
-        select
-          order_num, payment_flag, user_id, contact_name, contact_mobile, contact_address, message, status, type, payment_type, create_time
+        select order_num,
+               payment_flag,
+               user_id,
+               contact_name,
+               contact_mobile,
+               contact_address,
+               message,
+               status,
+               type,
+               payment_type,
+               create_time
         from fruit.order_info
         limit #{offset}, #{limit}
     </select>
@@ -77,8 +95,10 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderNum" useGeneratedKeys="true">
-        insert into fruit.order_info(payment_flag, user_id, contact_name, contact_mobile, contact_address, message, status, type, payment_type, create_time)
-        values (#{paymentFlag}, #{userId}, #{contactName}, #{contactMobile}, #{contactAddress}, #{message}, #{status}, #{type}, #{paymentType}, #{createTime})
+        insert into fruit.order_info(payment_flag, user_id, contact_name, contact_mobile, contact_address, message,
+                                     status, type, payment_type, create_time)
+        values (#{paymentFlag}, #{userId}, #{contactName}, #{contactMobile}, #{contactAddress}, #{message}, #{status},
+                #{type}, #{paymentType}, #{createTime})
     </insert>
 
     <insert id="insertBatch" keyProperty="orderNum" useGeneratedKeys="true">
@@ -148,7 +168,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from fruit.order_info where order_num = #{orderNum}
+        delete
+        from fruit.order_info
+        where order_num = #{orderNum}
     </delete>
 
 </mapper>

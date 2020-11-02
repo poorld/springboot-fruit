@@ -1,4 +1,4 @@
-package com.teenyda.service;
+package com.teenyda.controller.order.service;
 
 import com.teenyda.entity.OrderItem;
 

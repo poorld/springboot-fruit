@@ -14,16 +14,26 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="OrderItemMap">
-        select
-          order_item_id, order_num, product_id, price, quantity, user_id, spec_id
+        select order_item_id,
+               order_num,
+               product_id,
+               price,
+               quantity,
+               user_id,
+               spec_id
         from fruit.order_item
         where order_item_id = #{orderItemId}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="OrderItemMap">
-        select
-          order_item_id, order_num, product_id, price, quantity, user_id, spec_id
+        select order_item_id,
+               order_num,
+               product_id,
+               price,
+               quantity,
+               user_id,
+               spec_id
         from fruit.order_item
         limit #{offset}, #{limit}
     </select>
@@ -113,7 +123,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from fruit.order_item where order_item_id = #{orderItemId}
+        delete
+        from fruit.order_item
+        where order_item_id = #{orderItemId}
     </delete>
 
 </mapper>

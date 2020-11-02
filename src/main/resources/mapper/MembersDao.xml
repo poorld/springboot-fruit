@@ -6,24 +6,25 @@
         <result property="membersId" column="members_id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="level" column="level" jdbcType="INTEGER"/>
-        <result property="discount" column="discount" jdbcType="INTEGER"/>
-        <result property="distribution" column="distribution" jdbcType="INTEGER"/>
-        <result property="topup" column="topup" jdbcType="INTEGER"/>
         <result property="price" column="price" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="MembersMap">
-        select
-          members_id, name, level, discount, distribution, topup, price
+        select members_id,
+               name,
+               level,
+               price
         from fruit.members
         where members_id = #{membersId}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="MembersMap">
-        select
-          members_id, name, level, discount, distribution, topup, price
+        select members_id,
+               name,
+               level,
+               price
         from fruit.members
         limit #{offset}, #{limit}
     </select>
@@ -31,7 +32,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="MembersMap">
         select
-        members_id, name, level, discount, distribution, topup, price
+        members_id, name, level, price
         from fruit.members
         <where>
             <if test="membersId != null">
@@ -43,15 +44,6 @@
             <if test="level != null">
                 and level = #{level}
             </if>
-            <if test="discount != null">
-                and discount = #{discount}
-            </if>
-            <if test="distribution != null">
-                and distribution = #{distribution}
-            </if>
-            <if test="topup != null">
-                and topup = #{topup}
-            </if>
             <if test="price != null">
                 and price = #{price}
             </if>
@@ -60,29 +52,26 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="membersId" useGeneratedKeys="true">
-        insert into fruit.members(name, level, discount, distribution, topup, price)
-        values (#{name}, #{level}, #{discount}, #{distribution}, #{topup}, #{price})
+        insert into fruit.members(name, level, price)
+        values (#{name}, #{level}, #{price})
     </insert>
 
     <insert id="insertBatch" keyProperty="membersId" useGeneratedKeys="true">
-        insert into fruit.members(name, level, discount, distribution, topup, price)
+        insert into fruit.members(name, level, price)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.name}, #{entity.level}, #{entity.discount}, #{entity.distribution}, #{entity.topup},
-            #{entity.price})
+            (#{entity.name}, #{entity.level}, #{entity.price})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="membersId" useGeneratedKeys="true">
-        insert into fruit.members(name, level, discount, distribution, topup, price)
+        insert into fruit.members(name, level, price)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.name}, #{entity.level}, #{entity.discount}, #{entity.distribution}, #{entity.topup},
-            #{entity.price})
+            (#{entity.name}, #{entity.level}, #{entity.price})
         </foreach>
         on duplicate key update
-        name = values(name) , level = values(level) , discount = values(discount) , distribution = values(distribution)
-        , topup = values(topup) , price = values(price)
+        name = values(name) , level = values(level) , price = values(price)
     </insert>
 
     <!--通过主键修改数据-->
@@ -95,15 +84,6 @@
             <if test="level != null">
                 level = #{level},
             </if>
-            <if test="discount != null">
-                discount = #{discount},
-            </if>
-            <if test="distribution != null">
-                distribution = #{distribution},
-            </if>
-            <if test="topup != null">
-                topup = #{topup},
-            </if>
             <if test="price != null">
                 price = #{price},
             </if>
@@ -113,7 +93,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from fruit.members where members_id = #{membersId}
+        delete
+        from fruit.members
+        where members_id = #{membersId}
     </delete>
 
 </mapper>

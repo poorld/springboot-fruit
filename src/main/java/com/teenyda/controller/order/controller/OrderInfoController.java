@@ -1,9 +1,9 @@
-package com.teenyda.controller;
+package com.teenyda.controller.order.controller;
 
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.entity.OrderInfo;
-import com.teenyda.service.OrderInfoService;
+import com.teenyda.controller.order.service.OrderInfoService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

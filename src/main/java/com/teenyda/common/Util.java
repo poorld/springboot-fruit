@@ -84,4 +84,12 @@ public class Util {
     public static String buildDownloadFilePath(String filename) {
         return lunchAddress() + "/file/downloadFile/" + filename;
     }
+
+    public static String getOrderId() {
+        return "I" + UUIDUtil.getUuid32();
+    }
+
+    public static String getOrderNumber() {
+        return "O" + DateTimeUtil.nowStrTime(DateTimeUtil.YYYYMMDDHHMMSSSSS);
+    }
 }

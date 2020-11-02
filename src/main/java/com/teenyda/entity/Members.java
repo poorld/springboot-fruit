@@ -6,10 +6,10 @@ import java.io.Serializable;
  * (Members)实体类
  *
  * @author makejava
- * @since 2020-10-09 17:10:45
+ * @since 2020-11-02 12:50:08
  */
 public class Members implements Serializable {
-    private static final long serialVersionUID = 862662292328287934L;
+    private static final long serialVersionUID = 353332748889910292L;
 
     private Integer membersId;
 
@@ -18,18 +18,6 @@ public class Members implements Serializable {
      * 等级
      */
     private Integer level;
-    /**
-     * 购物折扣
-     */
-    private Integer discount;
-    /**
-     * 配送优惠
-     */
-    private Integer distribution;
-    /**
-     * 充值优惠
-     */
-    private Integer topup;
     /**
      * 价格/月
      */
@@ -58,30 +46,6 @@ public class Members implements Serializable {
 
     public void setLevel(Integer level) {
         this.level = level;
-    }
-
-    public Integer getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Integer discount) {
-        this.discount = discount;
-    }
-
-    public Integer getDistribution() {
-        return distribution;
-    }
-
-    public void setDistribution(Integer distribution) {
-        this.distribution = distribution;
-    }
-
-    public Integer getTopup() {
-        return topup;
-    }
-
-    public void setTopup(Integer topup) {
-        this.topup = topup;
     }
 
     public Integer getPrice() {

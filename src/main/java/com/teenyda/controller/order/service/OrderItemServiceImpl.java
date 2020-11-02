@@ -1,9 +1,14 @@
-package com.teenyda.service.impl;
+package com.teenyda.controller.order.service;
 
+import com.teenyda.common.Util;
+import com.teenyda.constant.PaymentFlagEnum;
+import com.teenyda.dao.OrderInfoDao;
 import com.teenyda.dao.OrderItemDao;
+import com.teenyda.entity.OrderInfo;
 import com.teenyda.entity.OrderItem;
-import com.teenyda.service.OrderItemService;
+import com.teenyda.controller.order.service.OrderItemService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -18,6 +23,8 @@ import java.util.List;
 public class OrderItemServiceImpl implements OrderItemService {
     @Resource
     private OrderItemDao orderItemDao;
+    @Resource
+    private OrderInfoDao orderInfoDao;
 
     /**
      * 通过ID查询单条数据
@@ -48,9 +55,21 @@ public class OrderItemServiceImpl implements OrderItemService {
      * @param orderItem 实例对象
      * @return 实例对象
      */
+    @Transactional
     @Override
     public OrderItem insert(OrderItem orderItem) {
+        // 生成订单号码
+        orderItem.setOrderItemId(Util.getOrderId());
+        orderItem.setOrderNum(Util.getOrderNumber());
+
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setOrderNum(orderItem.getOrderNum());
+        orderInfo.setPaymentFlag(PaymentFlagEnum.Not_Paying.getPaymentFlag());
+        orderInfo.setUserId(orderItem.getUserId());
+
         this.orderItemDao.insert(orderItem);
+        this.orderInfoDao.insert(orderInfo);
+
         return orderItem;
     }
 
