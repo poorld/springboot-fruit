@@ -107,15 +107,15 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderItemId" useGeneratedKeys="true">
-        insert into fruit.order_item(order_num, product_id, price, quantity, user_id, spec_id)
-        values (#{orderNum}, #{productId}, #{price}, #{quantity}, #{userId}, #{specId})
+        insert into fruit.order_item(order_item_id, order_num, product_id, price, quantity, user_id, spec_id)
+        values (#{orderItemId}, #{orderNum}, #{productId}, #{price}, #{quantity}, #{userId}, #{specId})
     </insert>
 
     <insert id="insertBatch" keyProperty="orderItemId" useGeneratedKeys="true">
-        insert into fruit.order_item(order_num, product_id, price, quantity, user_id, spec_id)
+        insert into fruit.order_item(order_item_id, order_num, product_id, price, quantity, user_id, spec_id)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.orderNum}, #{entity.productId}, #{entity.price}, #{entity.quantity}, #{entity.userId},
+            (#{orderItemId}, #{entity.orderNum}, #{entity.productId}, #{entity.price}, #{entity.quantity}, #{entity.userId},
             #{entity.specId})
         </foreach>
     </insert>

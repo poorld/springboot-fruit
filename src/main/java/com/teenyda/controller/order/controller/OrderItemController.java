@@ -1,7 +1,9 @@
 package com.teenyda.controller.order.controller;
 
 import com.teenyda.common.ResultBody;
+import com.teenyda.constant.OrderTypeEnum;
 import com.teenyda.controller.api.AbstractApiController;
+import com.teenyda.controller.order.dto.SettlementOrder;
 import com.teenyda.entity.OrderItem;
 import com.teenyda.controller.order.service.OrderItemService;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +32,8 @@ public class OrderItemController extends AbstractApiController {
      * @return 单条数据
      */
     @GetMapping("order/{orderNum}")
-    public ResultBody<OrderItem> selectOne(@PathVariable("orderNum") String orderNum) {
-        return responseSuccessJson(this.orderItemService.queryById(orderNum));
+    public ResultBody<SettlementOrder> selectOne(@PathVariable("orderNum") String orderNum) {
+        return responseSuccessJson(this.orderItemService.queryByOrderNum(orderNum));
     }
 
     @PostMapping("order/cart")
@@ -41,7 +43,7 @@ public class OrderItemController extends AbstractApiController {
 
     @PostMapping("order/buy")
     public ResultBody<OrderItem> buy(@RequestBody OrderItem orderItem) {
-        OrderItem order = orderItemService.insert(orderItem);
+        OrderItem order = orderItemService.insert(orderItem, OrderTypeEnum.Order.getOrderType());
         return responseSuccessJson(order);
     }
 

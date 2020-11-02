@@ -1,5 +1,6 @@
 package com.teenyda.controller.order.service;
 
+import com.teenyda.controller.order.dto.SettlementOrder;
 import com.teenyda.entity.OrderItem;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface OrderItemService {
      * @param orderItemId 主键
      * @return 实例对象
      */
-    OrderItem queryById(String orderNum);
+    SettlementOrder queryByOrderNum(String orderNum);
 
     /**
      * 查询多条数据
@@ -33,9 +34,10 @@ public interface OrderItemService {
      * 新增数据
      *
      * @param orderItem 实例对象
+     * @param type
      * @return 实例对象
      */
-    OrderItem insert(OrderItem orderItem);
+    OrderItem insert(OrderItem orderItem, int type);
 
     /**
      * 修改数据

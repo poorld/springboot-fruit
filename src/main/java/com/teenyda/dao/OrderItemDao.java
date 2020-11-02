@@ -20,7 +20,7 @@ public interface OrderItemDao {
      * @param orderItemId 主键
      * @return 实例对象
      */
-    OrderItem queryByOrderNumber(@Param("orderNum")String orderNum);
+    SettlementOrder queryByOrderNumber(@Param("orderNum")String orderNum);
 
     /**
      * 查询指定行数据

@@ -1,16 +1,19 @@
 package com.teenyda.controller.order.service;
 
+import com.power.common.util.DateTimeUtil;
 import com.teenyda.common.Util;
+import com.teenyda.constant.OrderStatusEnum;
 import com.teenyda.constant.PaymentFlagEnum;
+import com.teenyda.controller.order.dto.SettlementOrder;
 import com.teenyda.dao.OrderInfoDao;
 import com.teenyda.dao.OrderItemDao;
 import com.teenyda.entity.OrderInfo;
 import com.teenyda.entity.OrderItem;
-import com.teenyda.controller.order.service.OrderItemService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +36,7 @@ public class OrderItemServiceImpl implements OrderItemService {
      * @return 实例对象
      */
     @Override
-    public OrderItem queryById(String orderNum) {
+    public SettlementOrder queryByOrderNum(String orderNum) {
         return this.orderItemDao.queryByOrderNumber(orderNum);
     }
 
@@ -53,19 +56,24 @@ public class OrderItemServiceImpl implements OrderItemService {
      * 新增数据
      *
      * @param orderItem 实例对象
+     * @param type
      * @return 实例对象
      */
     @Transactional
     @Override
-    public OrderItem insert(OrderItem orderItem) {
+    public OrderItem insert(OrderItem orderItem, int type) {
         // 生成订单号码
         orderItem.setOrderItemId(Util.getOrderId());
         orderItem.setOrderNum(Util.getOrderNumber());
 
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderNum(orderItem.getOrderNum());
+        // 未付款
         orderInfo.setPaymentFlag(PaymentFlagEnum.Not_Paying.getPaymentFlag());
         orderInfo.setUserId(orderItem.getUserId());
+        orderInfo.setStatus(OrderStatusEnum.WaitingPayment.getOrderStatus());
+        orderInfo.setType(type);
+        orderInfo.setCreateTime(new Date());
 
         this.orderItemDao.insert(orderItem);
         this.orderInfoDao.insert(orderInfo);
@@ -82,7 +90,8 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public OrderItem update(OrderItem orderItem) {
         this.orderItemDao.update(orderItem);
-        return this.queryById(orderItem.getOrderItemId());
+        // return this.queryById(orderItem.getOrderItemId());
+        return null;
     }
 
     /**

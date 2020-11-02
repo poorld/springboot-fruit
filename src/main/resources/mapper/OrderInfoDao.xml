@@ -13,7 +13,7 @@
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
         <result property="paymentType" column="payment_type" jdbcType="INTEGER"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
     </resultMap>
 
     <!--查询单个-->
@@ -95,10 +95,74 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderNum" useGeneratedKeys="true">
-        insert into fruit.order_info(payment_flag, user_id, contact_name, contact_mobile, contact_address, message,
-                                     status, type, payment_type, create_time)
-        values (#{paymentFlag}, #{userId}, #{contactName}, #{contactMobile}, #{contactAddress}, #{message}, #{status},
-                #{type}, #{paymentType}, #{createTime})
+        insert into fruit.order_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+                order_num,
+            <if test="paymentFlag != null and paymentFlag != '' ">
+                payment_flag,
+            </if>
+            <if test="userId != null and userId != '' ">
+                user_id,
+            </if>
+            <if test="contactName != null and contactName != '' ">
+                contact_name,
+            </if>
+            <if test="contactMobile != null and contactMobile != '' ">
+                contact_mobile,
+            </if>
+            <if test="contactAddress != null and contactAddress != '' ">
+                contact_address,
+            </if>
+            <if test="message != null and message != '' ">
+                message,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="type != null ">
+                type,
+            </if>
+            <if test="paymentType != null ">
+                payment_type,
+            </if>
+            <if test="createTime != null ">
+                create_time
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            #{orderNum},
+            <if test="paymentFlag != null and paymentFlag != '' ">
+                #{paymentFlag},
+            </if>
+            <if test="userId != null and userId != '' ">
+                #{userId},
+            </if>
+            <if test="contactName != null and contactName != '' ">
+                #{contactName},
+            </if>
+            <if test="contactMobile != null and contactMobile != '' ">
+                #{contactMobile},
+            </if>
+            <if test="contactAddress != null and contactAddress != '' ">
+                #{contactAddress},
+            </if>
+            <if test="message != null and message != '' ">
+                #{message},
+            </if>
+            <if test="status != null ">
+                #{status},
+            </if>
+            <if test="type != null ">
+                #{type},
+            </if>
+            <if test="paymentType != null ">
+                #{paymentType},
+            </if>
+            <if test="createTime != null ">
+                #{createTime}
+            </if>
+        </trim>
+
     </insert>
 
     <insert id="insertBatch" keyProperty="orderNum" useGeneratedKeys="true">
