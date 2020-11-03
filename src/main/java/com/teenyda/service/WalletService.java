@@ -18,7 +18,7 @@ public interface WalletService {
      * @param walletId 主键
      * @return 实例对象
      */
-    Wallet queryById(Integer walletId);
+    Wallet queryById(Integer userId);
 
     /**
      * 查询多条数据

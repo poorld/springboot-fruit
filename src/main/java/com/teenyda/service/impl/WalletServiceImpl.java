@@ -26,8 +26,8 @@ public class WalletServiceImpl implements WalletService {
      * @return 实例对象
      */
     @Override
-    public Wallet queryById(Integer walletId) {
-        return this.walletDao.queryById(walletId);
+    public Wallet queryById(Integer userId) {
+        return this.walletDao.queryByUserId(userId);
     }
 
     /**

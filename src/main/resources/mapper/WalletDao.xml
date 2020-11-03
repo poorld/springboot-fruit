@@ -10,7 +10,7 @@
     </resultMap>
 
     <!--查询单个-->
-    <select id="queryById" resultMap="WalletMap">
+    <select id="queryByUserId" resultMap="WalletMap">
         select
           wallet_id, user_id, balance, password
         from fruit.wallet
