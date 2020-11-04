@@ -29,6 +29,8 @@ public interface ContactService {
      */
     List<Contact> queryAllByLimit(int offset, int limit);
 
+    List<Contact> queryByUserId(int userId);
+
     /**
      * 新增数据
      *

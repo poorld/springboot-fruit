@@ -30,14 +30,14 @@ public class ContactController extends AbstractApiController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("contact/{contactId}")
-    public ResultBody<Contact> selectOne(@PathVariable("contactId")Integer id) {
-        return responseSuccessJson(this.contactService.queryById(id));
-    }
+    // @GetMapping("contact/{contactId}")
+    // public ResultBody<Contact> selectOne(@PathVariable("contactId")Integer id) {
+    //     return responseSuccessJson(this.contactService.queryById(id));
+    // }
 
-    @GetMapping("contact")
-    public ResultBody<List<Contact>> contacts(Integer id) {
-        return responseSuccessJson(this.contactService.queryAllByLimit(0,10));
+    @GetMapping("contact/{userId}")
+    public ResultBody<List<Contact>> contacts(@PathVariable("userId")Integer userId) {
+        return responseSuccessJson(this.contactService.queryByUserId(userId));
     }
 
     @PostMapping("contact")

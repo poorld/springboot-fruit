@@ -19,6 +19,13 @@
         where contact_id = #{contactId}
     </select>
 
+    <select id="queryByUserId" resultMap="ContactMap">
+        select
+            contact_id, user_id, name, mobile, address, contact_flag
+        from fruit.contact
+        where user_id = #{userId}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ContactMap">
         select

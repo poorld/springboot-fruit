@@ -41,6 +41,11 @@ public class ContactServiceImpl implements ContactService {
         return this.contactDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Contact> queryByUserId(int userId) {
+        return this.contactDao.queryByUserId(userId);
+    }
+
     /**
      * 新增数据
      *

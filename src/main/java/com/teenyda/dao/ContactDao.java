@@ -39,6 +39,8 @@ public interface ContactDao {
      */
     List<Contact> queryAll(Contact contact);
 
+    List<Contact> queryByUserId(@Param("userId")Integer userId);
+
     /**
      * 新增数据
      *
