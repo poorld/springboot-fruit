@@ -1,8 +1,7 @@
-package com.teenyda.service.impl;
+package com.teenyda.controller.contact.service;
 
 import com.teenyda.dao.ContactDao;
 import com.teenyda.entity.Contact;
-import com.teenyda.service.ContactService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

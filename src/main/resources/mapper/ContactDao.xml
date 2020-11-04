@@ -56,8 +56,36 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="contactId" useGeneratedKeys="true">
-        insert into fruit.contact(user_id, name, mobile, address, contact_flag)
-        values (#{userId}, #{name}, #{mobile}, #{address}, #{contactFlag})
+        insert into fruit.contact
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            user_id,
+            <if test="name != null and name != '' ">
+                name,
+            </if>
+            <if test="mobile != null and mobile != '' ">
+                mobile,
+            </if>
+            <if test="address != null and address != '' ">
+                address,
+            </if>
+            <if test="contact_flag != null">
+                contact_flag
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="name != null and name != '' ">
+                #{name},
+            </if>
+            <if test="mobile != null and mobile != '' ">
+                #{mobile},
+            </if>
+            <if test="address != null and address != '' ">
+                #{address},
+            </if>
+            <if test="contact_flag != null">
+                #{contactFlag}
+            </if>
+        </trim>
     </insert>
 
     <insert id="insertBatch" keyProperty="contactId" useGeneratedKeys="true">
