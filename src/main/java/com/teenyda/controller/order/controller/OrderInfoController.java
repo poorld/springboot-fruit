@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @since 2020-10-09 20:17:16
  */
 @RestController
-@RequestMapping("orderInfo")
+@RequestMapping("fruit")
 public class OrderInfoController extends AbstractApiController {
     /**
      * 服务对象
@@ -31,7 +31,7 @@ public class OrderInfoController extends AbstractApiController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne")
+    @GetMapping("order/payment")
     public ResultBody<OrderInfo> selectOne(String id) {
         return responseSuccessJson(this.orderInfoService.queryById(id));
     }

@@ -15,15 +15,15 @@ spring:
         # request book_name -> bookName
         # property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
 
-    thymeleaf:
-        prefix: classpath:/templates/
-        suffix: .html
-        servlet:
-            content-type: text/html
-        enabled: true
-        encoding: utf-8
-        mode: HTML
-        check-template-location: true
+#    thymeleaf:
+#        prefix: classpath:/templates/
+#        suffix: .html
+#        servlet:
+#            content-type: text/html
+#        enabled: true
+#        encoding: utf-8
+#        mode: HTML
+#        check-template-location: true
 
   #文件上传配置
   # 开启multipart上传功能

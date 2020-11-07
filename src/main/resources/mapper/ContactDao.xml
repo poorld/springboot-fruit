@@ -75,11 +75,13 @@
             <if test="address != null and address != '' ">
                 address,
             </if>
-            <if test="contact_flag != null">
+            <if test="contactFlag != null">
                 contact_flag
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
+            #{userId},
+
             <if test="name != null and name != '' ">
                 #{name},
             </if>
@@ -89,7 +91,7 @@
             <if test="address != null and address != '' ">
                 #{address},
             </if>
-            <if test="contact_flag != null">
+            <if test="contactFlag != null">
                 #{contactFlag}
             </if>
         </trim>

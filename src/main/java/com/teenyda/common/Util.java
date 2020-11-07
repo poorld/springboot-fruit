@@ -10,6 +10,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.FileNotFoundException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -91,5 +92,18 @@ public class Util {
 
     public static String getOrderNumber() {
         return "O" + DateTimeUtil.nowStrTime(DateTimeUtil.YYYYMMDDHHMMSSSSS);
+    }
+
+    /**
+     * 获取往后N分钟时间
+     * @param date
+     * @param minute
+     * @return
+     */
+    public static Date getAfterMinutes(Date date, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MINUTE, minute);
+        return calendar.getTime();
     }
 }

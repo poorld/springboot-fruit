@@ -14,7 +14,7 @@
         select
           wallet_id, user_id, balance, password
         from fruit.wallet
-        where wallet_id = #{walletId}
+        where user_id = #{userId}
     </select>
 
     <!--查询指定行数据-->

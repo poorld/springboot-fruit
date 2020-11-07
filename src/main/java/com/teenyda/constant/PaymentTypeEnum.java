@@ -2,9 +2,9 @@ package com.teenyda.constant;
 
 public enum PaymentTypeEnum {
 
-    Balance(0, "余额"),
-    Alipay(1, "支付宝"),
-    WeChatPay(2, "微信支付");
+    Balance(3, "余额"),
+    Alipay(2, "支付宝"),
+    WeChatPay(1, "微信支付");
 
     int paymentType;
 

@@ -19,7 +19,7 @@ public interface WalletDao {
      * @param walletId 主键
      * @return 实例对象
      */
-    Wallet queryByUserId(Integer walletId);
+    Wallet queryByUserId(@Param("userId")Integer userId);
 
     /**
      * 查询指定行数据
