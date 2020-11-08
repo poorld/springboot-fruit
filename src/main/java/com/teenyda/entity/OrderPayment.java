@@ -34,7 +34,7 @@ public class OrderPayment implements Serializable {
     private Date endTime;
 
     private Integer payStatus;
-
+    private Integer payType;
 
     public Integer getOrderPaymentId() {
         return orderPaymentId;
@@ -100,6 +100,14 @@ public class OrderPayment implements Serializable {
         this.payStatus = payStatus;
     }
 
+    public Integer getPayType() {
+        return payType;
+    }
+
+    public void setPayType(Integer payType) {
+        this.payType = payType;
+    }
+
     @Override
     public String toString() {
         return "OrderPayment{" +
@@ -113,4 +121,5 @@ public class OrderPayment implements Serializable {
                 ", payStatus=" + payStatus +
                 '}';
     }
+
 }

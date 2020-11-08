@@ -1,5 +1,6 @@
 package com.teenyda.controller.order.controller;
 
+import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.controller.order.dto.OrderPaymentReq;
@@ -43,6 +44,28 @@ public class OrderPaymentController extends AbstractApiController {
     @PostMapping("order/payment")
     public ResultBody<OrderPayment> orderPayment(@RequestBody OrderPaymentReq orderPaymentReq) {
         return responseSuccessJson(this.orderPaymentService.payment(orderPaymentReq));
+    }
+
+    /**
+     * 支付
+     * 余额付款要计算余额
+     * 支付宝、微信支付 直接完成订单
+     * @param orderPaymentReq
+     * @return
+     */
+    @PutMapping("order/payment/pay")
+    public ResultBody<OrderPayment> pay(@PathVariable("orderNum")String orderNum) throws GlobalErrorInfoException {
+        return responseSuccessJson(this.orderPaymentService.pay(orderNum));
+    }
+
+    /**
+     * 超时，结束订单
+     * @param orderNum
+     * @return
+     */
+    @PutMapping("order/payment/finish")
+    public ResultBody<OrderPayment> finish(@PathVariable("orderNum")String orderNum) {
+        return responseSuccessJson(this.orderPaymentService.finish(orderNum));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.teenyda.service;
 
+import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.controller.order.dto.OrderPaymentReq;
 import com.teenyda.entity.OrderPayment;
 
@@ -23,6 +24,10 @@ public interface OrderPaymentService {
     OrderPayment queryByOrderNum(String orderNum);
 
     OrderPayment payment(OrderPaymentReq paymentReq);
+    OrderPayment pay(String orderNum) throws GlobalErrorInfoException;
+    OrderPayment finish(String orderNum);
+
+
 
     /**
      * 查询多条数据

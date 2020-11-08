@@ -6,7 +6,8 @@ public enum OrderStatusEnum {
     WaitingPayment(1, "等待支付"),
     HaveToPay(2, "已支付"),
     Distribution(3, "配送中"),
-    DistributionComplete(4, "配送完成");
+    DistributionComplete(4, "配送完成"),
+    PayOvertime(5, "订单支付超时");
 
     int orderStatus;
 

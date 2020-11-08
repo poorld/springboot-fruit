@@ -1,13 +1,15 @@
 package com.teenyda.service.impl;
 
+import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.common.Util;
-import com.teenyda.constant.OrderConstant;
-import com.teenyda.constant.OrderStatusEnum;
-import com.teenyda.constant.PaymentStatusEnum;
+import com.teenyda.constant.*;
 import com.teenyda.controller.order.dto.OrderPaymentReq;
+import com.teenyda.controller.order.exception.PaymentException;
+import com.teenyda.dao.ConsumptionRecordDao;
 import com.teenyda.dao.OrderInfoDao;
 import com.teenyda.dao.OrderPaymentDao;
 import com.teenyda.dao.WalletDao;
+import com.teenyda.entity.ConsumptionRecord;
 import com.teenyda.entity.OrderInfo;
 import com.teenyda.entity.OrderPayment;
 import com.teenyda.entity.Wallet;
@@ -33,6 +35,8 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
     private OrderInfoDao orderInfoDao;
     @Resource
     private WalletDao walletDao;
+    @Resource
+    private ConsumptionRecordDao consumptionRecordDao;
 
     /**
      * 通过ID查询单条数据
@@ -77,6 +81,77 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
         orderPaymentDao.insert(orderPayment);
         return orderPayment;
     }
+
+    /**
+     * 支付订单
+     * @param orderNum
+     * @return
+     */
+    @Transactional
+    @Override
+    public OrderPayment pay(String orderNum) throws GlobalErrorInfoException {
+        OrderInfo orderInfo = orderInfoDao.queryById(orderNum);
+        OrderPayment orderPayment = orderPaymentDao.queryByOrderNum(orderNum);
+        Integer payType = orderPayment.getPayType();
+        Integer userId = orderInfo.getUserId();
+
+        // 余额
+        if (payType == PaymentTypeEnum
+                .Balance.getPaymentType()) {
+
+            // 查询余额
+            Wallet wallet = walletDao.queryByUserId(userId);
+            // 获取需要支付的金额
+            Double payAmount = orderPayment.getPayAmount();
+            // 获取余额
+            Double balance = wallet.getBalance();
+            if (balance > payAmount) {
+                // 支付订单
+                double sub = Util.sub(balance, payAmount);
+                // todo 更新余额
+                wallet.setBalance(sub);
+                walletDao.update(wallet);
+
+            }else {
+                throw new GlobalErrorInfoException(PaymentException.LACK_OF_BABALCE);
+            }
+        }
+
+        // 微信或者支付宝 直接结算
+        // todo 更新orderInfo
+        orderInfo.setPaymentFlag(PaymentStatusEnum.PAYMENT.getPaymentType());
+        orderInfo.setStatus(OrderStatusEnum.HaveToPay.getOrderStatus());
+        orderInfoDao.update(orderInfo);
+
+        //todo orderPayment
+        orderPayment.setPayStatus(PaymentStatusEnum.PAYMENT.getPaymentType());
+        orderPaymentDao.update(orderPayment);
+
+        // todo ConsumptionRecord
+        ConsumptionRecord cr = new ConsumptionRecord();
+        cr.setUserId(userId);
+        cr.setSource("购物");
+        cr.setConsumption(orderPayment.getPayAmount());
+        cr.setCreateTime(new Date());
+        consumptionRecordDao.insert(cr);
+
+        return null;
+    }
+
+    /**
+     * 结束订单
+     * @param orderNum
+     * @return
+     */
+    @Override
+    public OrderPayment finish(String orderNum) {
+        OrderInfo orderInfo = orderInfoDao.queryById(orderNum);
+        // todo 更新orderInfo
+        orderInfo.setStatus(OrderStatusEnum.PayOvertime.getOrderStatus());
+        orderInfoDao.update(orderInfo);
+        return null;
+    }
+
 
     /**
      * 查询多条数据

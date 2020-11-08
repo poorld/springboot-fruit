@@ -11,6 +11,7 @@
         <result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
         <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
         <result property="payStatus" column="pay_status" jdbcType="INTEGER"/>
+        <result property="payType" column="pay_type" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
@@ -22,7 +23,8 @@
                discount_amount,
                creation_time,
                end_time,
-               pay_status
+               pay_status,
+               pay_type
         from fruit.order_payment
         where order_payment_id = #{orderPaymentId}
     </select>
@@ -48,7 +50,8 @@
                discount_amount,
                creation_time,
                end_time,
-               pay_status
+               pay_status,
+               pay_type
         from fruit.order_payment
         limit #{offset}, #{limit}
     </select>
@@ -56,7 +59,8 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="OrderPaymentMap">
         select
-        order_payment_id, order_num, total_amount, pay_amount, discount_amount, creation_time, end_time, pay_status
+        order_payment_id, order_num, total_amount, pay_amount, discount_amount, creation_time, end_time, pay_status,
+        pay_type
         from fruit.order_payment
         <where>
             <if test="orderPaymentId != null">
@@ -83,38 +87,42 @@
             <if test="payStatus != null">
                 and pay_status = #{payStatus}
             </if>
+            <if test="payType != null">
+                and pay_type = #{payType}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderPaymentId" useGeneratedKeys="true">
         insert into fruit.order_payment(order_num, total_amount, pay_amount, discount_amount, creation_time, end_time,
-                                        pay_status)
-        values (#{orderNum}, #{totalAmount}, #{payAmount}, #{discountAmount}, #{creationTime}, #{endTime}, #{payStatus})
+                                        pay_status, pay_type)
+        values (#{orderNum}, #{totalAmount}, #{payAmount}, #{discountAmount}, #{creationTime}, #{endTime}, #{payStatus},
+                #{payType})
     </insert>
 
     <insert id="insertBatch" keyProperty="orderPaymentId" useGeneratedKeys="true">
         insert into fruit.order_payment(order_num, total_amount, pay_amount, discount_amount, creation_time, end_time,
-        pay_status)
+        pay_status, pay_type)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.orderNum}, #{entity.totalAmount}, #{entity.payAmount}, #{entity.discountAmount},
-            #{entity.creationTime}, #{entity.endTime}, #{entity.payStatus})
+            #{entity.creationTime}, #{entity.endTime}, #{entity.payStatus}, #{entity.payType})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="orderPaymentId" useGeneratedKeys="true">
         insert into fruit.order_payment(order_num, total_amount, pay_amount, discount_amount, creation_time, end_time,
-        pay_status)
+        pay_status, pay_type)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.orderNum}, #{entity.totalAmount}, #{entity.payAmount}, #{entity.discountAmount},
-            #{entity.creationTime}, #{entity.endTime}, #{entity.payStatus})
+            #{entity.creationTime}, #{entity.endTime}, #{entity.payStatus}, #{entity.payType})
         </foreach>
         on duplicate key update
         order_num = values(order_num) , total_amount = values(total_amount) , pay_amount = values(pay_amount) ,
         discount_amount = values(discount_amount) , creation_time = values(creation_time) , end_time = values(end_time)
-        , pay_status = values(pay_status)
+        , pay_status = values(pay_status) , pay_type = values(pay_type)
     </insert>
 
     <!--通过主键修改数据-->
@@ -141,6 +149,9 @@
             </if>
             <if test="payStatus != null">
                 pay_status = #{payStatus},
+            </if>
+            <if test="payType != null">
+                pay_type = #{payType},
             </if>
         </set>
         where order_payment_id = #{orderPaymentId}
