@@ -30,11 +30,16 @@ public class OrderPaymentController extends AbstractApiController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("order/payment")
-    public ResultBody<OrderPayment> selectOne(Integer id) {
-        return responseSuccessJson(this.orderPaymentService.queryById(id));
+    @GetMapping("order/payment/{orderNum}")
+    public ResultBody<OrderPayment> getOrderPayment(@PathVariable("orderNum")String orderNum) {
+        return responseSuccessJson(this.orderPaymentService.queryByOrderNum(orderNum));
     }
 
+    /**
+     * 生成支付订单
+     * @param orderPaymentReq
+     * @return
+     */
     @PostMapping("order/payment")
     public ResultBody<OrderPayment> orderPayment(@RequestBody OrderPaymentReq orderPaymentReq) {
         return responseSuccessJson(this.orderPaymentService.payment(orderPaymentReq));

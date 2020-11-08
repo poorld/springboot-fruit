@@ -1,5 +1,8 @@
 package com.teenyda.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,10 +10,10 @@ import java.util.Date;
  * (OrderPayment)实体类
  *
  * @author makejava
- * @since 2020-11-07 10:18:52
+ * @since 2020-11-08 13:36:19
  */
 public class OrderPayment implements Serializable {
-    private static final long serialVersionUID = 950786359231003518L;
+    private static final long serialVersionUID = -98619280013902277L;
 
     private Integer orderPaymentId;
 
@@ -22,9 +25,15 @@ public class OrderPayment implements Serializable {
 
     private Double discountAmount;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date creationTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
+
+    private Integer payStatus;
 
 
     public Integer getOrderPaymentId() {
@@ -83,4 +92,25 @@ public class OrderPayment implements Serializable {
         this.endTime = endTime;
     }
 
+    public Integer getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(Integer payStatus) {
+        this.payStatus = payStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderPayment{" +
+                "orderPaymentId=" + orderPaymentId +
+                ", orderNum='" + orderNum + '\'' +
+                ", totalAmount=" + totalAmount +
+                ", payAmount=" + payAmount +
+                ", discountAmount=" + discountAmount +
+                ", creationTime=" + creationTime +
+                ", endTime=" + endTime +
+                ", payStatus=" + payStatus +
+                '}';
+    }
 }

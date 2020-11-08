@@ -20,6 +20,7 @@ public interface OrderPaymentDao {
      * @return 实例对象
      */
     OrderPayment queryById(Integer orderPaymentId);
+    OrderPayment queryByOrderNum(@Param("orderNum")String orderNum);
 
     /**
      * 查询指定行数据

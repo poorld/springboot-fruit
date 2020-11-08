@@ -20,6 +20,7 @@ public interface OrderPaymentService {
      * @return 实例对象
      */
     OrderPayment queryById(Integer orderPaymentId);
+    OrderPayment queryByOrderNum(String orderNum);
 
     OrderPayment payment(OrderPaymentReq paymentReq);
 

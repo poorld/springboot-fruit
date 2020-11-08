@@ -103,7 +103,7 @@ public class Util {
     public static Date getAfterMinutes(Date date, int minute) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.MINUTE, minute);
+        calendar.add(Calendar.MINUTE, minute);
         return calendar.getTime();
     }
 }

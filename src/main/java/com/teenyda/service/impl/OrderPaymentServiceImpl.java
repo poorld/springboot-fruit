@@ -3,6 +3,7 @@ package com.teenyda.service.impl;
 import com.teenyda.common.Util;
 import com.teenyda.constant.OrderConstant;
 import com.teenyda.constant.OrderStatusEnum;
+import com.teenyda.constant.PaymentStatusEnum;
 import com.teenyda.controller.order.dto.OrderPaymentReq;
 import com.teenyda.dao.OrderInfoDao;
 import com.teenyda.dao.OrderPaymentDao;
@@ -44,6 +45,11 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
         return this.orderPaymentDao.queryById(orderPaymentId);
     }
 
+    @Override
+    public OrderPayment queryByOrderNum(String orderNum) {
+        return this.orderPaymentDao.queryByOrderNum(orderNum);
+    }
+
     @Transactional
     @Override
     public OrderPayment payment(OrderPaymentReq paymentReq) {
@@ -67,6 +73,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
         Date endDate = Util.getAfterMinutes(createDate, OrderConstant.ORDER_END_TIME);
         orderPayment.setCreationTime(createDate);
         orderPayment.setEndTime(endDate);
+        orderPayment.setPayStatus(PaymentStatusEnum.UN_PAYMENT.getPaymentType());
         orderPaymentDao.insert(orderPayment);
         return orderPayment;
     }
