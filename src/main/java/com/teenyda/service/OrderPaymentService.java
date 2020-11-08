@@ -25,7 +25,7 @@ public interface OrderPaymentService {
 
     OrderPayment payment(OrderPaymentReq paymentReq);
     OrderPayment pay(String orderNum) throws GlobalErrorInfoException;
-    OrderPayment finish(String orderNum);
+    Boolean finish(String orderNum);
 
 
 

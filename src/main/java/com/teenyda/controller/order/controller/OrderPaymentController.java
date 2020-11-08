@@ -53,7 +53,7 @@ public class OrderPaymentController extends AbstractApiController {
      * @param orderPaymentReq
      * @return
      */
-    @PutMapping("order/payment/pay")
+    @PutMapping("order/payment/pay/{orderNum}")
     public ResultBody<OrderPayment> pay(@PathVariable("orderNum")String orderNum) throws GlobalErrorInfoException {
         return responseSuccessJson(this.orderPaymentService.pay(orderNum));
     }
@@ -63,8 +63,8 @@ public class OrderPaymentController extends AbstractApiController {
      * @param orderNum
      * @return
      */
-    @PutMapping("order/payment/finish")
-    public ResultBody<OrderPayment> finish(@PathVariable("orderNum")String orderNum) {
+    @PutMapping("order/payment/finish/{orderNum}")
+    public ResultBody<Boolean> finish(@PathVariable("orderNum")String orderNum) {
         return responseSuccessJson(this.orderPaymentService.finish(orderNum));
     }
 

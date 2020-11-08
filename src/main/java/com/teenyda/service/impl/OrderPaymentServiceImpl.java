@@ -135,7 +135,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
         cr.setCreateTime(new Date());
         consumptionRecordDao.insert(cr);
 
-        return null;
+        return orderPayment;
     }
 
     /**
@@ -144,12 +144,13 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
      * @return
      */
     @Override
-    public OrderPayment finish(String orderNum) {
+    public Boolean finish(String orderNum) {
         OrderInfo orderInfo = orderInfoDao.queryById(orderNum);
         // todo 更新orderInfo
         orderInfo.setStatus(OrderStatusEnum.PayOvertime.getOrderStatus());
         orderInfoDao.update(orderInfo);
-        return null;
+
+        return true;
     }
 
 
