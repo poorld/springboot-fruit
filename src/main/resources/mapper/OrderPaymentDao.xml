@@ -36,7 +36,8 @@
                discount_amount,
                creation_time,
                end_time,
-               pay_status
+               pay_status,
+               pay_type
         from fruit.order_payment
         where order_num = #{orderNum}
     </select>
