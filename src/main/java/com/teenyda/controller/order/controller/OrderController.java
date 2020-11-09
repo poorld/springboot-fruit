@@ -45,6 +45,12 @@ public class OrderController extends AbstractApiController {
         return responseSuccessJson(this.orderItemService.queryAllOrder(userId));
     }
 
+    @GetMapping("order/item/{userId}/status/{status}")
+    public ResultBody<List<OrderInfo>> allOrder(@PathVariable("userId") Integer userId,
+                                                @PathVariable("status") Integer status) {
+        return responseSuccessJson(this.orderItemService.queryByStatus(userId, status));
+    }
+
     @GetMapping("order/item/{userId}/{orderNum}")
     public ResultBody<OrderInfo> allOrder(@PathVariable("userId") Integer userId,
                                             @PathVariable("orderNum") String orderNum) {

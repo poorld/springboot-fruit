@@ -63,6 +63,7 @@ public interface OrderItemService {
      * @param userId
      */
     List<OrderInfo> queryAllOrder(Integer userId);
+    List<OrderInfo> queryByStatus(Integer userId, Integer status);
 
     OrderInfo queryOrderByNumber(Integer userId, String orderNum);
 

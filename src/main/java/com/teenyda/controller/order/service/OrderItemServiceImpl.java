@@ -117,7 +117,28 @@ public class OrderItemServiceImpl implements OrderItemService {
      */
     @Override
     public List<OrderInfo> queryAllOrder(Integer userId) {
-        List<OrderInfo> orderInfos = orderItemDao.queryOrderAll(userId);
+        /*List<OrderInfo> orderInfos = orderItemDao.queryOrderAll(userId);
+        for (OrderInfo orderInfo : orderInfos) {
+            List<OrderItemDto> orderItems = orderInfo.getOrderItems();
+            for (OrderItemDto orderItem: orderItems) {
+                Integer productId = orderItem.getProductId();
+                Integer specId = orderItem.getSpecId();
+                OrderProductDto orderProductDto = productDao.orderProductByIdAndSpec(productId, specId);
+                orderItem.setProduct(orderProductDto);
+            }
+        }*/
+        return queryByStatus(userId, null);
+    }
+
+    @Override
+    public List<OrderInfo> queryByStatus(Integer userId, Integer status) {
+        List<OrderInfo> orderInfos = null;
+        if (status == null) {
+            orderInfos = orderItemDao.queryOrderAll(userId);
+        } else {
+            orderInfos = orderItemDao.queryOrderByStatus(userId, status);
+        }
+
         for (OrderInfo orderInfo : orderInfos) {
             List<OrderItemDto> orderItems = orderInfo.getOrderItems();
             for (OrderItemDto orderItem: orderItems) {
