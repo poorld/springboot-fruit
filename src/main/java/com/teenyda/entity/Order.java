@@ -1,5 +1,6 @@
 package com.teenyda.entity;
 
+import com.teenyda.controller.product.dto.ProductDto;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,14 +13,11 @@ import java.io.Serializable;
  */
 
 @Data
-public class OrderItem implements Serializable {
-    private static final long serialVersionUID = -17799490146321986L;
+public class Order {
 
     private String orderItemId;
 
     private String orderNum;
-
-    private Integer productId;
 
     private Double price;
 
@@ -27,10 +25,8 @@ public class OrderItem implements Serializable {
 
     private Integer userId;
 
-    private Integer specId;
+    private OrderInfo orderInfo;
 
-    // private OrderInfo orderInfo;
-
-    private Product product;
+    private OrderProductDto product;
 
 }

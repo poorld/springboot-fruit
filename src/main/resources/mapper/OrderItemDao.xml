@@ -2,6 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.teenyda.dao.OrderItemDao">
 
+    <!--  查询订单  -->
+    <sql id="baseSqlQueryOrder">
+        SELECT
+            order_item.order_item_id,
+            order_item.order_num,
+            order_item.price,
+            order_item.quantity,
+            order_item.user_id,
+
+            order_info.payment_flag,
+            order_info.contact_name,
+            order_info.contact_mobile,
+            order_info.contact_address,
+            order_info.message,
+            order_info.`status`,
+            order_info.type,
+            order_info.payment_type,
+
+            product.product_id,
+            product.product_category_id,
+            product.`name`,
+            product.`explain`,
+            product.hot,
+            product.product_status,
+            product.default_img,
+            product.update_time,
+            product.create_time,
+
+            spec.spec_id,
+            spec.spec_name,
+            spec.price,
+            spec.quantity,
+
+            sku.sku_id,
+            sku.attrbute
+        FROM
+            order_item
+                LEFT JOIN order_info ON order_item.order_num = order_info.order_num
+                LEFT JOIN product ON order_item.product_id = product.product_id
+                LEFT JOIN spec ON product.product_id = spec.product_id
+                LEFT JOIN sku ON spec.sku_id = sku.sku_id
+    </sql>
+
     <resultMap type="com.teenyda.controller.order.dto.SettlementOrder" id="OrderItemMap">
         <result property="orderItemId" column="order_item_id" jdbcType="VARCHAR"/>
         <result property="orderNum" column="order_num" jdbcType="VARCHAR"/>
@@ -164,5 +207,67 @@
         from fruit.order_item
         where order_item_id = #{orderItemId}
     </delete>
+
+    <!--  查询订单-->
+    <select id="queryOrderAll" resultMap="OrderMap">
+        <include refid="baseSqlQueryOrder" />
+    </select>
+    <select id="queryOrderByStatus" resultMap="OrderMap">
+        <include refid="baseSqlQueryOrder" />
+        WHERE order_info.`status` = #{status}
+    </select>
+
+    <resultMap type="com.teenyda.entity.Order" id="OrderMap">
+        <result property="orderItemId" column="order_item_id" jdbcType="VARCHAR"/>
+        <result property="orderNum" column="order_num" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+
+        <association property="orderInfo" javaType="com.teenyda.entity.OrderInfo">
+            <result property="orderNum" column="order_num" jdbcType="VARCHAR"/>
+            <result property="paymentFlag" column="payment_flag" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+            <result property="contactMobile" column="contact_mobile" jdbcType="VARCHAR"/>
+            <result property="contactAddress" column="contact_address" jdbcType="VARCHAR"/>
+            <result property="message" column="message" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="paymentType" column="payment_type" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </association>
+        <association property="product" resultMap="OrderProductMap" />
+
+    </resultMap>
+
+    <resultMap id="OrderProductMap" type="com.teenyda.entity.OrderProductDto">
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="explain" column="explain" jdbcType="VARCHAR"/>
+        <result property="shopPrice" column="shop_price" jdbcType="NUMERIC"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="hot" column="hot" jdbcType="INTEGER"/>
+        <result property="productStatus" column="product_status" jdbcType="INTEGER"/>
+        <result property="defaultImg" column="default_img" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result property="recommended" column="recommended" jdbcType="INTEGER"/>
+        <association property="spec" resultMap="SpecMap" />
+
+    </resultMap>
+
+    <resultMap type="com.teenyda.entity.Spec" id="SpecMap">
+        <result property="specId" column="spec_id" jdbcType="INTEGER"/>
+        <result property="productId" column="spec_product_id" jdbcType="INTEGER"/>
+        <result property="specName" column="spec_name" jdbcType="VARCHAR"/>
+        <result property="price" column="spec_price" jdbcType="NUMERIC"/>
+        <result property="quantity" column="spec_quantity" jdbcType="INTEGER"/>
+
+        <association property="sku" javaType="com.teenyda.entity.Sku">
+            <id property="skuId" column="spec_sku_id" jdbcType="INTEGER"/>
+            <result property="attrbute" column="attrbute" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
 
 </mapper>

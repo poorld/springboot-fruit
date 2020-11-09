@@ -1,6 +1,7 @@
 package com.teenyda.dao;
 
 import com.teenyda.controller.order.dto.SettlementOrder;
+import com.teenyda.entity.Order;
 import com.teenyda.entity.OrderItem;
 import org.apache.ibatis.annotations.Param;
 
@@ -39,6 +40,9 @@ public interface OrderItemDao {
      * @return 对象列表
      */
     List<OrderItem> queryAll(OrderItem orderItem);
+
+    List<Order> queryOrderAll();
+    List<Order> queryOrderByStatus(@Param("status") int status);
 
     /**
      * 新增数据
