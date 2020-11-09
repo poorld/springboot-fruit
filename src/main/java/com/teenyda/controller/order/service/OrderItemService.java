@@ -1,6 +1,8 @@
 package com.teenyda.controller.order.service;
 
 import com.teenyda.controller.order.dto.SettlementOrder;
+import com.teenyda.entity.Order;
+import com.teenyda.entity.OrderInfo;
 import com.teenyda.entity.OrderItem;
 
 import java.util.List;
@@ -54,5 +56,14 @@ public interface OrderItemService {
      * @return 是否成功
      */
     boolean deleteById(String orderItemId);
+
+    /**
+     * 查询所有订单
+     * @return
+     * @param userId
+     */
+    List<OrderInfo> queryAllOrder(Integer userId);
+
+    OrderInfo queryOrderByNumber(Integer userId, String orderNum);
 
 }

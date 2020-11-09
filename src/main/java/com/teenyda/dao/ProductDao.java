@@ -2,6 +2,7 @@ package com.teenyda.dao;
 
 import com.teenyda.controller.product.dto.ProductQueryDto;
 import com.teenyda.controller.product.dto.SimpleProductDto;
+import com.teenyda.entity.OrderProductDto;
 import com.teenyda.entity.Product;
 import com.teenyda.entity.ProductCategory;
 import org.apache.ibatis.annotations.Param;
@@ -23,6 +24,8 @@ public interface ProductDao {
      * @return 实例对象
      */
     Product queryById(Integer productId);
+
+    OrderProductDto orderProductByIdAndSpec(@Param("productId") int productId, @Param("specId") int specId);
 
     /**
      * 查询指定行数据

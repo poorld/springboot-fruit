@@ -1,14 +1,16 @@
 package com.teenyda.controller.order.service;
 
-import com.power.common.util.DateTimeUtil;
 import com.teenyda.common.Util;
 import com.teenyda.constant.OrderStatusEnum;
 import com.teenyda.constant.PaymentFlagEnum;
+import com.teenyda.controller.order.dto.OrderItemDto;
 import com.teenyda.controller.order.dto.SettlementOrder;
 import com.teenyda.dao.OrderInfoDao;
 import com.teenyda.dao.OrderItemDao;
+import com.teenyda.dao.ProductDao;
 import com.teenyda.entity.OrderInfo;
 import com.teenyda.entity.OrderItem;
+import com.teenyda.entity.OrderProductDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,8 @@ public class OrderItemServiceImpl implements OrderItemService {
     private OrderItemDao orderItemDao;
     @Resource
     private OrderInfoDao orderInfoDao;
+    @Resource
+    private ProductDao productDao;
 
     /**
      * 通过ID查询单条数据
@@ -53,7 +57,8 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     /**
-     * 新增数据
+     * 新增订单
+     * 生成订单(OrderInfo)->生成订单项(OrderItem)
      *
      * @param orderItem 实例对象
      * @param type
@@ -62,12 +67,9 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Transactional
     @Override
     public OrderItem insert(OrderItem orderItem, int type) {
-        // 生成订单号码
-        orderItem.setOrderItemId(Util.getOrderId());
-        orderItem.setOrderNum(Util.getOrderNumber());
-
         OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setOrderNum(orderItem.getOrderNum());
+        // 生成订单号码
+        orderInfo.setOrderNum(Util.getOrderNumber());
         // 未付款
         orderInfo.setPaymentFlag(PaymentFlagEnum.Not_Paying.getPaymentFlag());
         orderInfo.setUserId(orderItem.getUserId());
@@ -75,8 +77,11 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderInfo.setType(type);
         orderInfo.setCreateTime(new Date());
 
-        this.orderItemDao.insert(orderItem);
+        orderItem.setOrderItemId(Util.getOrderId());
+        orderItem.setOrderNum(orderInfo.getOrderNum());
+
         this.orderInfoDao.insert(orderInfo);
+        this.orderItemDao.insert(orderItem);
 
         return orderItem;
     }
@@ -103,5 +108,38 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public boolean deleteById(String orderItemId) {
         return this.orderItemDao.deleteById(orderItemId) > 0;
+    }
+
+    /**
+     * 查询所有订单
+     * @return
+     * @param userId
+     */
+    @Override
+    public List<OrderInfo> queryAllOrder(Integer userId) {
+        List<OrderInfo> orderInfos = orderItemDao.queryOrderAll(userId);
+        for (OrderInfo orderInfo : orderInfos) {
+            List<OrderItemDto> orderItems = orderInfo.getOrderItems();
+            for (OrderItemDto orderItem: orderItems) {
+                Integer productId = orderItem.getProductId();
+                Integer specId = orderItem.getSpecId();
+                OrderProductDto orderProductDto = productDao.orderProductByIdAndSpec(productId, specId);
+                orderItem.setProduct(orderProductDto);
+            }
+        }
+        return orderInfos;
+    }
+
+    @Override
+    public OrderInfo queryOrderByNumber(Integer userId, String orderNum) {
+        OrderInfo orderInfo = orderItemDao.queryOrderByNumber(userId, orderNum);
+        List<OrderItemDto> orderItems = orderInfo.getOrderItems();
+        for (OrderItemDto orderItem: orderItems) {
+            Integer productId = orderItem.getProductId();
+            Integer specId = orderItem.getSpecId();
+            OrderProductDto orderProductDto = productDao.orderProductByIdAndSpec(productId, specId);
+            orderItem.setProduct(orderProductDto);
+        }
+        return orderInfo;
     }
 }

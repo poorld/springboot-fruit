@@ -41,6 +41,11 @@ public class OrderItemController extends AbstractApiController {
 
     }
 
+    /**
+     * 购买 确定
+     * @param orderItem
+     * @return
+     */
     @PostMapping("order/buy")
     public ResultBody<OrderItem> buy(@RequestBody OrderItem orderItem) {
         OrderItem order = orderItemService.insert(orderItem, OrderTypeEnum.Order.getOrderType());

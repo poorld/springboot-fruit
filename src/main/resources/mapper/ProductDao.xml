@@ -185,6 +185,49 @@
 	        LEFT JOIN `user` ON `user`.user_id = comments.user_id
     </sql>
 
+<!--    OrderProductDto-->
+    <sql id="OrderProductSql">
+        SELECT
+            product.product_id,
+            product.product_category_id,
+            product.`name`,
+            product.`explain`,
+            product.hot,
+            product.product_status,
+            product.default_img,
+            product.update_time,
+            product.create_time,
+            spec.spec_id,
+            spec.spec_name,
+            spec.price,
+            sku.sku_id,
+            sku.attrbute
+        FROM
+            product
+            LEFT JOIN spec ON product.product_id = spec.product_id
+            LEFT JOIN sku ON spec.sku_id = sku.sku_id
+    </sql>
+    <select id="orderProductByIdAndSpec" resultMap="OrderProductMap">
+        <include refid="OrderProductSql" />
+        WHERE product.product_id = #{productId}
+        AND spec.spec_id = #{specId}
+    </select>
+    <resultMap id="OrderProductMap" type="com.teenyda.entity.OrderProductDto">
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="explain" column="explain" jdbcType="VARCHAR"/>
+        <result property="shopPrice" column="shop_price" jdbcType="NUMERIC"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="hot" column="hot" jdbcType="INTEGER"/>
+        <result property="productStatus" column="product_status" jdbcType="INTEGER"/>
+        <result property="defaultImg" column="default_img" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result property="recommended" column="recommended" jdbcType="INTEGER"/>
+        <association property="spec" resultMap="SpecMap" />
+    </resultMap>
+
+
     <!--查询单个-->
     <select id="queryById" resultMap="ProductMap">
         <include refid="baseSql" />

@@ -31,6 +31,6 @@ public class OrderItem implements Serializable {
 
     // private OrderInfo orderInfo;
 
-    private Product product;
+    // private Product product;
 
 }

@@ -4,6 +4,7 @@ import com.teenyda.controller.product.dto.ProductDto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * (OrderItem)实体类
@@ -19,14 +20,12 @@ public class Order {
 
     private String orderNum;
 
+    //商品的价格
     private Double price;
 
     private Integer quantity;
 
     private Integer userId;
 
-    private OrderInfo orderInfo;
-
-    private OrderProductDto product;
 
 }
