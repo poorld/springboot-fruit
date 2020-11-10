@@ -1,5 +1,6 @@
 package com.teenyda.dao;
 
+import com.teenyda.controller.order.dto.ProductSales;
 import com.teenyda.entity.OrderInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -78,5 +79,12 @@ public interface OrderInfoDao {
      * @return 影响行数
      */
     int deleteById(String orderNum);
+
+    /**
+     * 根据分类获取当月销售额
+     * @param productCategoryId
+     * @return
+     */
+    ProductSales productSales(@Param("productCategoryId") int productCategoryId);
 
 }

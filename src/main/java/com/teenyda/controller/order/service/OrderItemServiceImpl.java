@@ -4,6 +4,7 @@ import com.teenyda.common.Util;
 import com.teenyda.constant.OrderStatusEnum;
 import com.teenyda.constant.PaymentFlagEnum;
 import com.teenyda.controller.order.dto.OrderItemDto;
+import com.teenyda.controller.order.dto.ProductSales;
 import com.teenyda.controller.order.dto.SettlementOrder;
 import com.teenyda.dao.OrderInfoDao;
 import com.teenyda.dao.OrderItemDao;
@@ -163,4 +164,5 @@ public class OrderItemServiceImpl implements OrderItemService {
         }
         return orderInfo;
     }
+
 }

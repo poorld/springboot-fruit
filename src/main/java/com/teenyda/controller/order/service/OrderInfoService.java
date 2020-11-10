@@ -1,5 +1,6 @@
 package com.teenyda.controller.order.service;
 
+import com.teenyda.controller.order.dto.ProductSales;
 import com.teenyda.entity.OrderInfo;
 
 import java.util.List;
@@ -52,5 +53,8 @@ public interface OrderInfoService {
      * @return 是否成功
      */
     boolean deleteById(String orderNum);
+
+    ProductSales queryOrderSalesByCategoryId(Integer categoryId);
+
 
 }

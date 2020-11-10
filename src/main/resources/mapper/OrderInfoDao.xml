@@ -12,6 +12,7 @@
         <result property="message" column="message" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="totalPrice" column="total_price" jdbcType="NUMERIC" />
         <result property="paymentType" column="payment_type" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
     </resultMap>
@@ -28,7 +29,8 @@
                status,
                type,
                payment_type,
-               create_time
+               create_time,
+               total_price
         from fruit.order_info
         where order_num = #{orderNum}
     </select>
@@ -45,7 +47,8 @@
                status,
                type,
                payment_type,
-               create_time
+               create_time,
+               total_price
         from fruit.order_info
         limit #{offset}, #{limit}
     </select>
@@ -126,7 +129,10 @@
                 payment_type,
             </if>
             <if test="createTime != null ">
-                create_time
+                create_time,
+            </if>
+            <if test="totalPrice != null ">
+                total_price
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -159,7 +165,10 @@
                 #{paymentType},
             </if>
             <if test="createTime != null ">
-                #{createTime}
+                #{createTime},
+            </if>
+            <if test="totalPrice != null ">
+                #{totalPrice}
             </if>
         </trim>
 
@@ -172,7 +181,7 @@
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.paymentFlag}, #{entity.userId}, #{entity.contactName}, #{entity.contactMobile},
             #{entity.contactAddress}, #{entity.message}, #{entity.status}, #{entity.type}, #{entity.paymentType},
-            #{entity.createTime})
+            #{entity.createTime},#{totalPrice})
         </foreach>
     </insert>
 
@@ -183,13 +192,13 @@
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.paymentFlag}, #{entity.userId}, #{entity.contactName}, #{entity.contactMobile},
             #{entity.contactAddress}, #{entity.message}, #{entity.status}, #{entity.type}, #{entity.paymentType},
-            #{entity.createTime})
+            #{entity.createTime}, #{entity.totalPrice})
         </foreach>
         on duplicate key update
         payment_flag = values(payment_flag) , user_id = values(user_id) , contact_name = values(contact_name) ,
         contact_mobile = values(contact_mobile) , contact_address = values(contact_address) , message = values(message)
         , status = values(status) , type = values(type) , payment_type = values(payment_type) , create_time =
-        values(create_time)
+        values(create_time) , total_price=values(total_price)
     </insert>
 
     <!--通过主键修改数据-->
@@ -226,6 +235,9 @@
             <if test="createTime != null">
                 create_time = #{createTime},
             </if>
+            <if test="totalPrice != null ">
+                total_price = #{totalPrice}
+            </if>
         </set>
         where order_num = #{orderNum}
     </update>
@@ -236,5 +248,33 @@
         from fruit.order_info
         where order_num = #{orderNum}
     </delete>
+
+    <!--
+        获取当月每一天的销售额度，以产品分类分组
+    -->
+    <select id="productSales" resultMap="ProductSalesMap">
+        SELECT
+            product_category.`name` AS category_name,
+            SUM( order_info.total_price ) AS sales,
+            DATE_FORMAT( order_info.create_time, '%m-%d' ) as `day`
+        FROM
+            order_info
+                LEFT JOIN order_item ON order_info.order_num = order_item.order_num
+                LEFT JOIN product ON order_item.product_id = product.product_id
+                LEFT JOIN product_category ON product.product_category_id = product_category.product_category_id
+        WHERE
+                date_format( order_info.create_time, '%Y-%m' ) = date_format( now( ), '%Y-%m' )
+          AND product_category.product_category_id = #{productCategoryId}
+        GROUP BY
+            date_format( order_info.create_time, '%Y-%m' ),
+            DATE_FORMAT( order_info.create_time, '%m-%d' )
+    </select>
+    <resultMap id="ProductSalesMap" type="com.teenyda.controller.order.dto.ProductSales">
+        <result property="categoryName" column="category_name" jdbcType="VARCHAR"/>
+        <collection property="sales" ofType="com.teenyda.controller.order.dto.Sales">
+            <result property="sales" column="sales" jdbcType="VARCHAR"/>
+            <result property="day" column="day" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
 
 </mapper>

@@ -2,6 +2,8 @@ package com.teenyda.controller.order.controller;
 
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
+import com.teenyda.controller.order.dto.ProductSales;
+import com.teenyda.controller.order.service.OrderInfoService;
 import com.teenyda.controller.order.service.OrderItemService;
 import com.teenyda.entity.Order;
 import com.teenyda.entity.OrderInfo;
@@ -28,6 +30,8 @@ public class OrderController extends AbstractApiController {
      */
     @Resource
     private OrderItemService orderItemService;
+    @Resource
+    private OrderInfoService orderInfoService;
 
     /**
      * 通过主键查询单条数据
@@ -55,5 +59,10 @@ public class OrderController extends AbstractApiController {
     public ResultBody<OrderInfo> allOrder(@PathVariable("userId") Integer userId,
                                             @PathVariable("orderNum") String orderNum) {
         return responseSuccessJson(this.orderItemService.queryOrderByNumber(userId, orderNum));
+    }
+
+    @GetMapping("order/sales/{productCategoryId}")
+    public ResultBody<ProductSales> getSales(@PathVariable("productCategoryId") Integer productCategoryId) {
+        return responseSuccessJson(this.orderInfoService.queryOrderSalesByCategoryId(productCategoryId));
     }
 }

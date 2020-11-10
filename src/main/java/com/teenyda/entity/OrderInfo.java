@@ -39,6 +39,8 @@ public class OrderInfo implements Serializable {
 
     private Date createTime;
 
+    private Double totalPrice;
+
     private List<OrderItemDto> orderItems;
 
     // private List<OrderProductDto> product;

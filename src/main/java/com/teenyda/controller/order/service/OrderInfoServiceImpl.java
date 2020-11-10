@@ -1,5 +1,6 @@
 package com.teenyda.controller.order.service;
 
+import com.teenyda.controller.order.dto.ProductSales;
 import com.teenyda.dao.OrderInfoDao;
 import com.teenyda.entity.OrderInfo;
 import com.teenyda.controller.order.service.OrderInfoService;
@@ -75,5 +76,11 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Override
     public boolean deleteById(String orderNum) {
         return this.orderInfoDao.deleteById(orderNum) > 0;
+    }
+
+
+    @Override
+    public ProductSales queryOrderSalesByCategoryId(Integer categoryId) {
+        return orderInfoDao.productSales(categoryId);
     }
 }

@@ -1,7 +1,7 @@
 package com.teenyda.controller.order.service;
 
+import com.teenyda.controller.order.dto.ProductSales;
 import com.teenyda.controller.order.dto.SettlementOrder;
-import com.teenyda.entity.Order;
 import com.teenyda.entity.OrderInfo;
 import com.teenyda.entity.OrderItem;
 
