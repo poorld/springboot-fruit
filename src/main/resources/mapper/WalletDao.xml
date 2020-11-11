@@ -48,8 +48,29 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="walletId" useGeneratedKeys="true">
-        insert into fruit.wallet(user_id, balance, password)
-        values (#{userId}, #{balance}, #{password})
+        insert into fruit.wallet
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null ">
+                user_id,
+            </if>
+            <if test="balance != null ">
+                balance,
+            </if>
+            <if test="password != null and password != '' ">
+                password
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null and userId != '' ">
+                #{userId},
+            </if>
+            <if test="balance != null ">
+                #{balance},
+            </if>
+            <if test="password != null and password != '' ">
+                #{password}
+            </if>
+        </trim>
     </insert>
 
     <insert id="insertBatch" keyProperty="walletId" useGeneratedKeys="true">

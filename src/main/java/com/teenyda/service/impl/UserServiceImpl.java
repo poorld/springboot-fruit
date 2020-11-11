@@ -3,9 +3,12 @@ package com.teenyda.service.impl;
 import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.controller.user.exception.LoginFailException;
 import com.teenyda.dao.UserDao;
+import com.teenyda.dao.WalletDao;
 import com.teenyda.entity.User;
+import com.teenyda.entity.Wallet;
 import com.teenyda.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -21,6 +24,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
+    @Resource
+    private WalletDao walletDao;
 
     /**
      * 通过ID查询单条数据
@@ -65,14 +70,19 @@ public class UserServiceImpl implements UserService {
      * @param user 实例对象
      * @return 实例对象
      */
+    @Transactional
     @Override
     public User insert(User user) throws GlobalErrorInfoException {
         User byUserName = this.userDao.queryByUserName(user.getUsername());
         if (byUserName != null) {
             throw new GlobalErrorInfoException(LoginFailException.USER_EXIST);
         }
+        Wallet wallet = new Wallet();
         user.setRegisterTime(new Date());
         this.userDao.insert(user);
+        wallet.setUserId(user.getUserId());
+        wallet.setBalance(100d);
+        walletDao.insert(wallet);
         return user;
     }
 
