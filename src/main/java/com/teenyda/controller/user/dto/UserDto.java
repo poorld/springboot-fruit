@@ -21,11 +21,11 @@ public class UserDto {
 
     private String nickname;
 
-    // private String email;
+    private String email;
 
     private String image;
 
-    // private String qq;
+    private String qq;
 
     private String mobile;
 

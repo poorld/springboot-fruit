@@ -9,7 +9,7 @@
         <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="image" column="image" jdbcType="VARCHAR"/>
-        <result property="qq" column="QQ" jdbcType="VARCHAR"/>
+        <result property="qq" column="qq" jdbcType="VARCHAR"/>
         <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
         <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
         <result property="registerTime" column="register_time" jdbcType="TIMESTAMP"/>
@@ -35,11 +35,27 @@
         WHERE
             u.user_id = #{userId}
     </select>
+    <select id="queryByPassword" resultMap="UserMap">
+        SELECT
+            *
+        FROM
+            `user`
+        WHERE
+            `user`.username = #{username} AND `user`.password = #{password}
+    </select>
+    <select id="queryByUserName" resultMap="UserMap">
+        SELECT
+            *
+        FROM
+            `user`
+        WHERE
+            `user`.username = #{username}
+    </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="UserMap">
         select
-          user_id, username, password, nickname, email, image, QQ, mobile, last_login_time, register_time
+          user_id, username, password, nickname, email, image, qq, mobile, last_login_time, register_time
         from fruit.user
         limit #{offset}, #{limit}
     </select>
@@ -47,7 +63,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="UserMap">
         select
-        user_id, username, password, nickname, email, image, QQ, mobile, last_login_time, register_time
+        user_id, username, password, nickname, email, image, qq, mobile, last_login_time, register_time
         from fruit.user
         <where>
             <if test="userId != null">
@@ -69,7 +85,7 @@
                 and image = #{image}
             </if>
             <if test="qq != null and qq != ''">
-                and QQ = #{qq}
+                and qq = #{qq}
             </if>
             <if test="mobile != null and mobile != ''">
                 and mobile = #{mobile}
@@ -85,12 +101,63 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
-        insert into fruit.user(username, password, nickname, email, image, QQ, mobile, last_login_time, register_time)
-        values (#{username}, #{password}, #{nickname}, #{email}, #{image}, #{qq}, #{mobile}, #{lastLoginTime}, #{registerTime})
+        insert into fruit.user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="username != null and username != '' ">
+                username,
+            </if>
+            <if test="password != null and password != '' ">
+                password,
+            </if>
+            <if test="nickname != null and nickname != '' ">
+                nickname,
+            </if>
+            <if test="email != null and email != '' ">
+                email,
+            </if>
+            <if test="image != null and image != '' ">
+                image,
+            </if>
+            <if test="qq != null and qq != '' ">
+                qq,
+            </if>
+            <if test="mobile != null and mobile != '' ">
+                mobile,
+            </if>
+            <if test="registerTime != null ">
+                register_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="username != null and username != '' ">
+                #{username},
+            </if>
+            <if test="password != null and password != '' ">
+                #{password},
+            </if>
+            <if test="nickname != null and nickname != '' ">
+                #{nickname},
+            </if>
+            <if test="email != null and email != '' ">
+                #{email},
+            </if>
+            <if test="image != null and image != '' ">
+                #{image},
+            </if>
+            <if test="qq != null and qq != '' ">
+                #{qq},
+            </if>
+            <if test="mobile != null and mobile != '' ">
+                #{mobile},
+            </if>
+            <if test="registerTime != null ">
+                #{registerTime},
+            </if>
+        </trim>
     </insert>
 
     <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
-        insert into fruit.user(username, password, nickname, email, image, QQ, mobile, last_login_time, register_time)
+        insert into fruit.user(username, password, nickname, email, image, qq, mobile, last_login_time, register_time)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.username}, #{entity.password}, #{entity.nickname}, #{entity.email}, #{entity.image}, #{entity.qq},
@@ -99,7 +166,7 @@
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
-        insert into fruit.user(username, password, nickname, email, image, QQ, mobile, last_login_time, register_time)
+        insert into fruit.user(username, password, nickname, email, image, qq, mobile, last_login_time, register_time)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.username}, #{entity.password}, #{entity.nickname}, #{entity.email}, #{entity.image}, #{entity.qq},
@@ -107,7 +174,7 @@
         </foreach>
         on duplicate key update
         username = values(username) , password = values(password) , nickname = values(nickname) , email = values(email)
-        , image = values(image) , QQ = values(QQ) , mobile = values(mobile) , last_login_time = values(last_login_time)
+        , image = values(image) , qq = values(qq) , mobile = values(mobile) , last_login_time = values(last_login_time)
         , register_time = values(register_time)
     </insert>
 
@@ -131,7 +198,7 @@
                 image = #{image},
             </if>
             <if test="qq != null and qq != ''">
-                QQ = #{qq},
+                qq = #{qq},
             </if>
             <if test="mobile != null and mobile != ''">
                 mobile = #{mobile},

@@ -20,6 +20,8 @@ public interface UserDao {
      * @return 实例对象
      */
     User queryById(Integer userId);
+    User queryByUserName(String userName);
+    User queryByPassword(User user);
 
     /**
      * 查询指定行数据

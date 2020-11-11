@@ -1,11 +1,14 @@
 package com.teenyda.service.impl;
 
+import com.teenyda.common.GlobalErrorInfoException;
+import com.teenyda.controller.user.exception.LoginFailException;
 import com.teenyda.dao.UserDao;
 import com.teenyda.entity.User;
 import com.teenyda.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +33,20 @@ public class UserServiceImpl implements UserService {
         return this.userDao.queryById(userId);
     }
 
+    @Override
+    public User queryByPassword(User user) throws GlobalErrorInfoException {
+        User byUserName = this.userDao.queryByUserName(user.getUsername());
+        if (byUserName == null) {
+            throw new GlobalErrorInfoException(LoginFailException.USER_NOT_EXIST);
+        }
+
+        User byPassword = this.userDao.queryByPassword(user);
+        if (byPassword == null) {
+            throw new GlobalErrorInfoException(LoginFailException.USERNAME_PASSWORD_ERR);
+        }
+        return byPassword;
+    }
+
     /**
      * 查询多条数据
      *
@@ -49,7 +66,12 @@ public class UserServiceImpl implements UserService {
      * @return 实例对象
      */
     @Override
-    public User insert(User user) {
+    public User insert(User user) throws GlobalErrorInfoException {
+        User byUserName = this.userDao.queryByUserName(user.getUsername());
+        if (byUserName != null) {
+            throw new GlobalErrorInfoException(LoginFailException.USER_EXIST);
+        }
+        user.setRegisterTime(new Date());
         this.userDao.insert(user);
         return user;
     }

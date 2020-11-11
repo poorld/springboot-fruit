@@ -1,5 +1,6 @@
 package com.teenyda.service;
 
+import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.entity.User;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public interface UserService {
      * @return 实例对象
      */
     User queryById(Integer userId);
+    User queryByPassword(User user) throws GlobalErrorInfoException;
 
     /**
      * 查询多条数据
@@ -35,7 +37,7 @@ public interface UserService {
      * @param user 实例对象
      * @return 实例对象
      */
-    User insert(User user);
+    User insert(User user) throws GlobalErrorInfoException;
 
     /**
      * 修改数据
