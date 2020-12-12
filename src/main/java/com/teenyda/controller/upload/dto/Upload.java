@@ -21,6 +21,8 @@ public class Upload implements Serializable {
 
     private String filePath;
 
+    private long fileSize;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date uploadDate;
@@ -58,4 +60,11 @@ public class Upload implements Serializable {
         this.uploadDate = uploadDate;
     }
 
+    public long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+    }
 }

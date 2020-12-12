@@ -32,8 +32,8 @@ public class UploadController extends AbstractApiController {
      * @return 单条数据
      */
     @GetMapping("list")
-    public ResultBody<List<Upload>> selectOne() {
-        return responseSuccessJson(this.uploadService.queryAllByLimit(0, 100));
+    public ResultBody<List<Upload>> getList() {
+        return responseSuccessJson(this.uploadService.queryAllByLimit(0, 10));
     }
 
     /**
