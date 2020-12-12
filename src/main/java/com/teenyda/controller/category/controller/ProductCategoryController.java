@@ -50,7 +50,7 @@ public class ProductCategoryController extends AbstractApiController {
     }
 
     @PostMapping("category")
-    public ResultBody<CategoryDto> addCategory(@RequestBody ProductCategory category) {
+    public ResultBody<CategoryDto> addCategory(@RequestBody ProductCategory category) throws GlobalErrorInfoException {
         ProductCategory productCategory = this.productCategoryService.insert(category);
         CategoryDto categoryDto = CloneBeanUtils.copyProperties(productCategory, CategoryDto.class);
         return responseSuccessJson(categoryDto);

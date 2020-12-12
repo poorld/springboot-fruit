@@ -5,7 +5,8 @@ import com.teenyda.common.ResponseInfoInterface;
 public enum CategoryException implements ResponseInfoInterface {
     ERROR_PARAM(40001, "参数错误"),
     ERROR(ERROR_UNKNOW, ERROR_UNKNOW_DESC),
-    ERROR_DELETE(40002, "删除失败")
+    ERROR_DELETE(40002, "删除失败"),
+    ERROR_NAME_ERROR(40003, "分类名称错误")
 
     ;
 

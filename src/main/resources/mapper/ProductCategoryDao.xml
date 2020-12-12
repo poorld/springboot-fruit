@@ -20,6 +20,14 @@
         where product_category_id = #{productCategoryId}
     </select>
 
+    <!--查询单个-->
+    <select id="queryByName" resultMap="ProductCategoryMap">
+        select
+            product_category_id, name, sort_order, description, image, update_time, update_user_id
+        from fruit.product_category
+        where product_category_id = #{productCategoryId}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ProductCategoryMap">
         select

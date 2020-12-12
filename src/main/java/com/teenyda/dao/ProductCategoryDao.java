@@ -20,6 +20,7 @@ public interface ProductCategoryDao {
      * @return 实例对象
      */
     ProductCategory queryById(Integer productCategoryId);
+    ProductCategory queryByName(String productCategoryName);
 
     /**
      * 查询指定行数据

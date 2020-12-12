@@ -62,7 +62,7 @@ public class OrderItemServiceImpl implements OrderItemService {
      * 生成订单(OrderInfo)->生成订单项(OrderItem)
      *
      * @param orderItem 实例对象
-     * @param type
+     * @param type 0订单 1购物车
      * @return 实例对象
      */
     @Transactional

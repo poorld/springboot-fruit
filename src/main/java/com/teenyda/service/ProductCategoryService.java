@@ -1,5 +1,6 @@
 package com.teenyda.service;
 
+import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.entity.ProductCategory;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public interface ProductCategoryService {
      * @param productCategory 实例对象
      * @return 实例对象
      */
-    ProductCategory insert(ProductCategory productCategory);
+    ProductCategory insert(ProductCategory productCategory) throws GlobalErrorInfoException;
 
     /**
      * 修改数据

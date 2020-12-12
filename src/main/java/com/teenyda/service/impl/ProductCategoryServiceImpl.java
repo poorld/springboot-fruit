@@ -1,5 +1,7 @@
 package com.teenyda.service.impl;
 
+import com.teenyda.common.GlobalErrorInfoException;
+import com.teenyda.controller.category.exception.CategoryException;
 import com.teenyda.dao.ProductCategoryDao;
 import com.teenyda.entity.ProductCategory;
 import com.teenyda.service.ProductCategoryService;
@@ -49,7 +51,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      * @return 实例对象
      */
     @Override
-    public ProductCategory insert(ProductCategory productCategory) {
+    public ProductCategory insert(ProductCategory productCategory) throws GlobalErrorInfoException {
+        ProductCategory pc = this.productCategoryDao.queryByName(productCategory.getName());
+        if (pc.getName() != null && !pc.getName().equals("")) {
+            throw new GlobalErrorInfoException(CategoryException.ERROR_NAME_ERROR);
+        }
         this.productCategoryDao.insert(productCategory);
         return productCategory;
     }
