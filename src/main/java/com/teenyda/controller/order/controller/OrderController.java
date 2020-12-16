@@ -1,16 +1,16 @@
 package com.teenyda.controller.order.controller;
 
+import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.common.ResultBody;
+import com.teenyda.constant.OrderStatusEnum;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.controller.order.dto.ProductSales;
 import com.teenyda.controller.order.service.OrderInfoService;
 import com.teenyda.controller.order.service.OrderItemService;
 import com.teenyda.entity.Order;
 import com.teenyda.entity.OrderInfo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.teenyda.entity.OrderPayment;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
  * @program: personal_information
  * @author: Teenyda
  * @create: 2020-11-09 10:11
- * @description: 订单查询
+ * @description: 订单查询、购物车查询
  **/
 @RestController
 @RequestMapping("fruit")
@@ -65,4 +65,19 @@ public class OrderController extends AbstractApiController {
     public ResultBody<ProductSales> getSales(@PathVariable("productCategoryId") Integer productCategoryId) {
         return responseSuccessJson(this.orderInfoService.queryOrderSalesByCategoryId(productCategoryId));
     }
+
+
+    /**
+     * 发现已经写过了payment/finish/{orderNum}
+     * 暂时不要这个接口
+     * @param orderPayment
+     * @return
+     * @throws GlobalErrorInfoException
+     */
+    @PostMapping("order/timeout")
+    public ResultBody<OrderInfo> orderTimeout(@RequestBody OrderPayment orderPayment) throws GlobalErrorInfoException {
+        OrderInfo orderInfo = this.orderInfoService.changeOrderStatus(orderPayment.getOrderNum(), OrderStatusEnum.PayOvertime.getOrderStatus());
+        return responseSuccessJson(orderInfo);
+    }
+
 }

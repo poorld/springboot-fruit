@@ -2,9 +2,9 @@ package com.teenyda.controller.order.service;
 
 import com.teenyda.common.Util;
 import com.teenyda.constant.OrderStatusEnum;
+import com.teenyda.constant.OrderTypeEnum;
 import com.teenyda.constant.PaymentFlagEnum;
 import com.teenyda.controller.order.dto.OrderItemDto;
-import com.teenyda.controller.order.dto.ProductSales;
 import com.teenyda.controller.order.dto.SettlementOrder;
 import com.teenyda.dao.OrderInfoDao;
 import com.teenyda.dao.OrderItemDao;
@@ -45,6 +45,12 @@ public class OrderItemServiceImpl implements OrderItemService {
         return this.orderItemDao.queryByOrderNumber(orderNum);
     }
 
+    @Override
+    public List<SettlementOrder> queryCartOrder(String orderNum) {
+        return this.orderItemDao.queryCartOrder(orderNum);
+    }
+
+
     /**
      * 查询多条数据
      *
@@ -74,7 +80,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         // 未付款
         orderInfo.setPaymentFlag(PaymentFlagEnum.Not_Paying.getPaymentFlag());
         orderInfo.setUserId(orderItem.getUserId());
-        orderInfo.setStatus(OrderStatusEnum.WaitingPayment.getOrderStatus());
+        orderInfo.setStatus(OrderStatusEnum.ToCart.getOrderStatus());
         orderInfo.setType(type);
         orderInfo.setCreateTime(new Date());
 
@@ -98,6 +104,42 @@ public class OrderItemServiceImpl implements OrderItemService {
         this.orderItemDao.update(orderItem);
         // return this.queryById(orderItem.getOrderItemId());
         return null;
+    }
+
+    /**
+     * 购物车下单
+     * @param orderItem
+     * @return
+     */
+    @Transactional
+    @Override
+    public OrderInfo updateCart(List<OrderItem> orderItem) {
+        OrderInfo orderInfo = new OrderInfo();
+        // 生成订单号码
+        orderInfo.setOrderNum(Util.getOrderNumber());
+        // 未付款
+        orderInfo.setPaymentFlag(PaymentFlagEnum.Not_Paying.getPaymentFlag());
+        orderInfo.setStatus(OrderStatusEnum.ToCart.getOrderStatus());
+        orderInfo.setType(OrderTypeEnum.Order.getOrderType());
+        orderInfo.setCreateTime(new Date());
+
+        for (OrderItem item : orderItem) {
+            // 删除，重新生成订单
+            orderItemDao.deleteById(item.getOrderItemId());
+            orderInfoDao.deleteById(item.getOrderNum());
+
+            item.setOrderItemId(Util.getOrderId());
+            item.setOrderNum(orderInfo.getOrderNum());
+
+            orderInfo.setUserId(item.getUserId());
+
+        }
+        this.orderInfoDao.insert(orderInfo);
+        this.orderItemDao.insertBatch(orderItem);
+
+
+        // return this.queryById(orderItem.getOrderItemId());
+        return orderInfo;
     }
 
     /**
@@ -129,6 +171,22 @@ public class OrderItemServiceImpl implements OrderItemService {
             }
         }*/
         return queryByStatus(userId, null);
+    }
+
+    @Override
+    public List<OrderInfo> queryCart(Integer userId) {
+        List<OrderInfo> orderInfos = orderItemDao.queryCart(userId);
+        for (OrderInfo orderInfo : orderInfos) {
+            List<OrderItemDto> orderItems = orderInfo.getOrderItems();
+            for (OrderItemDto orderItem: orderItems) {
+                Integer productId = orderItem.getProductId();
+                Integer specId = orderItem.getSpecId();
+                OrderProductDto orderProductDto = productDao.orderProductByIdAndSpec(productId, specId);
+                orderItem.setProduct(orderProductDto);
+                orderItem.setUserId(orderInfo.getUserId());
+            }
+        }
+        return orderInfos;
     }
 
     @Override
@@ -164,5 +222,6 @@ public class OrderItemServiceImpl implements OrderItemService {
         }
         return orderInfo;
     }
+
 
 }

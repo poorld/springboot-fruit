@@ -25,6 +25,14 @@ public interface OrderItemDao {
     SettlementOrder queryByOrderNumber(@Param("orderNum")String orderNum);
 
     /**
+     * 查询购物车订单
+     *
+     * @param orderItemId 主键
+     * @return 实例对象
+     */
+    List<SettlementOrder> queryCartOrder(@Param("orderNum")String orderNum);
+
+    /**
      * 查询指定行数据
      *
      * @param offset 查询起始位置
@@ -43,6 +51,7 @@ public interface OrderItemDao {
     List<OrderItem> queryAll(OrderItem orderItem);
 
     List<OrderInfo> queryOrderAll(@Param("userId")Integer userId);
+    List<OrderInfo> queryCart(@Param("userId")Integer userId);
     List<OrderInfo> queryOrderByStatus(@Param("userId")Integer userId, @Param("status") int status);
     OrderInfo queryOrderByNumber(@Param("userId")Integer userId, @Param("orderNum") String orderNum);
 

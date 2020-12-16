@@ -1,5 +1,6 @@
 package com.teenyda.controller.order.service;
 
+import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.controller.order.dto.ProductSales;
 import com.teenyda.entity.OrderInfo;
 
@@ -57,4 +58,5 @@ public interface OrderInfoService {
     ProductSales queryOrderSalesByCategoryId(Integer categoryId);
 
 
+    OrderInfo changeOrderStatus(String orderNum, Integer status) throws GlobalErrorInfoException;
 }

@@ -86,6 +86,36 @@
             oi.order_num = #{orderNum}
     </select>
 
+    <!--查询单个-->
+    <select id="queryCartOrder" resultMap="OrderItemMap">
+        SELECT
+            oi.`order_item_id`,
+            oi.`order_num`,
+            oi.`quantity`,
+            oi.`user_id`,
+
+            p.`product_id`,
+            p.`name`,
+            p.`explain`,
+            p.`default_img`,
+            p.`update_time`,
+
+            spec.`spec_id`,
+            spec.`spec_name`,
+            spec.`price`,
+
+            sku.sku_id,
+            sku.attrbute
+
+        FROM
+            fruit.order_item oi
+                LEFT JOIN product p ON oi.product_id = p.product_id
+                LEFT JOIN spec ON oi.spec_id = spec.spec_id
+                LEFT JOIN sku ON spec.sku_id = sku.sku_id
+        WHERE
+            oi.order_num = #{orderNum}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="OrderItemMap">
         select order_item_id,
@@ -139,7 +169,7 @@
         insert into fruit.order_item(order_item_id, order_num, product_id, price, quantity, user_id, spec_id)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{orderItemId}, #{entity.orderNum}, #{entity.productId}, #{entity.price}, #{entity.quantity}, #{entity.userId},
+            (#{entity.orderItemId}, #{entity.orderNum}, #{entity.productId}, #{entity.price}, #{entity.quantity}, #{entity.userId},
             #{entity.specId})
         </foreach>
     </insert>
@@ -193,6 +223,13 @@
     <select id="queryOrderAll" resultMap="OrderMap">
         <include refid="baseSqlQueryOrder" />
         WHERE order_item.user_id = #{userId}
+        AND `status` != 0
+    </select>
+    <!--  查询购物车-->
+    <select id="queryCart" resultMap="OrderMap">
+        <include refid="baseSqlQueryOrder" />
+        WHERE order_item.user_id = #{userId}
+        AND order_info.type = 1
     </select>
     <select id="queryOrderByStatus" resultMap="OrderMap">
         <include refid="baseSqlQueryOrder" />

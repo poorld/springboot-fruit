@@ -1,6 +1,5 @@
 package com.teenyda.controller.order.service;
 
-import com.teenyda.controller.order.dto.ProductSales;
 import com.teenyda.controller.order.dto.SettlementOrder;
 import com.teenyda.entity.OrderInfo;
 import com.teenyda.entity.OrderItem;
@@ -22,6 +21,8 @@ public interface OrderItemService {
      * @return 实例对象
      */
     SettlementOrder queryByOrderNum(String orderNum);
+
+    List<SettlementOrder> queryCartOrder(String orderNum);
 
     /**
      * 查询多条数据
@@ -49,6 +50,8 @@ public interface OrderItemService {
      */
     OrderItem update(OrderItem orderItem);
 
+    OrderInfo updateCart(List<OrderItem> orderItem);
+
     /**
      * 通过主键删除数据
      *
@@ -63,6 +66,7 @@ public interface OrderItemService {
      * @param userId
      */
     List<OrderInfo> queryAllOrder(Integer userId);
+    List<OrderInfo> queryCart(Integer userId);
     List<OrderInfo> queryByStatus(Integer userId, Integer status);
 
     OrderInfo queryOrderByNumber(Integer userId, String orderNum);

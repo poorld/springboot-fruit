@@ -1,6 +1,8 @@
 package com.teenyda.controller.order.service;
 
+import com.teenyda.common.GlobalErrorInfoException;
 import com.teenyda.controller.order.dto.ProductSales;
+import com.teenyda.controller.order.exception.OrderException;
 import com.teenyda.dao.OrderInfoDao;
 import com.teenyda.entity.OrderInfo;
 import com.teenyda.controller.order.service.OrderInfoService;
@@ -82,5 +84,16 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Override
     public ProductSales queryOrderSalesByCategoryId(Integer categoryId) {
         return orderInfoDao.productSales(categoryId);
+    }
+
+    @Override
+    public OrderInfo changeOrderStatus(String orderNum, Integer status) throws GlobalErrorInfoException {
+        OrderInfo orderInfo = queryById(orderNum);
+        if (orderInfo == null) {
+            throw new GlobalErrorInfoException(OrderException.ERROR_ORDER_NUMBER);
+        }
+        orderInfo.setStatus(status);
+        orderInfoDao.update(orderInfo);
+        return orderInfo;
     }
 }
