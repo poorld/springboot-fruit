@@ -66,6 +66,12 @@ public interface OrderItemService {
      * @param userId
      */
     List<OrderInfo> queryAllOrder(Integer userId);
+
+    /**
+     * 后台 查询所有订单
+     * @return
+     */
+    List<OrderInfo> queryAllOrder();
     List<OrderInfo> queryCart(Integer userId);
     List<OrderInfo> queryByStatus(Integer userId, Integer status);
 

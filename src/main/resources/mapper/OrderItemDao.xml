@@ -14,6 +14,8 @@
             order_info.`status`,
             order_info.type,
             order_info.payment_type,
+            order_info.create_time,
+            order_info.total_price,
 
             order_item.order_item_id,
             order_item.product_id,
@@ -241,6 +243,9 @@
         WHERE order_item.user_id = #{userId}
         AND order_item.order_num = #{orderNum}
     </select>
+    <select id="selectAll" resultMap="OrderMap">
+        <include refid="baseSqlQueryOrder" />
+    </select>
 
     <resultMap type="com.teenyda.entity.OrderInfo" id="OrderMap">
         <result property="orderNum" column="order_num" jdbcType="VARCHAR"/>
@@ -254,6 +259,7 @@
         <result property="type" column="type" jdbcType="INTEGER"/>
         <result property="paymentType" column="payment_type" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result property="totalPrice" column="total_price" jdbcType="NUMERIC"/>
 
         <collection property="orderItems" resultMap="OrderItemDtoMap" />
 

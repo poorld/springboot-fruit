@@ -1,7 +1,9 @@
 package com.teenyda.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.teenyda.controller.order.dto.OrderItemDto;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -37,6 +39,8 @@ public class OrderInfo implements Serializable {
 
     private Integer paymentType;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
 
     private Double totalPrice;

@@ -66,6 +66,10 @@ public class OrderController extends AbstractApiController {
         return responseSuccessJson(this.orderInfoService.queryOrderSalesByCategoryId(productCategoryId));
     }
 
+    @GetMapping("order/query")
+    public ResultBody<List<OrderInfo>> queryOrder() {
+        return responseSuccessJson(this.orderItemService.queryAllOrder());
+    }
 
     /**
      * 发现已经写过了payment/finish/{orderNum}

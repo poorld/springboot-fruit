@@ -51,6 +51,7 @@ public interface OrderItemDao {
     List<OrderItem> queryAll(OrderItem orderItem);
 
     List<OrderInfo> queryOrderAll(@Param("userId")Integer userId);
+    List<OrderInfo> selectAll();
     List<OrderInfo> queryCart(@Param("userId")Integer userId);
     List<OrderInfo> queryOrderByStatus(@Param("userId")Integer userId, @Param("status") int status);
     OrderInfo queryOrderByNumber(@Param("userId")Integer userId, @Param("orderNum") String orderNum);

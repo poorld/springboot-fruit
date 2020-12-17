@@ -28,6 +28,7 @@ public interface OrderPaymentService {
     Boolean finish(String orderNum);
 
 
+    Boolean cancel(String orderNum);
 
     /**
      * 查询多条数据

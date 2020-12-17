@@ -68,4 +68,14 @@ public class OrderPaymentController extends AbstractApiController {
         return responseSuccessJson(this.orderPaymentService.finish(orderNum));
     }
 
+    /**
+     * 取消订单
+     * @param orderNum
+     * @return
+     */
+    @PutMapping("order/payment/cancel/{orderNum}")
+    public ResultBody<Boolean> cancel(@PathVariable("orderNum")String orderNum) {
+        return responseSuccessJson(this.orderPaymentService.cancel(orderNum));
+    }
+
 }

@@ -174,6 +174,21 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    public List<OrderInfo> queryAllOrder() {
+        List<OrderInfo> orderInfos = orderItemDao.selectAll();
+        for (OrderInfo orderInfo : orderInfos) {
+            List<OrderItemDto> orderItems = orderInfo.getOrderItems();
+            for (OrderItemDto orderItem : orderItems) {
+                Integer productId = orderItem.getProductId();
+                Integer specId = orderItem.getSpecId();
+                OrderProductDto orderProductDto = productDao.orderProductByIdAndSpec(productId, specId);
+                orderItem.setProduct(orderProductDto);
+            }
+        }
+        return orderInfos;
+    }
+
+    @Override
     public List<OrderInfo> queryCart(Integer userId) {
         List<OrderInfo> orderInfos = orderItemDao.queryCart(userId);
         for (OrderInfo orderInfo : orderInfos) {

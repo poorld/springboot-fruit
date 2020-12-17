@@ -197,6 +197,7 @@
             product.default_img,
             product.update_time,
             product.create_time,
+
             spec.spec_id,
             spec.spec_name,
             spec.price,
@@ -207,6 +208,10 @@
             LEFT JOIN spec ON product.product_id = spec.product_id
             LEFT JOIN sku ON spec.sku_id = sku.sku_id
     </sql>
+    <select id="orderProductById" resultMap="OrderProductMap">
+        <include refid="OrderProductSql" />
+        WHERE product.product_id = #{productId}
+    </select>
     <select id="orderProductByIdAndSpec" resultMap="OrderProductMap">
         <include refid="OrderProductSql" />
         WHERE product.product_id = #{productId}

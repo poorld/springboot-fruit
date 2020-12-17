@@ -26,6 +26,7 @@ public interface ProductDao {
     Product queryById(Integer productId);
 
     OrderProductDto orderProductByIdAndSpec(@Param("productId") int productId, @Param("specId") int specId);
+    OrderProductDto orderProductById(@Param("productId") int productId);
 
     /**
      * 查询指定行数据

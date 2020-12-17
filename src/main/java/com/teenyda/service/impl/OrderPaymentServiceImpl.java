@@ -153,6 +153,20 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
         return true;
     }
 
+    /**
+     * 取消订单
+     * @param orderNum
+     * @return
+     */
+    @Override
+    public Boolean cancel(String orderNum) {
+        OrderInfo orderInfo = orderInfoDao.queryById(orderNum);
+        // todo 更新orderInfo
+        orderInfo.setStatus(OrderStatusEnum.OrderCancel.getOrderStatus());
+        orderInfoDao.update(orderInfo);
+        return true;
+    }
+
 
     /**
      * 查询多条数据
