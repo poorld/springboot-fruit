@@ -72,6 +72,15 @@ public class OrderController extends AbstractApiController {
     }
 
     /**
+     * 更新订单
+     * @return
+     */
+    @PutMapping("order")
+    public ResultBody<OrderInfo> updateContact(@RequestBody OrderInfo orderInfo) {
+        return responseSuccessJson(this.orderInfoService.update(orderInfo));
+    }
+
+    /**
      * 发现已经写过了payment/finish/{orderNum}
      * 暂时不要这个接口
      * @param orderPayment

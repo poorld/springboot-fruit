@@ -35,7 +35,7 @@ public interface ProductDao {
      * @param limit  查询条数
      * @return 对象列表
      */
-    List<Product> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<Product> queryAllByLimit();
 
     // @Param("offset") int offset, @Param("limit") int limit
     List<SimpleProductDto> simpleProduct();

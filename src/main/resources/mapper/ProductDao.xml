@@ -250,8 +250,8 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ProductMap">
         <include refid="baseSql" />
-        limit #{offset}, #{limit}
     </select>
+<!--  limit #{offset}, #{limit}  -->
 
     <!-- 根据分类查询 -->
     <select id="queryByCategory" resultMap="ProductMap">

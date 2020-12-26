@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<Product> queryAllByLimit(int offset, int limit) {
-        return this.productDao.queryAllByLimit(offset, limit);
+        return this.productDao.queryAllByLimit();
     }
 
     @Override
@@ -139,10 +139,14 @@ public class ProductServiceImpl implements ProductService {
         }
 
         this.specDao.insertBatch(spec);
-        this.productDiscountsDao.insertBatch(dcList);
+        if (dcList.size() > 0) {
+            this.productDiscountsDao.insertBatch(dcList);
+        }
         this.InfoImageDao.insertBatch(infoImages);
         this.bannerImageDao.insertBatch(bannerImages);
-        this.productTagDao.insertBatch(productTags);
+        if (productTags.size() > 0) {
+            this.productTagDao.insertBatch(productTags);
+        }
         return product;
     }
 

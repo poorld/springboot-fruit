@@ -40,7 +40,7 @@ public class ProductController extends AbstractApiController {
 
     @GetMapping("product")
     public ResultBody<List<Product>> all() {
-        return responseSuccessJson(this.productService.queryAllByLimit(0, 100));
+        return responseSuccessJson(this.productService.queryAllByLimit(0 ,100));
     }
 
     @GetMapping("product/list/simple")

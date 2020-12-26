@@ -1,7 +1,9 @@
 package com.teenyda.controller.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.teenyda.entity.Members;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -28,9 +30,12 @@ public class UserDto {
     private String qq;
 
     private String mobile;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date lastLoginTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date registerTime;
 
     private Members members;

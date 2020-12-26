@@ -10,6 +10,7 @@ import com.teenyda.utils.CloneBeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (User)表控制层
@@ -37,6 +38,19 @@ public class UserController extends AbstractApiController {
         User user = this.userService.queryById(id);
         UserDto userDto = CloneBeanUtils.copyProperties(user, UserDto.class);
         return responseSuccessJson(userDto);
+    }
+
+    @GetMapping("user")
+    public ResultBody<List<UserDto>> getAll() {
+        List<User> users = this.userService.queryAllByLimit(0, 100);
+        List<UserDto> userDtos = CloneBeanUtils.copyListProperties(users, UserDto::new);
+        return responseSuccessJson(userDtos);
+    }
+
+    @PutMapping("user")
+    public ResultBody<UserDto> updateUser(@RequestBody User user) {
+        User users = this.userService.update(user);
+        return responseSuccessJson();
     }
 
     @PostMapping("user/register")
