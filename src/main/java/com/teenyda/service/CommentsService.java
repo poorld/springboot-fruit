@@ -1,5 +1,6 @@
 package com.teenyda.service;
 
+import com.teenyda.controller.comments.dto.CommentsDto1;
 import com.teenyda.entity.Comments;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public interface CommentsService {
      * @param comments 实例对象
      * @return 实例对象
      */
-    Comments insert(Comments comments);
+    CommentsDto1 insert(CommentsDto1 comments);
 
     /**
      * 修改数据

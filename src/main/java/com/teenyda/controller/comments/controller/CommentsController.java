@@ -3,15 +3,14 @@ package com.teenyda.controller.comments.controller;
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.controller.comments.dto.CommentsDto;
+import com.teenyda.controller.comments.dto.CommentsDto1;
 import com.teenyda.entity.Comments;
 import com.teenyda.service.CommentsService;
 import com.teenyda.utils.CloneBeanUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,5 +48,16 @@ public class CommentsController extends AbstractApiController {
     @GetMapping("comments/product/{productId}/best")
     public ResultBody<Comments> bestCommentsByProductId(@PathVariable("productId")Integer id) {
         return responseSuccessJson(this.commentsService.bestCommentsByProductId(id));
+    }
+
+    /**
+     * 评论商品
+     * @param comments
+     * @return
+     */
+    @PostMapping("comments/product")
+    public ResultBody<CommentsDto1> commentProduct(@RequestBody CommentsDto1 comments) {
+        comments.setCreateTime(new Date());
+        return responseSuccessJson(this.commentsService.insert(comments));
     }
 }

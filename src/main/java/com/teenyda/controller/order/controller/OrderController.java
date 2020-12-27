@@ -61,6 +61,11 @@ public class OrderController extends AbstractApiController {
         return responseSuccessJson(this.orderItemService.queryOrderByNumber(userId, orderNum));
     }
 
+    /**
+     * 销量
+     * @param productCategoryId
+     * @return
+     */
     @GetMapping("order/sales/{productCategoryId}")
     public ResultBody<ProductSales> getSales(@PathVariable("productCategoryId") Integer productCategoryId) {
         return responseSuccessJson(this.orderInfoService.queryOrderSalesByCategoryId(productCategoryId));
@@ -93,4 +98,39 @@ public class OrderController extends AbstractApiController {
         return responseSuccessJson(orderInfo);
     }
 
+    /**
+     * 发货
+     * @param orderPayment
+     * @return
+     * @throws GlobalErrorInfoException
+     */
+    @PutMapping("order/delivery/{orderNum}")
+    public ResultBody<OrderInfo> delivery(@PathVariable("orderNum") String orderNum) throws GlobalErrorInfoException {
+        OrderInfo orderInfo = this.orderInfoService.changeOrderStatus(orderNum, OrderStatusEnum.Distribution.getOrderStatus());
+        return responseSuccessJson(orderInfo);
+    }
+
+    /**
+     * 确认收货
+     * @param orderNum
+     * @return
+     * @throws GlobalErrorInfoException
+     */
+    @PutMapping("order/distribution/{orderNum}")
+    public ResultBody<OrderInfo> distribution(@PathVariable("orderNum") String orderNum) throws GlobalErrorInfoException {
+        OrderInfo orderInfo = this.orderInfoService.changeOrderStatus(orderNum, OrderStatusEnum.DistributionComplete.getOrderStatus());
+        return responseSuccessJson(orderInfo);
+    }
+
+    /**
+     * 订单完成（评价后）
+     * @param orderNum
+     * @return
+     * @throws GlobalErrorInfoException
+     */
+    @PutMapping("order/complete/{orderNum}")
+    public ResultBody<OrderInfo> complete(@PathVariable("orderNum") String orderNum) throws GlobalErrorInfoException {
+        OrderInfo orderInfo = this.orderInfoService.changeOrderStatus(orderNum, OrderStatusEnum.OrderSuccess.getOrderStatus());
+        return responseSuccessJson(orderInfo);
+    }
 }

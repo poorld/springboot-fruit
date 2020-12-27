@@ -66,6 +66,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public SimpleProductDto simpleProductById(int productId) {
+        return this.productDao.simpleProductById(productId);
+    }
+
+    @Override
     public List<SimpleProductDto> queryByCategoryId(Integer categoryId) {
         return this.productDao.queryByCategoryId(categoryId);
     }

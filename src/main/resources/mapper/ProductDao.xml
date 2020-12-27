@@ -138,6 +138,10 @@
     <select id="simpleProduct" resultMap="simpleProductMap">
         <include refid="simpleColumn" />
     </select>
+    <select id="simpleProductById" resultMap="simpleProductMap">
+        <include refid="simpleColumn" />
+        where product.product_id = #{productId}
+    </select>
     <resultMap id="simpleProductMap" type="com.teenyda.controller.product.dto.SimpleProductDto">
         <result property="productId" column="product_id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>

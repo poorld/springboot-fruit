@@ -40,6 +40,8 @@ public interface ProductService {
      */
     List<SimpleProductDto> simpleProduct(int offset, int limit);
 
+    SimpleProductDto simpleProductById(int productId);
+
     List<SimpleProductDto> queryByCategoryId(Integer categoryId);
 
     List<Product> queryAll();

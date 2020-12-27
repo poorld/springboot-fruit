@@ -38,6 +38,11 @@ public class ProductController extends AbstractApiController {
         return responseSuccessJson(this.productService.queryById(id));
     }
 
+    @GetMapping("product/simple/{productId}")
+    public ResultBody<SimpleProductDto> simpleProduct(@PathVariable("productId")Integer id) {
+        return responseSuccessJson(this.productService.simpleProductById(id));
+    }
+
     @GetMapping("product")
     public ResultBody<List<Product>> all() {
         return responseSuccessJson(this.productService.queryAllByLimit(0 ,100));

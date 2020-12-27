@@ -1,5 +1,6 @@
 package com.teenyda.service.impl;
 
+import com.teenyda.controller.comments.dto.CommentsDto1;
 import com.teenyda.dao.CommentsDao;
 import com.teenyda.entity.Comments;
 import com.teenyda.service.CommentsService;
@@ -59,7 +60,7 @@ public class CommentsServiceImpl implements CommentsService {
      * @return 实例对象
      */
     @Override
-    public Comments insert(Comments comments) {
+    public CommentsDto1 insert(CommentsDto1 comments) {
         this.commentsDao.insert(comments);
         return comments;
     }

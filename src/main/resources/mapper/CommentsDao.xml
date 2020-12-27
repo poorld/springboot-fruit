@@ -130,6 +130,67 @@
         insert into fruit.comments(user_id, product_id, content, img1, img2, img3, audit, reply, create_time)
         values (#{userId}, #{productId}, #{content}, #{img1}, #{img2}, #{img3}, #{audit}, #{reply}, #{createTime})
     </insert>
+    <insert id="insertComments" keyProperty="commentsId" useGeneratedKeys="true">
+        insert into fruit.comments
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="product_id != null">
+                product_id,
+            </if>
+            <if test="content != null and content != '' ">
+                content,
+            </if>
+            <if test="img1 != null and img1 != '' ">
+                img1,
+            </if>
+            <if test="img2 != null and img2 != '' ">
+                img2,
+            </if>
+            <if test="img3 != null and img3 != '' ">
+                img3,
+            </if>
+            <if test="audit != null">
+                audit,
+            </if>
+            <if test="reply != null and reply != '' ">
+                reply,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="product_id != null">
+                #{productId},
+            </if>
+            <if test="content != null and content != '' ">
+                #{content},
+            </if>
+            <if test="img1 != null and img1 != '' ">
+                #{img1},
+            </if>
+            <if test="img2 != null and img2 != '' ">
+                #{img2},
+            </if>
+            <if test="img3 != null and img3 != '' ">
+                #{img3},
+            </if>
+            <if test="audit != null">
+                #{audit},
+            </if>
+            <if test="reply != null and reply != '' ">
+                #{reply},
+            </if>
+            <if test="createTime != null">
+                #{createTime}
+            </if>
+        </trim>
+    </insert>
 
     <insert id="insertBatch" keyProperty="commentsId" useGeneratedKeys="true">
         insert into fruit.comments(user_id, product_id, content, img1, img2, img3, audit, reply, create_time)

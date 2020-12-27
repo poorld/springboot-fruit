@@ -39,6 +39,7 @@ public interface ProductDao {
 
     // @Param("offset") int offset, @Param("limit") int limit
     List<SimpleProductDto> simpleProduct();
+    SimpleProductDto simpleProductById(@Param("productId") int productId);
 
     List<SimpleProductDto> queryByCategoryId(@Param("categoryId") Integer categoryId);
 

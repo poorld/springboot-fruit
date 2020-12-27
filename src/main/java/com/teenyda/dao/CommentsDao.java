@@ -1,5 +1,6 @@
 package com.teenyda.dao;
 
+import com.teenyda.controller.comments.dto.CommentsDto1;
 import com.teenyda.entity.Comments;
 import org.apache.ibatis.annotations.Param;
 
@@ -49,7 +50,8 @@ public interface CommentsDao {
      * @param comments 实例对象
      * @return 影响行数
      */
-    int insert(Comments comments);
+    int insert(CommentsDto1 comments);
+    int insertComments(CommentsDto1 comments);
 
     /**
      * 批量新增数据（MyBatis原生foreach方法）
