@@ -3,6 +3,7 @@ package com.teenyda.controller.product.controller;
 import com.teenyda.common.ResultBody;
 import com.teenyda.controller.api.AbstractApiController;
 import com.teenyda.controller.product.dto.ProductQueryDto;
+import com.teenyda.controller.product.dto.ProductQueryReq;
 import com.teenyda.controller.product.dto.SimpleProductDto;
 import com.teenyda.entity.Product;
 import com.teenyda.controller.product.service.ProductService;
@@ -10,6 +11,7 @@ import com.teenyda.entity.ProductCategory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -56,6 +58,10 @@ public class ProductController extends AbstractApiController {
     @GetMapping("product/list/simple/category/{categoryId}")
     public ResultBody<List<SimpleProductDto>> simpleByCategoryId(@PathVariable("categoryId") Integer categoryId) {
         return responseSuccessJson(this.productService.queryByCategoryId(categoryId));
+    }
+    @PostMapping("product/list/simple/category")
+    public ResultBody<List<SimpleProductDto>> simpleByCategoryAndName(@RequestBody ProductQueryReq req) {
+        return responseSuccessJson(this.productService.queryByCategoryIdAndName(req.getCategoryId(), req.getName()));
     }
 
     @PostMapping("product/category")

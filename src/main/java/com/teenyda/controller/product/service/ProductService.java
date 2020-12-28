@@ -43,6 +43,7 @@ public interface ProductService {
     SimpleProductDto simpleProductById(int productId);
 
     List<SimpleProductDto> queryByCategoryId(Integer categoryId);
+    List<SimpleProductDto> queryByCategoryIdAndName(Integer categoryId, String name);
 
     List<Product> queryAll();
 

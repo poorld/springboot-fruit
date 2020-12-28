@@ -42,6 +42,7 @@ public interface ProductDao {
     SimpleProductDto simpleProductById(@Param("productId") int productId);
 
     List<SimpleProductDto> queryByCategoryId(@Param("categoryId") Integer categoryId);
+    List<SimpleProductDto> queryByCategoryAndName(@Param("categoryId") Integer categoryId, @Param("name") String name);
 
     /**
      * 通过实体作为筛选条件查询

@@ -76,6 +76,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<SimpleProductDto> queryByCategoryIdAndName(Integer categoryId, String name) {
+        return this.productDao.queryByCategoryAndName(categoryId, name);
+    }
+
+    @Override
     public List<Product> queryAll() {
         return this.productDao.queryAll(null);
     }

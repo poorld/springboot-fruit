@@ -271,6 +271,11 @@
         <include refid="simpleColumn" />
         WHERE product_category_id = ${categoryId}
     </select>
+    <select id="queryByCategoryAndName" resultMap="simpleProductMap">
+        <include refid="simpleColumn" />
+        WHERE product_category_id = ${categoryId}
+        AND product.`name` LIKE '%${name}%'
+    </select>
 
     <!-- 根据分类和状态查询 -->
     <select id="queryByCategoryAndStatus" resultMap="ProductMap">
